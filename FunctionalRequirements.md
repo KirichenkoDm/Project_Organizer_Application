@@ -6,7 +6,7 @@
   + User Page.
     - Edit Personal information.
     - Delete (archive) account.
-x
+
 ## **Project** + **Roles**
   + User who created the project gets role *Owner* in **Roles** Table;
     - hierarchy of roles: Owner -> Project Manager -> member.

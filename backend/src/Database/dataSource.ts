@@ -1,7 +1,8 @@
 import "reflect-metadata"
 import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../Entities"
 import { DataSource } from "typeorm"
-import { InitialCreation1742833962934 } from "./Migrations/1742833962934-InitialCreation"
+import { CommentInsert1742928923624 } from "./Migrations/1742928923624-CommentInsert"
+
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: "localhost",
@@ -19,6 +20,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity
   ],
-  migrations: [InitialCreation1742833962934],
+  migrations: [CommentInsert1742928923624],
   subscribers: [],
 })

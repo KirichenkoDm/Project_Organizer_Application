@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../Entities"
 import { DataSource } from "typeorm"
-import { CommentInsert1742928923624 } from "./Migrations/1742928923624-CommentInsert"
+import { RenamingDatabaseColumns1742990873704 } from "./Migrations/1742990873704-RenamingDatabaseColumns"
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -20,6 +20,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity
   ],
-  migrations: [CommentInsert1742928923624],
+  migrations: [RenamingDatabaseColumns1742990873704],
   subscribers: [],
 })

@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../Entities"
 import { DataSource } from "typeorm"
-import { UniqueContraints1743002916366 } from "./Migrations/1743002916366-UniqueContraints"
+import { IDsTypeChange1743518683351 } from "./Migrations/1743518683351-IDsTypeChange"
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -20,6 +20,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity
   ],
-  migrations: [UniqueContraints1743002916366],
+  migrations: [IDsTypeChange1743518683351],
   subscribers: [],
 })

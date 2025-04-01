@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { EProjectTheme } from "../Enums";
+import { EProjectTheme } from "../enums_";
 
 @Entity("projects")
 export class ProjectEntity {

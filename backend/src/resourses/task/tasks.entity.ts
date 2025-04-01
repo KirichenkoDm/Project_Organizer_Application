@@ -1,5 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { ColumnEntity, ProjectEntity, UserEntity } from ".";
+import { ProjectEntity } from "../project";
+import { ColumnEntity } from "../column";
+import { UserEntity } from "../user";
 
 @Entity("tasks")
 export class TaskEntity {

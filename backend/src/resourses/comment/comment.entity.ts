@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { TaskEntity, UserEntity } from ".";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "../user";
+import { TaskEntity } from "../task";
 
 @Entity("comments")
 export class CommentEntity {
@@ -17,7 +18,7 @@ export class CommentEntity {
   task: TaskEntity;
 
   @Column({ type: "jsonb", default: () => "'{}'::jsonb" })
-  text: object;  // или тип any, если требуется
+  text: object;
 
   @Column("timestamptz")
   createdAt: Date;

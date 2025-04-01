@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { ProjectEntity, UserEntity } from ".";
-import { ERoles } from "../enums_";
+import { ERoles } from "./role.enum";
+import { ProjectEntity } from "../project";
+import { UserEntity } from "../user";
 
 @Entity("roles")
 @Unique(["project", "user"])  

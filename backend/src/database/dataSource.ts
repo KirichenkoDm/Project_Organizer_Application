@@ -1,7 +1,7 @@
 import "reflect-metadata"
-import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../Entities"
+import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../entities_"
 import { DataSource } from "typeorm"
-import { IDsTypeChange1743518683351 } from "./Migrations/1743518683351-IDsTypeChange"
+import { IDsTypeChange1743518683351 } from "./migrations/1743518683351-IDsTypeChange"
 
 export const AppDataSource = new DataSource({
   type: "postgres",

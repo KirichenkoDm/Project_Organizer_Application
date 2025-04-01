@@ -1,5 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { ProjectEntity } from ".";
+import { ProjectEntity } from "../project";
 
 @Entity("columns")
 @Unique(["project", "columnName"])  

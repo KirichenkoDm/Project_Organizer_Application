@@ -1,8 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 export class InitialCreation1742833962934 implements MigrationInterface {
-
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
       -- users table
       CREATE TABLE public.users (
         id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY, 
@@ -157,7 +156,7 @@ export class InitialCreation1742833962934 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
       DROP TABLE public.comments ;
       DROP TABLE public.columns;
       DROP TABLE public.tasks;

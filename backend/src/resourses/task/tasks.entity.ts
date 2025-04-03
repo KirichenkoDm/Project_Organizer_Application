@@ -5,44 +5,47 @@ import { UserEntity } from "../user";
 
 @Entity("tasks")
 export class TaskEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: "varchar", length: 255})
+  @Column({ type: "varchar", length: 255 })
   name: string;
 
-  @Column({ type: "varchar", length: 255})
+  @Column({ type: "varchar", length: 255 })
   description: string;
 
-  @Column("uuid")
+  @Column("int")
+  order: number;
+
+  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "projectId" })
   project: ProjectEntity;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => ColumnEntity)
   @JoinColumn({ name: "columnId" })
   column: ColumnEntity;
 
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "int", nullable: true })
   @ManyToOne(() => TaskEntity)
   @JoinColumn({ name: "blockedBy" })
   task: TaskEntity;
 
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: "int", nullable: true })
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "assignedId" })
   user: UserEntity;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true
+  @Column({
+    type: "timestamptz",
+    nullable: true,
   })
   start: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true
+  @Column({
+    type: "timestamptz",
+    nullable: true,
   })
   end: Date;
 
@@ -52,10 +55,10 @@ export class TaskEntity {
   @Column("timestamptz")
   updatedAt: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true, 
-    default: null
+  @Column({
+    type: "timestamptz",
+    nullable: true,
+    default: null,
   })
   archivedAt: Date;
-};
+}

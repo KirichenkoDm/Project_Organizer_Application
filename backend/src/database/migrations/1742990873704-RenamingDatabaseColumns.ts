@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class RenamingDatabaseColumns1742990873704 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         -- users table
         ALTER TABLE public.users RENAME COLUMN "firstname" TO "first_name";
         ALTER TABLE public.users RENAME COLUMN "lastname" TO "last_name";
@@ -47,10 +46,10 @@ export class RenamingDatabaseColumns1742990873704 implements MigrationInterface 
         ALTER TABLE public.comments RENAME COLUMN "updatedat" TO "updated_at";
         ALTER TABLE public.comments RENAME COLUMN "archivedat" TO "archived_at";
       `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         -- users table
         ALTER TABLE public.users RENAME COLUMN "first_name" TO "firstname";
         ALTER TABLE public.users RENAME COLUMN "last_name" TO "lastname";
@@ -94,6 +93,5 @@ export class RenamingDatabaseColumns1742990873704 implements MigrationInterface 
         ALTER TABLE public.comments RENAME COLUMN "updated_at" TO "updatedat";
         ALTER TABLE public.comments RENAME COLUMN "archived_at" TO "archivedat";
       `);
-    }
-
+  }
 }

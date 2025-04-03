@@ -1,7 +1,7 @@
-import "reflect-metadata"
-import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../entities_"
-import { DataSource } from "typeorm"
-import { IDsTypeChange1743518683351 } from "./migrations/1743518683351-IDsTypeChange"
+import "reflect-metadata";
+import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../entities_";
+import { DataSource } from "typeorm";
+import { IDsTypeChange1743518683351 } from "./migrations/1743518683351-IDsTypeChange";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -12,14 +12,7 @@ export const AppDataSource = new DataSource({
   database: "project_organizer_application",
   synchronize: false,
   logging: false,
-  entities: [
-    UserEntity,
-    ProjectEntity,
-    RoleEntity,
-    ColumnEntity,
-    TaskEntity,
-    CommentEntity
-  ],
+  entities: [UserEntity, ProjectEntity, RoleEntity, ColumnEntity, TaskEntity, CommentEntity],
   migrations: [IDsTypeChange1743518683351],
   subscribers: [],
-})
+});

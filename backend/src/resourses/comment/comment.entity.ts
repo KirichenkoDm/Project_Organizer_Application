@@ -4,15 +4,15 @@ import { TaskEntity } from "../task";
 
 @Entity("comments")
 export class CommentEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "userId" })
   user: UserEntity;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => TaskEntity)
   @JoinColumn({ name: "taskId" })
   task: TaskEntity;
@@ -26,10 +26,10 @@ export class CommentEntity {
   @Column("timestamptz")
   updatedAt: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true, 
-    default: null
+  @Column({
+    type: "timestamptz",
+    nullable: true,
+    default: null,
   })
   archivedAt: Date;
-};
+}

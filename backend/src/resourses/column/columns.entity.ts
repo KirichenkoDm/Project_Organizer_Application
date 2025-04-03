@@ -2,17 +2,17 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique }
 import { ProjectEntity } from "../project";
 
 @Entity("columns")
-@Unique(["project", "columnName"])  
+@Unique(["project", "columnName"])
 export class ColumnEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "projectId" })
   project: ProjectEntity;
 
-  @Column({ type: "varchar", length: 255}) 
+  @Column({ type: "varchar", length: 255 })
   columnName: string;
 
   @Column("int")
@@ -27,10 +27,10 @@ export class ColumnEntity {
   @Column("timestamptz")
   updatedAt: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true, 
-    default: null
+  @Column({
+    type: "timestamptz",
+    nullable: true,
+    default: null,
   })
   archivedAt: Date;
-};
+}

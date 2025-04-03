@@ -1,4 +1,4 @@
-export enum EProjectTheme {
+export enum ProjectThemeEnum {
   Cybersecurity = "Cybersecurity",
   FunctionalSecurity = "Functional security",
   Engineering = "Engineering",

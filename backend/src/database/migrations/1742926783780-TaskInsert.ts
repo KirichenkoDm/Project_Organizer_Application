@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class TaskInsert1742926783780 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         INSERT INTO public.tasks (
           "name", 
           "description", 
@@ -56,12 +55,11 @@ export class TaskInsert1742926783780 implements MigrationInterface {
           NULL
         );
       `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         DELETE FROM public.tasks;
       `);
-    }
-
+  }
 }

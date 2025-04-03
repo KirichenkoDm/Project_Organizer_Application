@@ -1,30 +1,30 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { ERoles } from "./role.enum";
+import { RoleNamesEnum } from "./role-names.enum";
 import { ProjectEntity } from "../project";
 import { UserEntity } from "../user";
 
 @Entity("roles")
-@Unique(["project", "user"])  
+@Unique(["project", "user"])
 export class RoleEntity {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "projectId" })
   project: ProjectEntity;
 
-  @Column("uuid")
+  @Column("int")
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "userId" })
   user: UserEntity;
 
   @Column({
     type: "enum",
-    enum: ERoles,
-    default: ERoles.Member
+    enum: RoleNamesEnum,
+    default: RoleNamesEnum.Member,
   })
-  role: ERoles;
+  role: RoleNamesEnum;
 
   @Column("timestamptz")
   createdAt: Date;
@@ -32,10 +32,10 @@ export class RoleEntity {
   @Column("timestamptz")
   updatedAt: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true, 
-    default: null
+  @Column({
+    type: "timestamptz",
+    nullable: true,
+    default: null,
   })
   archivedAt: Date;
-};
+}

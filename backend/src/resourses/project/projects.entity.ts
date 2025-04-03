@@ -1,32 +1,32 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { EProjectTheme } from "./project_theme.enum";
+import { ProjectThemeEnum } from "./project-theme.enum";
 
 @Entity("projects")
 export class ProjectEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ 
-    type: "varchar", 
-    length: 255, 
-    unique: true 
+  @Column({
+    type: "varchar",
+    length: 255,
+    unique: true,
   })
   name: string;
 
   @Column({
     type: "enum",
-    enum: EProjectTheme,
-    default: EProjectTheme.ComputerScience
+    enum: ProjectThemeEnum,
+    default: ProjectThemeEnum.ComputerScience,
   })
-  theme: EProjectTheme;
+  theme: ProjectThemeEnum;
 
-  @Column({ type: "varchar", length: 255})
+  @Column({ type: "varchar", length: 255 })
   description: string;
 
-  @Column({ 
-    type: "varchar", 
-    length: 255, 
-    nullable: true 
+  @Column({
+    type: "varchar",
+    length: 255,
+    nullable: true,
   })
   report: string;
 
@@ -36,10 +36,10 @@ export class ProjectEntity {
   @Column("timestamptz")
   updatedAt: Date;
 
-  @Column({ 
-    type: "timestamptz", 
-    nullable: true, 
-    default: null
+  @Column({
+    type: "timestamptz",
+    nullable: true,
+    default: null,
   })
   archivedAt: Date;
-};
+}

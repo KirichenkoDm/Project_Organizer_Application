@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class IDsTypeChange1743518683351 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         -- remove foreign keys and unique constraints
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_foreign_key_projectid";
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_foreign_key_userid";
@@ -21,7 +20,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP CONSTRAINT IF EXISTS "comments_foreign_key_userid";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- remove primary keys
         ALTER TABLE public.users DROP CONSTRAINT IF EXISTS "users_pkey";
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_pkey";
@@ -31,7 +30,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP CONSTRAINT IF EXISTS "comments_pkey";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- remove columns
         ALTER TABLE public.users DROP COLUMN IF EXISTS "id";
         ALTER TABLE public.projects DROP COLUMN IF EXISTS "id";
@@ -54,7 +53,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP COLUMN IF EXISTS "task_id";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- return columns with new types
         ALTER TABLE public.users ADD COLUMN "id" SERIAL NOT NULL PRIMARY KEY; 
         ALTER TABLE public.projects ADD COLUMN "id" SERIAL NOT NULL PRIMARY KEY; 
@@ -76,8 +75,8 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments ADD COLUMN "user_id" INTEGER NOT NULL;
         ALTER TABLE public.comments ADD COLUMN "task_id" INTEGER NOT NULL;
       `);
-      
-      await queryRunner.query(/* sql */`
+
+    await queryRunner.query(/* sql */ `
         -- return keys
         -- roles
         ALTER TABLE public.roles 
@@ -136,10 +135,10 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
             FOREIGN KEY ("user_id")
               REFERENCES public.users("id");
       `);
-    }
+  }
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query(/* sql */`
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(/* sql */ `
         -- remove keys
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_foreign_key_project_id";
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_foreign_key_user_id";
@@ -157,7 +156,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP CONSTRAINT IF EXISTS "comments_foreign_key_user_id";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         ALTER TABLE public.users DROP CONSTRAINT IF EXISTS "users_pkey";
         ALTER TABLE public.roles DROP CONSTRAINT IF EXISTS "roles_pkey";
         ALTER TABLE public.projects DROP CONSTRAINT IF EXISTS "projects_pkey";
@@ -166,7 +165,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP CONSTRAINT IF EXISTS "comments_pkey";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- remove columns
         ALTER TABLE public.users DROP COLUMN IF EXISTS "id";
         ALTER TABLE public.projects DROP COLUMN IF EXISTS "id";
@@ -189,7 +188,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments DROP COLUMN IF EXISTS "task_id";
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- return columns with old types
         ALTER TABLE public.users ADD COLUMN "id" uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY;
         ALTER TABLE public.projects ADD COLUMN "id" uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY; 
@@ -212,7 +211,7 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
         ALTER TABLE public.comments ADD COLUMN "task_id" uuid NOT NULL;
       `);
 
-      await queryRunner.query(/* sql */`
+    await queryRunner.query(/* sql */ `
         -- return keys
         -- roles
         ALTER TABLE public.roles 
@@ -269,5 +268,5 @@ export class IDsTypeChange1743518683351 implements MigrationInterface {
             FOREIGN KEY ("user_id")
               REFERENCES public.users("id");
       `);
-    }
+  }
 }

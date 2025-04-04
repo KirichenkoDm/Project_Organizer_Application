@@ -22,7 +22,7 @@ export class TaskController {
 
   /*
     gets id of task to find
-    returns detailed data of task or error message
+    returns task data
   */
   @Get(":id")
   async getTaskById(
@@ -33,7 +33,7 @@ export class TaskController {
 
   /*
    gets id of project
-   returns array of tasks id, name, description and order or error message
+   returns array of tasks datas
  */
   @Get("/project/:id")
   async getTasksByProjectId(
@@ -42,6 +42,10 @@ export class TaskController {
     return;
   }
 
+  /*
+   gets id of project
+   returns array of archived tasks datas
+ */
   @Get("/project/:id/archived")
   async getArchivedTasksByProjectId(
     @Param("id") projectId: number,
@@ -51,7 +55,7 @@ export class TaskController {
 
   /*
     gets task data to create new task
-    returns responce with success/error message 
+    returns created task data
   */
   @Post()
   async createTask(
@@ -62,7 +66,7 @@ export class TaskController {
 
   /*
     gets id of task and data to update it
-    returns responce with success/error message
+    returns updated task data
   */
   @Put(":id")
   async updateTaskById(
@@ -74,7 +78,7 @@ export class TaskController {
 
   /*
     gets id of task delete
-    returns responce with success/error message
+    returns responce with success message
   */
   @Delete(":id")
   async deleteTaskById(

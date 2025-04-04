@@ -21,7 +21,7 @@ export class CommentController {
 
   /*
   gets id of task to find related comment (pagination)
-  returns array of tasks id and text or error message
+  returns array of comments ids, userids, users names and comment texts
 */
   @Get("/task/:id")
   async getCommentsByTaskId(
@@ -33,7 +33,7 @@ export class CommentController {
 
   /*
     gets comment data to create
-    returns responce with success/error message 
+    returns created comment data
   */
   @Post()
   async createComment(
@@ -45,7 +45,7 @@ export class CommentController {
 
   /*
     gets id of comment and new text
-    returns responce with success/error message
+    returns updated comment data
   */
   @Put(":id")
   async updateCommentById(
@@ -58,7 +58,7 @@ export class CommentController {
 
   /*
      gets id of comment to delete
-     returns responce with success/error message
+     returns responce with success message
    */
   @Put(":id")
   async deleteCommentById(

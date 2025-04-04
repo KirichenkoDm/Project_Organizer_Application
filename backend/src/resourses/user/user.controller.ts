@@ -21,7 +21,7 @@ export class UserController {
 
   /*
     gets id of user to find
-    returns found user first and last name or error message
+    returns found user first and last name
   */
   @Get(":id")
   async getUserById(
@@ -32,7 +32,7 @@ export class UserController {
 
   /*
     gets email of user to find
-    returns found user id, first and last name or error message
+    returns found user id, first and last name
  */
   @Get("/email/:email")
   async getUsersByEmail(
@@ -45,7 +45,7 @@ export class UserController {
   /*
     gets id of project to find all related users
     search relations in roles table and join users data
-    returns array of users id, first and last name and their roles or error message
+    returns array of users id, first and last name and their roles
   */
   @Get("/project/:id")
   async getUsersByProjectId(
@@ -56,7 +56,7 @@ export class UserController {
 
   /*
     gets user data to create new user
-    returns responce with success/error message 
+    returns created user data
   */
   @Post()
   async createUser(
@@ -67,7 +67,7 @@ export class UserController {
 
   /*
     gets id of user and data to update it
-    returns responce with success/error message
+    returns updated user data
   */
   @Put(":id")
   async updateUserById(
@@ -79,7 +79,7 @@ export class UserController {
 
   /*
     gets id of user to delete
-    returns responce with success/error message
+    returns responce with success message
   */
   @Delete(":id")
   async deleteUserById(

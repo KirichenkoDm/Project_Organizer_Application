@@ -31,8 +31,8 @@ export class ColumnController {
 
   /*
      gets column data to create new column
-     returns responce with success/error message 
-   */
+     returns created column data 
+  */
   @Post()
   async createColumn(
     @Body() createColumnDto: CreateColumnDto,
@@ -42,7 +42,7 @@ export class ColumnController {
 
   /*
     gets id of column and data to update it
-    returns responce with success/error message
+    returns updated column data
   */
   @Put(":id")
   async updateColumnById(
@@ -55,7 +55,7 @@ export class ColumnController {
   /*
     gets new order of column
     updates all records of affected columns
-    returns responce with success/error message
+    returns responce with success message
   */
   @Put(":id/reorder/:neworder")
   async reorderColumnById(
@@ -67,7 +67,7 @@ export class ColumnController {
 
   /*
     gets id of column to delete
-    returns responce with success/error message
+    returns responce with success message
   */
   @Delete(":id")
   async deleteColumnById(

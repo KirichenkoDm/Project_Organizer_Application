@@ -21,7 +21,7 @@ export class RoleController {
 
   /*
      gets role data (project and user Ids plus role name) to create new relation
-     returns responce with success/error message 
+     returns responce with success message 
   */
   @Post()
   async createRole(
@@ -33,7 +33,7 @@ export class RoleController {
 
   /*
     gets id of role and new role name
-    returns responce with success/error message
+    returns responce with success message
   */
   @Put(":id")
   async updateRoleById(
@@ -46,7 +46,7 @@ export class RoleController {
 
   /*
     gets id of role to delete
-    returns responce with success/error message
+    returns responce with success message
   */
   @Delete(":id")
   async deleteRoleById(

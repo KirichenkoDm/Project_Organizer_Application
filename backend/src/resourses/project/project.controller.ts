@@ -21,7 +21,7 @@ export class ProjectController {
 
   /*
     gets id of project to find
-    returns found project name, theme and description or error message
+    returns found project name, theme and description
   */
   @Get(":id")
   async getProjectById(
@@ -34,7 +34,7 @@ export class ProjectController {
   /*
     gets id of user to find all related projects
     search relations in roles table and join project data
-    returns array of project id, name, theme and description or error message
+    returns array of project id, name, theme and description
   */
   @Get("/user/:id")
   async getProjectsByUserId(
@@ -48,7 +48,7 @@ export class ProjectController {
 
   /*
       gets project data to create
-      returns responce with success/error message 
+      returns created project id, name, theme and description
     */
   @Post()
   async createProject(
@@ -60,7 +60,7 @@ export class ProjectController {
 
   /*
     gets id of project and data to update it
-    returns responce with success/error message
+    returns updated project id, name, theme and description
   */
   @Put(":id")
   async updateProjectById(
@@ -73,7 +73,7 @@ export class ProjectController {
 
   /*
     gets id of project to delete
-    returns responce with success/error message
+    returns responce with success message
   */
   @Delete(":id")
   async deleteProjectById(

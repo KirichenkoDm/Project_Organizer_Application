@@ -4,3 +4,4 @@ export * from "./role";
 export * from "./comment";
 export * from "./column";
 export * from "./project";
+export * from "./auth";

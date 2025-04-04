@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Res, Put } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Res,
+  Put,
+} from "@nestjs/common";
 import { CommentService } from "./comment.service";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { UpdateCommentDto } from "./dto/update-comment.dto";
@@ -18,7 +27,7 @@ export class CommentController {
   async getCommentsByTaskId(
     @Param("id") taskId: number,
     @Res() response: Response,
-  ): Promise<GetCommentDto[] | BasicResponceDto> {
+  ): Promise<GetCommentDto[]> {
     return;
   }
 
@@ -30,7 +39,7 @@ export class CommentController {
   async createComment(
     @Body() createCommentDto: CreateCommentDto,
     @Res() response: Response,
-  ): Promise<BasicResponceDto> {
+  ): Promise<GetCommentDto> {
     return;
   }
 
@@ -43,7 +52,7 @@ export class CommentController {
     @Param("id") id: number,
     @Body() updateCommentDto: UpdateCommentDto,
     @Res() response: Response,
-  ): Promise<BasicResponceDto> {
+  ): Promise<GetCommentDto> {
     return;
   }
 
@@ -52,7 +61,10 @@ export class CommentController {
      returns responce with success/error message
    */
   @Put(":id")
-  async deleteCommentById(@Param("id") id: number, @Res() response: Response): Promise<BasicResponceDto> {
+  async deleteCommentById(
+    @Param("id") id: number,
+    @Res() response: Response,
+  ): Promise<BasicResponceDto> {
     return;
   }
 }

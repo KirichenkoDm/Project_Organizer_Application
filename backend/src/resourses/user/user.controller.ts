@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Res, Put, Delete } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Res,
+  Put,
+  Delete,
+} from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -15,7 +24,9 @@ export class UserController {
     returns found user first and last name or error message
   */
   @Get(":id")
-  async getUserById(@Param("id") id: number): Promise<GetUserDto | BasicResponceDto> {
+  async getUserById(
+    @Param("id") id: number,
+  ): Promise<GetUserDto> {
     return;
   }
 
@@ -24,7 +35,10 @@ export class UserController {
     returns found user id, first and last name or error message
  */
   @Get("/email/:email")
-  async getUserByEmail(@Param("email") email: string): Promise<GetUserDto | BasicResponceDto> {
+  async getUsersByEmail(
+    @Param("email") email: string,
+    // or @Query("email") email: string,
+  ): Promise<GetUserDto> {
     return;
   }
 
@@ -34,7 +48,9 @@ export class UserController {
     returns array of users id, first and last name and their roles or error message
   */
   @Get("/project/:id")
-  async getUsersByProjectId(@Param("id") projectId: number): Promise<GetUserWithRoleDto[] | BasicResponceDto> {
+  async getUsersByProjectId(
+    @Param("id") projectId: number,
+  ): Promise<GetUserWithRoleDto[]> {
     return;
   }
 
@@ -43,7 +59,9 @@ export class UserController {
     returns responce with success/error message 
   */
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<BasicResponceDto> {
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<GetUserDto> {
     return;
   }
 
@@ -52,7 +70,10 @@ export class UserController {
     returns responce with success/error message
   */
   @Put(":id")
-  async updateUserById(@Param("id") id: number, @Body() updateUserDto: UpdateUserDto): Promise<BasicResponceDto> {
+  async updateUserById(
+    @Param("id") id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<GetUserDto> {
     return;
   }
 
@@ -61,7 +82,9 @@ export class UserController {
     returns responce with success/error message
   */
   @Delete(":id")
-  async deleteUserById(@Param("id") id: number): Promise<BasicResponceDto> {
+  async deleteUserById(
+    @Param("id") id: number
+  ): Promise<BasicResponceDto> {
     return;
   }
 }

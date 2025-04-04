@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Put } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Res,
+  Put,
+} from "@nestjs/common";
 import { ColumnService } from "./column.service";
 import { CreateColumnDto } from "./dto/create-column.dto";
 import { UpdateColumnDto } from "./dto/update-column.dto";
-import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
 
@@ -12,13 +20,12 @@ export class ColumnController {
 
   /*
     gets id of project to find related columns
-    returns array of columns id, name, isCustom and order or error message
+    returns array of columns id, name, isCustom and order
   */
   @Get("project/:id")
   async getColumnsByProjectId(
     @Param("id") projectId: number,
-    @Res() response: Response,
-  ): Promise<GetColumnDto[] | BasicResponceDto> {
+  ): Promise<GetColumnDto[]> {
     return;
   }
 
@@ -27,7 +34,9 @@ export class ColumnController {
      returns responce with success/error message 
    */
   @Post()
-  async createColumn(@Body() createColumnDto: CreateColumnDto, @Res() response: Response): Promise<BasicResponceDto> {
+  async createColumn(
+    @Body() createColumnDto: CreateColumnDto,
+  ): Promise<GetColumnDto> {
     return;
   }
 
@@ -39,8 +48,7 @@ export class ColumnController {
   async updateColumnById(
     @Param("id") id: number,
     @Body() updateColumnDto: UpdateColumnDto,
-    @Res() response: Response,
-  ): Promise<BasicResponceDto> {
+  ): Promise<GetColumnDto> {
     return;
   }
 
@@ -53,7 +61,6 @@ export class ColumnController {
   async reorderColumnById(
     @Param("id") id: number,
     @Param("neworder") newOrder: number,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
     return;
   }
@@ -65,8 +72,6 @@ export class ColumnController {
   @Delete(":id")
   async deleteColumnById(
     @Param("id") id: number,
-    @Body() updateColumnDto: UpdateColumnDto,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
     return;
   }

@@ -26,12 +26,12 @@ export default [
     },
     rules: {
       "prettier/prettier": ["error", {
-        "printWidth": 120
+        "printWidth": 80
       }],
       "max-len": [
         "error",
         {
-          "code": 120,
+          "code": 80,
           "ignoreComments": true,
           "ignoreUrls": true,
           "ignoreStrings": true,

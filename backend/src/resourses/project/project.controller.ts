@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Delete, Res, Put } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Res,
+  Put,
+} from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
@@ -15,7 +24,10 @@ export class ProjectController {
     returns found project name, theme and description or error message
   */
   @Get(":id")
-  async getProjectById(@Param("id") id: number, @Res() response: Response): Promise<GetProjectDto | BasicResponceDto> {
+  async getProjectById(
+    @Param("id") id: number,
+    @Res() response: Response,
+  ): Promise<GetProjectDto> {
     return;
   }
 
@@ -25,12 +37,14 @@ export class ProjectController {
     returns array of project id, name, theme and description or error message
   */
   @Get("/user/:id")
-  async getProjectsByUser(
+  async getProjectsByUserId(
     @Param("id") userId: number,
     @Res() response: Response,
-  ): Promise<GetProjectDto[] | BasicResponceDto> {
+  ): Promise<GetProjectDto[]> {
     return;
   }
+
+  // getProjectReportById
 
   /*
       gets project data to create
@@ -40,7 +54,7 @@ export class ProjectController {
   async createProject(
     @Body() createProjectDto: CreateProjectDto,
     @Res() response: Response,
-  ): Promise<BasicResponceDto> {
+  ): Promise<GetProjectDto> {
     return;
   }
 
@@ -53,7 +67,7 @@ export class ProjectController {
     @Param("id") id: number,
     @Body() updateProjectDto: UpdateProjectDto,
     @Res() response: Response,
-  ): Promise<BasicResponceDto> {
+  ): Promise<GetProjectDto> {
     return;
   }
 
@@ -62,7 +76,10 @@ export class ProjectController {
     returns responce with success/error message
   */
   @Delete(":id")
-  async deleteProjectById(@Param("id") id: number, @Res() response: Response): Promise<BasicResponceDto> {
+  async deleteProjectById(
+    @Param("id") id: number,
+    @Res() response: Response,
+  ): Promise<BasicResponceDto> {
     return;
   }
 }

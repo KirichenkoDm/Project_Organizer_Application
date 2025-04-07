@@ -35,7 +35,7 @@ export class UserController {
     returns found user id, first and last name
  */
   @Get("/email/:email")
-  async getUsersByEmail(
+  async getUserByEmail(
     @Param("email") email: string,
     // or @Query("email") email: string,
   ): Promise<GetUserDto> {

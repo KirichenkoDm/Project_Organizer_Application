@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import {
+  AuthModule,
   ColumnModule,
   CommentModule,
   ProjectModule,
@@ -16,6 +17,7 @@ import {
     ColumnModule,
     TaskModule,
     CommentModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

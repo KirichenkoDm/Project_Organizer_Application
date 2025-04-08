@@ -19,7 +19,7 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new BadRequestException("The password is wrong.");
     }
-    // todo: remove password?
+    
     return user;
   }
 

@@ -1,46 +1,43 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import * as bcrypt from 'bcrypt';
+import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { GetUserDto } from "./dto/get-user.dto";
-import { Repository } from "typeorm";
-import { UserEntity } from "./user.entity";
+import { GetUserDto, GetUserWithPasswordDto, GetUserWithRoleDto } from "./dto/get-user.dto";
+import { UserRepository } from "./user.repository";
+import { RoleRepository } from "../role";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly userRepository: Repository<UserEntity>
+    private readonly userRepository: UserRepository,
+    private readonly roleRepository: RoleRepository
   ) { }
 
+  async getUserById(id: number): Promise<GetUserDto> {
+    return await this.userRepository.findById(id);
+  }
+
   async getUserByEmail(email: string): Promise<GetUserDto> {
-    const foundUser = await this.userRepository.findOne({
-      where: {email}
-    });
-    if(!foundUser) {
-      throw new NotFoundException("User with this email not found");
-    }
-    return foundUser;
+    return await this.userRepository.findByEmail(email);
   }
 
   async getUserWithPasswordByEmail(email:string): Promise<GetUserDto & {password: string}> {
-    const foundUser = await this.userRepository.findOne({
-      where: { email }
-    });
-  
-    if(!foundUser) {
-      throw new NotFoundException("User with this email not found");
-    }
+    return await this.userRepository.findByEmailWithPassword(email);
+  }
 
-    //todo: class-transformer?
-    return foundUser;
+  async getUsersByProjectId(projectId: number): Promise<GetUserWithRoleDto[]> {
+    return await this.roleRepository.findUsersByProjectId(projectId)
   }
 
   async createUser(userData: CreateUserDto): Promise<GetUserDto> {
-    const salt = await bcrypt.genSalt(10);
-    userData.password = await bcrypt.hash(userData.password, salt);
-    const createdUser = await this.userRepository.save(userData);
-    if(!createdUser) {
-      throw new Error("User was not created");
-    }
-    return createdUser;
+    return await this.userRepository.addNew(userData);
+  }
+  
+  async updateUserById(id: number, userData: UpdateUserDto): Promise<GetUserDto> {
+    return await this.userRepository.updateById(id, userData);
+  }
+
+  async deleteUserById(id: number): Promise<BasicResponceDto> {
+    return await this.userRepository.deleteById(id);
   }
 }

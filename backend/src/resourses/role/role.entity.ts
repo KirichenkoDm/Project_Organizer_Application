@@ -18,12 +18,12 @@ export class RoleEntity {
 
   @Column("int")
   @ManyToOne(() => ProjectEntity)
-  @JoinColumn({ name: "projectId" })
+  @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
   @Column("int")
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: "user_id" })
   user: UserEntity;
 
   @Column({

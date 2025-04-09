@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { CredentialsDto } from "./dto/Credentials.dto";
+import { CredentialDto } from "./dto/credential.dto";
 
 @Controller('auth')
 export class AuthController {
@@ -8,7 +8,7 @@ export class AuthController {
 
   @Post('login')
   async login(
-    @Body() loginData: CredentialsDto,
+    @Body() loginData: CredentialDto,
   ): Promise<string> {
     const user = await this.authService.validateUser(loginData);
 

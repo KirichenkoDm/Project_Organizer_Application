@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { UserService } from "../user/user.service";
-import { CredentialsDto } from "./dto/Credentials.dto";
+import { CredentialDto } from "./dto/credential.dto";
 import * as bcrypt from 'bcrypt';
 import { GetUserDto } from "../user/dto/get-user.dto";
 import { JwtService } from "@nestjs/jwt";
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(loginData: CredentialsDto): Promise<GetUserDto> {
+  async validateUser(loginData: CredentialDto): Promise<GetUserDto> {
     const user = await this.userService.getUserWithPasswordByEmail(loginData.email);
     
     const isPasswordValid = await bcrypt.compare(loginData.password, user.password);

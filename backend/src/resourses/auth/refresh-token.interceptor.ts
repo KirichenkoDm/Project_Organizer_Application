@@ -10,7 +10,6 @@ export class SetRefreshTokenInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       tap((data) => {
-        // Якщо у відповіді є refreshToken, ставимо його в cookie
         if (data?.refreshToken) {
           response.cookie('refreshToken', data.refreshToken, {
             httpOnly: true,

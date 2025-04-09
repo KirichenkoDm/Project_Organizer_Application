@@ -106,6 +106,14 @@ export class UserRepository extends Repository<UserEntity> {
     } as GetUserDto;
   }
 
+  async setRefreshToken(id: number, refreshToken: string): Promise<BasicResponceDto> {
+    await this.save({
+      id,
+      refreshToken
+    })
+    return {message: "Refresh token set"};
+  }
+
   async deleteById(id: number): Promise<BasicResponceDto> {
     const userToUpdate = await this.findOneBy({ id });
     if (!userToUpdate) {

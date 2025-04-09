@@ -1,13 +1,16 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import * as cookieParser from "cookie-parser";
 import {
   AuthModule,
   ColumnModule,
   CommentModule,
+  JwtAuthGuard,
   ProjectModule,
   RoleModule,
   TaskModule,
   UserModule,
 } from "./resourses";
+import { APP_GUARD } from "@nestjs/core";
 
 @Module({
   imports: [
@@ -20,6 +23,15 @@ import {
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(cookieParser()).forRoutes("*");
+  }
+}

@@ -14,7 +14,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetUserDto, GetUserWithRoleDto } from "./dto/get-user.dto";
-import { Public } from "../auth";
+//import { Public } from "../auth";
 @Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -58,7 +58,7 @@ export class UserController {
     returns created user data
   */
   @Post()
-  @Public()
+  //@Public()
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<GetUserDto> {

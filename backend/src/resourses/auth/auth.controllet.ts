@@ -4,12 +4,14 @@ import { CredentialDto } from "./dto/credential.dto";
 import { TokensDto } from "./dto/token.dto";
 import { SetRefreshTokenInterceptor } from "./refresh-token.interceptor";
 import { Request } from "express";
+import { Public } from "src/shared/public.decorator";
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) { }
 
   @Post('login')
+  @Public()
   @UseInterceptors(SetRefreshTokenInterceptor)
   async login(
     @Body() loginData: CredentialDto,
@@ -22,6 +24,7 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @Public()
   @UseInterceptors(SetRefreshTokenInterceptor)
   async refresh(
     @Req() req: Request,

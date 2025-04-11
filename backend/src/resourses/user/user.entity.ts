@@ -15,16 +15,18 @@ export class UserEntity {
   @Column({ type: "varchar", length: 255 })
   password: string;
 
-  @Column({ type: "varchar", length: 255 })
-  salt: string;
-
   @Column({ name: "first_name", type: "varchar", length: 255 })
   firstName: string;
 
   @Column({ name: "last_name", type: "varchar", length: 255 })
   lastName: string;
 
-  @Column({ name: "refresh_token", type: "varchar", length: 225, nullable: true})
+  @Column({
+    name: "refresh_token", 
+    type: "varchar", 
+    length: 225, 
+    nullable: true
+  })
   refreshToken: string;
 
   @CreateDateColumn({ name: "created_at"})

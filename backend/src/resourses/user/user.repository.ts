@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { UserEntity } from "./user.entity";
-import { GetUserDto, GetUserWithPasswordDto, GetUserWithRoleDto } from "./dto/get-user.dto";
+import { GetUserDto, GetUserWithPasswordDto } from "./dto/get-user.dto";
 import { CreateUserDto } from "./dto/create-user.dto";
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -104,6 +104,14 @@ export class UserRepository extends Repository<UserEntity> {
       firstName: user.firstName,
       lastName: user.lastName,
     } as GetUserDto;
+  }
+
+  async setRefreshToken(id: number, refreshToken: string): Promise<BasicResponceDto> {
+    await this.save({
+      id,
+      refreshToken
+    })
+    return {message: "Refresh token set"};
   }
 
   async deleteById(id: number): Promise<BasicResponceDto> {

@@ -1,15 +1,8 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-import { IDsTypeChange1743518683351 } from "./migrations/1743518683351-IDsTypeChange";
-import { 
-  ColumnEntity,
-  CommentEntity,
-  ProjectEntity,
-  RoleEntity,
-  TaskEntity,
-  UserEntity,
-} from "src/resourses";
+import { StructureUpdate1744217868273 } from "./migrations/1744217868273-StructureUpdate";
+import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../resourses";
 
 dotenv.config();
 
@@ -30,6 +23,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity,
   ],
-  migrations: [IDsTypeChange1743518683351],
+  migrations: [StructureUpdate1744217868273],
   subscribers: [],
 });

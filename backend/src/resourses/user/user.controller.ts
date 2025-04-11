@@ -13,8 +13,8 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
-import { GetUserDto } from "./dto/get-user.dto";
-import { GetUserWithRoleDto } from "./dto/get-user-with-role.dto";
+import { GetUserDto, GetUserWithRoleDto } from "./dto/get-user.dto";
+import { Public } from "src/shared/public.decorator";
 @Controller("user")
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -27,7 +27,7 @@ export class UserController {
   async getUserById(
     @Param("id") id: number,
   ): Promise<GetUserDto> {
-    return;
+    return await this.userService.getUserById(id);
   }
 
   /*
@@ -37,9 +37,8 @@ export class UserController {
   @Get("/email/:email")
   async getUserByEmail(
     @Param("email") email: string,
-    // or @Query("email") email: string,
   ): Promise<GetUserDto> {
-    return;
+    return await this.userService.getUserByEmail(email);
   }
 
   /*
@@ -51,7 +50,7 @@ export class UserController {
   async getUsersByProjectId(
     @Param("id") projectId: number,
   ): Promise<GetUserWithRoleDto[]> {
-    return;
+    return await this.userService.getUsersByProjectId(projectId);
   }
 
   /*
@@ -59,10 +58,11 @@ export class UserController {
     returns created user data
   */
   @Post()
+  @Public()
   async createUser(
     @Body() createUserDto: CreateUserDto,
   ): Promise<GetUserDto> {
-    return;
+    return await this.userService.createUser(createUserDto);
   }
 
   /*
@@ -74,7 +74,7 @@ export class UserController {
     @Param("id") id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<GetUserDto> {
-    return;
+    return this.userService.updateUserById(id, updateUserDto);
   }
 
   /*
@@ -85,6 +85,6 @@ export class UserController {
   async deleteUserById(
     @Param("id") id: number
   ): Promise<BasicResponceDto> {
-    return;
+    return this.userService.deleteUserById(id);
   }
 }

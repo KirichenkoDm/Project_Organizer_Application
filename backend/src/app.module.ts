@@ -1,16 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import * as cookieParser from "cookie-parser";
-import {
-  AuthModule,
-  ColumnModule,
-  CommentModule,
-  JwtAuthGuard,
-  ProjectModule,
-  RoleModule,
-  TaskModule,
-  UserEntity,
-  UserModule,
-} from "./resourses";
+import { JwtAuthGuard } from "./resourses";
 import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { appEntities, appModules } from "./joined";

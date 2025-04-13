@@ -37,7 +37,7 @@ export class ColumnController {
   async createColumn(
     @Body() createColumnDto: CreateColumnDto,
   ): Promise<GetColumnDto> {
-    return;
+    return this.columnService.createColumn(createColumnDto);
   }
 
   /*

@@ -1,6 +1,6 @@
 export class GetColumnDto {
   id: number;
-  columnName: string;
+  name: string;
   order: number;
   isCustom: boolean;
 }

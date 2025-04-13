@@ -1,10 +1,13 @@
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
+  UpdateDateColumn,
 } from "typeorm";
 import { ProjectEntity } from "../project";
 
@@ -16,28 +19,24 @@ export class ColumnEntity {
 
   @Column("int")
   @ManyToOne(() => ProjectEntity)
-  @JoinColumn({ name: "projectId" })
+  @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
   @Column({ type: "varchar", length: 255 })
-  columnName: string;
+  name: string;
 
   @Column("int")
   order: number;
 
-  @Column("boolean")
+  @Column({ type: "boolean", name: "is_custom" })
   isCustom: boolean;
 
-  @Column("timestamptz")
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @Column("timestamptz")
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @Column({
-    type: "timestamptz",
-    nullable: true,
-    default: null,
-  })
+  @DeleteDateColumn({ name: "archived_at" })
   archivedAt: Date;
 }

@@ -5,13 +5,11 @@ import {
   Body,
   Param,
   Delete,
-  Res,
   Put,
 } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
-import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetProjectDto } from "./dto/get-project.dto";
 
@@ -26,9 +24,8 @@ export class ProjectController {
   @Get(":id")
   async getProjectById(
     @Param("id") id: number,
-    @Res() response: Response,
   ): Promise<GetProjectDto> {
-    return;
+    return await this.projectService.getProjectById(id);
   }
 
   /*
@@ -39,12 +36,16 @@ export class ProjectController {
   @Get("/user/:id")
   async getProjectsByUserId(
     @Param("id") userId: number,
-    @Res() response: Response,
   ): Promise<GetProjectDto[]> {
-    return;
+    return await this.projectService.getProjectsByUserId(userId);
   }
 
-  // getProjectReportById
+  @Get(":id/report")
+  async getProjectReportById(
+    @Param("id") id: number,
+  ): Promise<object> {
+    return await this.projectService.getProjectReportById(id);
+  }
 
   /*
       gets project data to create
@@ -53,9 +54,8 @@ export class ProjectController {
   @Post()
   async createProject(
     @Body() createProjectDto: CreateProjectDto,
-    @Res() response: Response,
   ): Promise<GetProjectDto> {
-    return;
+    return await this.projectService.createProject(createProjectDto);
   }
 
   /*
@@ -66,9 +66,8 @@ export class ProjectController {
   async updateProjectById(
     @Param("id") id: number,
     @Body() updateProjectDto: UpdateProjectDto,
-    @Res() response: Response,
   ): Promise<GetProjectDto> {
-    return;
+    return await this.projectService.updateProjectById(id, updateProjectDto);
   }
 
   /*
@@ -78,8 +77,7 @@ export class ProjectController {
   @Delete(":id")
   async deleteProjectById(
     @Param("id") id: number,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
-    return;
+    return await this.projectService.deleteProjectById(id);
   }
 }

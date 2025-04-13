@@ -21,7 +21,7 @@ export class UserService {
     return await this.userRepository.findByEmail(email);
   }
 
-  async getUserWithPasswordByEmail(email:string): Promise<GetUserDto & {password: string}> {
+  async getUserWithPasswordByEmail(email:string): Promise<GetUserWithPasswordDto> {
     return await this.userRepository.findByEmailWithPassword(email);
   }
 

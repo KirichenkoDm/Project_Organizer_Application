@@ -1,18 +1,14 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  Res,
   Put,
 } from "@nestjs/common";
 import { RoleService } from "./role.service";
 import { CreateRoleDto } from "./dto/create-role.dto";
 import { UpdateRoleDto } from "./dto/update-role.dto";
-import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 
 @Controller("role")
@@ -26,9 +22,8 @@ export class RoleController {
   @Post()
   async createRole(
     @Body() createRoleDto: CreateRoleDto,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
-    return;
+    return await this.roleService.createRole(createRoleDto);
   }
 
   /*
@@ -39,9 +34,8 @@ export class RoleController {
   async updateRoleById(
     @Param("id") id: number,
     @Body() updateRoleDto: UpdateRoleDto,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
-    return;
+    return await this.roleService.updateRoleById(id, updateRoleDto);
   }
 
   /*
@@ -51,9 +45,7 @@ export class RoleController {
   @Delete(":id")
   async deleteRoleById(
     @Param("id") id: number,
-    @Body() updateRoleDto: UpdateRoleDto,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
-    return;
+    return await this.roleService.deleteRoleById(id);
   }
 }

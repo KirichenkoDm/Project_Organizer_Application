@@ -1,7 +1,7 @@
 import { RoleNamesEnum } from "../role-names.enum";
 
 export class CreateRoleDto {
-  userid: number;
-  projectid: number;
+  userId: number;
+  projectId: number;
   role: RoleNamesEnum;
 }

@@ -13,7 +13,7 @@ import { UpdateProjectDto } from "./dto/update-project.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetProjectDto } from "./dto/get-project.dto";
 import { Roles, SkipRoles } from "src/shared/roles.decorator";
-import { RoleNamesEnum } from "../role";
+import { RoleNamesEnum } from "src/shared";
 
 @Controller("project")
 export class ProjectController {

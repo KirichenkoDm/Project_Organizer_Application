@@ -9,9 +9,9 @@ import {
   Unique,
   UpdateDateColumn,
 } from "typeorm";
-import { RoleNamesEnum } from "./role-names.enum";
-import { ProjectEntity } from "../project";
+import { RoleNamesEnum } from "../../shared/role-names.enum";
 import { UserEntity } from "../user";
+import { ProjectEntity } from "../project/projects.entity";
 
 @Entity("roles")
 @Unique(["project", "user"])

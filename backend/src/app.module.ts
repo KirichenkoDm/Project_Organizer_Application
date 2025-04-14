@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import * as cookieParser from "cookie-parser";
-import { JwtAuthGuard } from "./resourses";
+import { JwtAuthGuard, RoleModule, RoleRepository } from "./resourses";
 import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { appEntities, appModules } from "./joined";
@@ -9,6 +9,7 @@ import { RoleGuard } from "./shared/role.guard";
 
 @Module({
   imports: [
+    RoleModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ".env", 
@@ -29,6 +30,7 @@ import { RoleGuard } from "./shared/role.guard";
   ],
   controllers: [],
   providers: [
+    RoleRepository,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

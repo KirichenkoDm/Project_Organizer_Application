@@ -5,11 +5,11 @@ import { IDsTypeChange1743518683351 } from "./migrations/1743518683351-IDsTypeCh
 import { 
   ColumnEntity,
   CommentEntity,
-  ProjectEntity,
   RoleEntity,
   TaskEntity,
   UserEntity,
 } from "src/resourses";
+import { ProjectEntity } from "src/resourses/project/projects.entity";
 
 dotenv.config();
 

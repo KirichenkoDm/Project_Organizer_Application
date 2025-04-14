@@ -9,7 +9,7 @@ import {
   Unique,
   UpdateDateColumn,
 } from "typeorm";
-import { ProjectEntity } from "../project";
+import { ProjectEntity } from "../project/projects.entity";
 
 @Entity("columns")
 @Unique(["project", "columnName"])

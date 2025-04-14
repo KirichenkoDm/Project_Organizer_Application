@@ -14,8 +14,7 @@ import { UpdateCommentDto } from "./dto/update-comment.dto";
 import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetCommentDto } from "./dto/get-comment.dto";
-import { Roles } from "src/shared";
-import { RoleNamesEnum } from "../role";
+import { RoleNamesEnum, Roles } from "src/shared";
 
 @Controller("comment")
 export class CommentController {

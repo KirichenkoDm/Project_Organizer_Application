@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { RoleEntity } from "./role.entity";
 import { DataSource, Repository } from "typeorm";
 import { GetUserWithRoleDto } from "../user";
-import { ProjectEntity } from "../project";
-import { RoleNamesEnum } from "./role-names.enum";
+import { RoleNamesEnum } from "../../shared/role-names.enum";
+import { ProjectEntity } from "../project/projects.entity";
 
 @Injectable()
 export class RoleRepository extends Repository<RoleEntity> {

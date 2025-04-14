@@ -1,5 +1,5 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common';
-import { RoleNamesEnum } from 'src/resourses';
+import { RoleNamesEnum } from './role-names.enum';
 
 export const ROLES_KEY = 'roles';
 

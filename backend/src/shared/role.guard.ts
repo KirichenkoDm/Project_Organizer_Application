@@ -1,14 +1,21 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
-import { RoleNamesEnum, RoleRepository } from "src/resourses";
+import { RoleRepository } from "src/resourses";
 import { ROLES_KEY, SKIP_ROLES_KEY } from "./roles.decorator";
+import { RoleNamesEnum } from "./role-names.enum";
 
 const rolePriority = {
   [RoleNamesEnum.Member]: 1,
   [RoleNamesEnum.ProjectManager]: 2,
   [RoleNamesEnum.Owner]: 3,
 };
+
+// const rolePriority = {
+//   "Member": 1,
+//   "Project Manager": 2,
+//   "Owner": 3,
+// };
 
 @Injectable()
 export class RoleGuard implements CanActivate {

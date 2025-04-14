@@ -13,8 +13,7 @@ import { CreateColumnDto } from "./dto/create-column.dto";
 import { UpdateColumnDto } from "./dto/update-column.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
-import { Roles } from "src/shared";
-import { RoleNamesEnum } from "../role";
+import { RoleNamesEnum, Roles } from "src/shared";
 
 @Controller("column")
 export class ColumnController {

@@ -4,8 +4,6 @@ import {
   ColumnModule,
   CommentEntity,
   CommentModule,
-  ProjectEntity,
-  ProjectModule,
   RoleEntity,
   RoleModule,
   TaskEntity,
@@ -13,6 +11,8 @@ import {
   UserEntity,
   UserModule,
 } from "./resourses";
+import { ProjectModule } from "./resourses/project/project.module";
+import { ProjectEntity } from "./resourses/project/projects.entity";
 
 export const appModules = [
   UserModule,

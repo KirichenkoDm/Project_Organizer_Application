@@ -1,12 +1,13 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { ProjectRepository } from "./project.repository";
 import { GetProjectDto } from "./dto/get-project.dto";
-import { RoleNamesEnum, RoleRepository, RoleService } from "../role";
+import { RoleRepository, RoleService } from "../role";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { ProjectEntity } from "./projects.entity";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { ColumnService } from "../column";
+import { RoleNamesEnum } from "src/shared";
 
 @Injectable()
 export class ProjectService {

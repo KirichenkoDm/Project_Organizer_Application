@@ -11,12 +11,6 @@ const rolePriority = {
   [RoleNamesEnum.Owner]: 3,
 };
 
-// const rolePriority = {
-//   "Member": 1,
-//   "Project Manager": 2,
-//   "Owner": 3,
-// };
-
 @Injectable()
 export class RoleGuard implements CanActivate {
   constructor(

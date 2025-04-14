@@ -9,6 +9,7 @@ import { RoleRepository } from "../role/role.repository";
 import { RoleService } from "../role/role.service";
 import { ColumnService } from "../column/column.service";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
+import { ProjectCore } from "./project.core";
 
 @Injectable()
 export class ProjectService {
@@ -17,6 +18,7 @@ export class ProjectService {
     private readonly roleRepository: RoleRepository,
     private readonly roleService: RoleService,
     private readonly columnService: ColumnService,
+    private readonly projectCole: ProjectCore,
   ) { }
 
   async getProjectById(id: number): Promise<GetProjectDto> {
@@ -26,12 +28,7 @@ export class ProjectService {
       throw new NotFoundException("Project with this id not found");
     }
 
-    return {
-      id: project.id,
-      name: project.name,
-      theme: project.theme,
-      description: project.description
-    } as GetProjectDto;
+    return this.projectCole.mapperEntityToGetDTO(project);
   }
 
   async getProjectsByUserId(userId: number): Promise<GetProjectDto[]> {
@@ -41,7 +38,7 @@ export class ProjectService {
       throw new NotFoundException("No projects found for this user");
     }
 
-    return projects.map(proj => this.entityToGetDto(proj))
+    return projects.map(proj => this.projectCole.mapperEntityToGetDTO(proj))
   }
 
   async getProjectReportById(id: number): Promise<object> {
@@ -70,7 +67,7 @@ export class ProjectService {
     await this.roleService.createRole(roleData)
     await this.columnService.createDefaultColumns(project.id);
 
-    return this.entityToGetDto(project);
+    return this.projectCole.mapperEntityToGetDTO(project);
   }
 
   async updateProjectById(id: number, projectData: UpdateProjectDto): Promise<GetProjectDto> {
@@ -88,7 +85,7 @@ export class ProjectService {
       throw new BadRequestException("Project was not updated");
     }
 
-    return this.entityToGetDto(project);
+    return this.projectCole.mapperEntityToGetDTO(project);
   }
 
   async deleteProjectById(id: number): Promise<BasicResponceDto> {
@@ -105,14 +102,5 @@ export class ProjectService {
     }
 
     return {message: "Project successsfully deleted"}
-  }
-
-  entityToGetDto(project: ProjectEntity): GetProjectDto {
-    return {
-      id: project.id,
-      name: project.name,
-      theme: project.theme,
-      description: project.description
-    } as GetProjectDto;
   }
 }

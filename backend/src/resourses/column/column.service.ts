@@ -3,7 +3,7 @@ import { ColumnRepository } from "./column.repository";
 import { CreateColumnDto } from "./dto/create-column.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
 
-export const defaultColumnNames = [
+const defaultColumnNames = [
   "To Do",
   "In Progress",
   "Finished"

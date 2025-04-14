@@ -7,6 +7,7 @@ import { ConfigModule } from "@nestjs/config";
 import { RoleGuard } from "./shared/role.guard";
 import { RoleModule } from "./resourses/role/role.module";
 import { JwtAuthGuard } from "./resourses/auth/auth.guard";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   imports: [
@@ -14,6 +15,10 @@ import { JwtAuthGuard } from "./resourses/auth/auth.guard";
       isGlobal: true,
       envFilePath: ".env",
       cache: false,
+    }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY,
+      signOptions: { expiresIn: '1h' },
     }),
     TypeOrmModule.forRoot({
       type: "postgres",

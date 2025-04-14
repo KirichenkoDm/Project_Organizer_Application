@@ -12,7 +12,7 @@ import {
 import { ProjectEntity } from "../project/projects.entity";
 
 @Entity("columns")
-@Unique(["project", "columnName"])
+@Unique(["project", "name"])
 export class ColumnEntity {
   @PrimaryGeneratedColumn()
   id: number;

@@ -6,6 +6,7 @@ import { ProjectEntity } from "./projects.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { RoleModule } from "../role/role.module";
 import { ColumnModule } from "../column/column.module";
+import { ProjectCore } from "./project.core";
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { ColumnModule } from "../column/column.module";
     ColumnModule
   ],
   controllers: [ProjectController],
-  providers: [ProjectService, ProjectRepository],
+  providers: [ProjectService, ProjectRepository, ProjectCore],
 })
 export class ProjectModule { }

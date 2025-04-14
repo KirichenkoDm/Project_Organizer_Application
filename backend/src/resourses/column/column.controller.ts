@@ -13,16 +13,23 @@ import { CreateColumnDto } from "./dto/create-column.dto";
 import { UpdateColumnDto } from "./dto/update-column.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
+import { Roles } from "src/shared";
+import { RoleNamesEnum } from "../role";
 
 @Controller("column")
 export class ColumnController {
-  constructor(private readonly columnService: ColumnService) {}
+  constructor(private readonly columnService: ColumnService) { }
 
   /*
     gets id of project to find related columns
     returns array of columns id, name, isCustom and order
   */
   @Get("project/:id")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getColumnsByProjectId(
     @Param("id") projectId: number,
   ): Promise<GetColumnDto[]> {
@@ -34,6 +41,10 @@ export class ColumnController {
      returns created column data 
   */
   @Post()
+  @Roles(
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async createColumn(
     @Body() createColumnDto: CreateColumnDto,
   ): Promise<GetColumnDto> {
@@ -45,6 +56,10 @@ export class ColumnController {
     returns updated column data
   */
   @Put(":id")
+  @Roles(
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async updateColumnById(
     @Param("id") id: number,
     @Body() updateColumnDto: UpdateColumnDto,
@@ -58,6 +73,10 @@ export class ColumnController {
     returns responce with success message
   */
   @Put(":id/reorder/:neworder")
+  @Roles(
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async reorderColumnById(
     @Param("id") id: number,
     @Param("neworder") newOrder: number,
@@ -70,6 +89,10 @@ export class ColumnController {
     returns responce with success message
   */
   @Delete(":id")
+  @Roles(
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async deleteColumnById(
     @Param("id") id: number,
   ): Promise<BasicResponceDto> {

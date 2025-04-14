@@ -12,6 +12,8 @@ import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetProjectDto } from "./dto/get-project.dto";
+import { Roles, SkipRoles } from "src/shared/roles.decorator";
+import { RoleNamesEnum } from "../role";
 
 @Controller("project")
 export class ProjectController {
@@ -22,6 +24,11 @@ export class ProjectController {
     returns found project name, theme and description
   */
   @Get(":id")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getProjectById(
     @Param("id") id: number,
   ): Promise<GetProjectDto> {
@@ -34,6 +41,11 @@ export class ProjectController {
     returns array of project id, name, theme and description
   */
   @Get("/user/:id")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getProjectsByUserId(
     @Param("id") userId: number,
   ): Promise<GetProjectDto[]> {
@@ -41,6 +53,11 @@ export class ProjectController {
   }
 
   @Get(":id/report")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getProjectReportById(
     @Param("id") id: number,
   ): Promise<object> {
@@ -50,8 +67,9 @@ export class ProjectController {
   /*
       gets project data to create
       returns created project id, name, theme and description
-    */
+  */
   @Post()
+  @SkipRoles()
   async createProject(
     @Body() createProjectDto: CreateProjectDto,
   ): Promise<GetProjectDto> {
@@ -63,6 +81,9 @@ export class ProjectController {
     returns updated project id, name, theme and description
   */
   @Put(":id")
+  @Roles(
+    RoleNamesEnum.Owner
+  )
   async updateProjectById(
     @Param("id") id: number,
     @Body() updateProjectDto: UpdateProjectDto,
@@ -75,6 +96,9 @@ export class ProjectController {
     returns responce with success message
   */
   @Delete(":id")
+  @Roles(
+    RoleNamesEnum.Owner
+  )
   async deleteProjectById(
     @Param("id") id: number,
   ): Promise<BasicResponceDto> {

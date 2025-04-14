@@ -1,5 +1,5 @@
 export enum RoleNamesEnum {
-  Owner = "Owner",
-  ProjectManager = "Project manager",
   Member = "Member",
+  ProjectManager = "Project manager",
+  Owner = "Owner",
 }

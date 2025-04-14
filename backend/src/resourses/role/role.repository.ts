@@ -3,6 +3,7 @@ import { RoleEntity } from "./role.entity";
 import { DataSource, Repository } from "typeorm";
 import { GetUserWithRoleDto } from "../user";
 import { ProjectEntity } from "../project";
+import { RoleNamesEnum } from "./role-names.enum";
 
 @Injectable()
 export class RoleRepository extends Repository<RoleEntity> {
@@ -23,7 +24,7 @@ export class RoleRepository extends Repository<RoleEntity> {
       .where("roles.project_id = :projectId", { projectId })
       .getRawMany();
   }
- 
+
   async findProjectsByUserId(userId: number): Promise<ProjectEntity[]> {
     return await this.createQueryBuilder("roles")
       .leftJoin("roles.project", "project")
@@ -35,5 +36,18 @@ export class RoleRepository extends Repository<RoleEntity> {
       ])
       .where("roles.user_Id = :userId", { userId })
       .getRawMany();
+  }
+
+  async findRole(userId: number, projectId: number): Promise<RoleNamesEnum> {
+    const role = await this.findOne({
+      select: {
+        role: true,
+      }, 
+      where: {
+        user: {id: userId},
+        project: {id: projectId}
+      }
+     })
+     return role.role;
   }
 }

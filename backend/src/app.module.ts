@@ -5,6 +5,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { appEntities, appModules } from "./joined";
 import { ConfigModule } from "@nestjs/config";
+import { RoleGuard } from "./shared/role.guard";
 
 @Module({
   imports: [
@@ -32,6 +33,10 @@ import { ConfigModule } from "@nestjs/config";
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    }
   ],
 })
 export class AppModule implements NestModule {

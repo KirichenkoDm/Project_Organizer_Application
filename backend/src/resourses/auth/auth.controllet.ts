@@ -5,8 +5,10 @@ import { TokensDto } from "./dto/token.dto";
 import { SetRefreshTokenInterceptor } from "./refresh-token.interceptor";
 import { Request } from "express";
 import { Public } from "src/shared/public.decorator";
+import { SkipRoles } from "src/shared";
 
 @Controller('auth')
+@SkipRoles()
 export class AuthController {
   constructor(private authService: AuthService) { }
 

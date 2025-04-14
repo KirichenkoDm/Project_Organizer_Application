@@ -12,7 +12,7 @@ export class ProjectRepository extends Repository<ProjectEntity> {
   async findReportById(id: number): Promise<object> {
     const project = await this.findOne({
       where: { id },
-      select: ["report"]
+      select: {report: {}}
     });
 
     return project.report;

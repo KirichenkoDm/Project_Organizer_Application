@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-import { StructureUpdate1744217868273 } from "./migrations/1744217868273-StructureUpdate";
 import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../resourses";
+import { ColumnNameRenaming1744646418265 } from "./migrations/1744646418265-ColumnNameRenaming";
 
 dotenv.config();
 
@@ -23,6 +23,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity,
   ],
-  migrations: [StructureUpdate1744217868273],
+  migrations: [ColumnNameRenaming1744646418265],
   subscribers: [],
 });

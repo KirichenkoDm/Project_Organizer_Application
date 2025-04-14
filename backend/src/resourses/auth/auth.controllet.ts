@@ -5,7 +5,7 @@ import { TokensDto } from "./dto/token.dto";
 import { SetRefreshTokenInterceptor } from "./refresh-token.interceptor";
 import { Request } from "express";
 import { Public } from "src/shared/public.decorator";
-import { SkipRoles } from "src/shared";
+import { SkipRoles } from "src/shared/roles.decorator";
 
 @Controller('auth')
 @SkipRoles()

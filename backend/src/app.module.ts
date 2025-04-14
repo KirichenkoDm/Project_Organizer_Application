@@ -1,18 +1,18 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import * as cookieParser from "cookie-parser";
-import { JwtAuthGuard, RoleModule, RoleRepository } from "./resourses";
 import { APP_GUARD } from "@nestjs/core";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { appEntities, appModules } from "./joined";
 import { ConfigModule } from "@nestjs/config";
 import { RoleGuard } from "./shared/role.guard";
+import { RoleModule } from "./resourses/role/role.module";
+import { JwtAuthGuard } from "./resourses/auth/auth.guard";
 
 @Module({
   imports: [
-    RoleModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ".env", 
+      envFilePath: ".env",
       cache: false,
     }),
     TypeOrmModule.forRoot({
@@ -26,11 +26,11 @@ import { RoleGuard } from "./shared/role.guard";
       logging: false,
       entities: appEntities
     }),
+    RoleModule,
     ...appModules
   ],
   controllers: [],
   providers: [
-    RoleRepository,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

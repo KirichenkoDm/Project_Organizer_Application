@@ -5,9 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ColumnEntity } from "../column";
-import { UserEntity } from "../user";
 import { ProjectEntity } from "../project/projects.entity";
+import { ColumnEntity } from "../column/columns.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Entity("tasks")
 export class TaskEntity {

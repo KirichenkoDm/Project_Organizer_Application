@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { DynamicModule, Module } from "@nestjs/common";
 import { RoleService } from "./role.service";
 import { RoleController } from "./role.controller";
 import { RoleRepository } from "./role.repository";
@@ -13,4 +13,15 @@ import { RoleEntity } from "./role.entity";
   providers: [RoleService, RoleRepository],
   exports: [RoleService, RoleRepository],
 })
-export class RoleModule { }
+export class RoleModule {
+  static forRootAsync(): DynamicModule {
+    return {
+      module: RoleModule,
+      global: true,
+      imports: [TypeOrmModule.forFeature([RoleEntity])],
+      controllers: [RoleController],
+      providers: [RoleService, RoleRepository],
+      exports: [RoleService, RoleRepository],
+    }
+  }
+}

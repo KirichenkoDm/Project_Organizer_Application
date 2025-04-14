@@ -1,9 +1,9 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
-import { RoleRepository } from "src/resourses";
 import { ROLES_KEY, SKIP_ROLES_KEY } from "./roles.decorator";
 import { RoleNamesEnum } from "./role-names.enum";
+import { RoleRepository } from "src/resourses/role/role.repository";
 
 const rolePriority = {
   [RoleNamesEnum.Member]: 1,

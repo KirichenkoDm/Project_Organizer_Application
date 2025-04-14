@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { ProjectService } from "./project.service";
 import { ProjectController } from "./project.controller";
 import { ProjectRepository } from "./project.repository";
-import { RoleModule } from "../role";
-import { ColumnModule } from "../column";
 import { ProjectEntity } from "./projects.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { RoleModule } from "../role/role.module";
+import { ColumnModule } from "../column/column.module";
 
 @Module({
   imports: [

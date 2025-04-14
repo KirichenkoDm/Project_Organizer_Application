@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { UserEntity } from "../user";
 import { TaskEntity } from "../task";
+import { UserEntity } from "../user/user.entity";
 
 @Entity("comments")
 export class CommentEntity {

@@ -10,7 +10,8 @@ import { RoleService } from "./role.service";
 import { CreateRoleDto } from "./dto/create-role.dto";
 import { UpdateRoleDto } from "./dto/update-role.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
-import { RoleNamesEnum, Roles } from "src/shared";
+import { RoleNamesEnum } from "src/shared/role-names.enum";
+import { Roles } from "src/shared/roles.decorator";
 
 @Controller("role")
 export class RoleController {

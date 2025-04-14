@@ -1,4 +1,4 @@
-import { RoleNamesEnum } from "src/shared";
+import { RoleNamesEnum } from "src/shared/role-names.enum";
 
 export class GetUserDto {
   id: number;

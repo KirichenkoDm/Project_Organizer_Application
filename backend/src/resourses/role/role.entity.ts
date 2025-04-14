@@ -10,8 +10,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { RoleNamesEnum } from "../../shared/role-names.enum";
-import { UserEntity } from "../user";
 import { ProjectEntity } from "../project/projects.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Entity("roles")
 @Unique(["project", "user"])

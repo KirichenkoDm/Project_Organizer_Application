@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
 import { ColumnEntity, CommentEntity, ProjectEntity, RoleEntity, TaskEntity, UserEntity } from "../resourses";
-import { ColumnNameRenaming1744646418265 } from "./migrations/1744646418265-ColumnNameRenaming";
+import { DefaultColumnTrigger1744647861089 } from "./migrations/1744647861089-DefaultColumnTrigger";
 
 dotenv.config();
 
@@ -23,6 +23,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity,
   ],
-  migrations: [ColumnNameRenaming1744646418265],
+  migrations: [DefaultColumnTrigger1744647861089],
   subscribers: [],
 });

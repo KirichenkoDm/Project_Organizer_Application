@@ -1,5 +1,6 @@
 export class CreateColumnDto {
   projectId: number;
-  columnName: string;
+  name: string;
   order: number;
+  isCustom: boolean;
 }

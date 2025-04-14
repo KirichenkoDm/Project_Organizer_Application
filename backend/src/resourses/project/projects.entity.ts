@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ProjectThemeEnum } from "./project-theme.enum";
 
 @Entity("projects")
@@ -24,22 +24,18 @@ export class ProjectEntity {
   description: string;
 
   @Column({
-    type: "varchar",
-    length: 255,
-    nullable: true,
+    type: "jsonb",
+    default: () => "'{}'::jsonb",
+    nullable: true
   })
-  report: string;
+  report: object;
 
-  @Column("timestamptz")
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @Column("timestamptz")
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @Column({
-    type: "timestamptz",
-    nullable: true,
-    default: null,
-  })
+  @DeleteDateColumn({ name: "archived_at" })
   archivedAt: Date;
 }

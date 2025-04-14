@@ -4,18 +4,20 @@ import {
   Post,
   Body,
   Param,
-  Res,
   Put,
   Delete,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetUserDto, GetUserWithRoleDto } from "./dto/get-user.dto";
 import { Public } from "src/shared/public.decorator";
+import { SkipRoles } from "src/shared/roles.decorator";
+
+
 @Controller("user")
+@SkipRoles()
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

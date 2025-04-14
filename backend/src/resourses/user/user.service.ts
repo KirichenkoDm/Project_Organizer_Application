@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { GetUserDto, GetUserWithPasswordDto, GetUserWithRoleDto } from "./dto/get-user.dto";
 import { UserRepository } from "./user.repository";
-import { RoleRepository } from "../role";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { RoleRepository } from "../role/role.repository";
 
 @Injectable()
 export class UserService {
@@ -21,7 +21,7 @@ export class UserService {
     return await this.userRepository.findByEmail(email);
   }
 
-  async getUserWithPasswordByEmail(email:string): Promise<GetUserDto & {password: string}> {
+  async getUserWithPasswordByEmail(email:string): Promise<GetUserWithPasswordDto> {
     return await this.userRepository.findByEmailWithPassword(email);
   }
 

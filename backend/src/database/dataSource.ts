@@ -8,6 +8,7 @@ import { RoleEntity } from "src/resourses/role/role.entity";
 import { ColumnEntity } from "src/resourses/column/columns.entity";
 import { TaskEntity } from "src/resourses/task";
 import { CommentEntity } from "src/resourses/comment/comment.entity";
+import { ColumnNameRenaming1744646418265 } from "./migrations/1744646418265-ColumnNameRenaming";
 
 dotenv.config();
 
@@ -28,6 +29,6 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity,
   ],
-  migrations: [IDsTypeChange1743518683351],
+  migrations: [ColumnNameRenaming1744646418265],
   subscribers: [],
 });

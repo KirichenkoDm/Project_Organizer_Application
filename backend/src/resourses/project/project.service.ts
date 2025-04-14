@@ -101,6 +101,9 @@ export class ProjectService {
       throw new BadRequestException("Project was not deleted");
     }
 
-    return {message: "Project successsfully deleted"}
+    return {
+      message: "Project successsfully deleted",
+      isSuccess: true,
+    }
   }
 }

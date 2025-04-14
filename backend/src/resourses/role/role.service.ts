@@ -17,7 +17,10 @@ export class RoleService {
       throw new BadRequestException("Role was not created");
     }
 
-    return {message: "Role successsfully created"};
+    return {
+      message: "Role successsfully created",
+      isSuccess: true,
+    };
   }
 
   async updateRoleById(id: number, roleData: UpdateRoleDto): Promise<BasicResponceDto> {
@@ -35,7 +38,10 @@ export class RoleService {
         throw new BadRequestException("Role was not updated");
       }
   
-      return {message: "Role successsfully updated"};
+      return {
+        message: "Role successsfully updated",
+        isSuccess: true,
+      };
     }
 
     async deleteRoleById(id: number): Promise<BasicResponceDto> {
@@ -51,6 +57,9 @@ export class RoleService {
         throw new BadRequestException("Role was not deleted");
       }
   
-      return {message: "Role successsfully deleted"}
+      return {
+        message: "Role successsfully deleted",
+        isSuccess: true,
+      }
     }
 }

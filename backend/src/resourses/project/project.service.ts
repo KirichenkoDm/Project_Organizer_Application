@@ -64,8 +64,7 @@ export class ProjectService {
       role: RoleNamesEnum.Owner
     }
     
-    await this.roleService.createRole(roleData)
-    await this.columnService.createDefaultColumns(project.id);
+    await this.roleService.createRole(roleData);
 
     return this.projectCole.mapperEntityToGetDTO(project);
   }

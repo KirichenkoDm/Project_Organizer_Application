@@ -5,7 +5,6 @@ import {
   Body,
   Param,
   Delete,
-  Res,
   Put,
 } from "@nestjs/common";
 import { ColumnService } from "./column.service";
@@ -33,7 +32,7 @@ export class ColumnController {
   async getColumnsByProjectId(
     @Param("id") projectId: number,
   ): Promise<GetColumnDto[]> {
-    return;
+    return await this.columnService.getColumnsByProjectId(projectId);
   }
 
   /*
@@ -48,7 +47,7 @@ export class ColumnController {
   async createColumn(
     @Body() createColumnDto: CreateColumnDto,
   ): Promise<GetColumnDto> {
-    return this.columnService.createColumn(createColumnDto);
+    return await this.columnService.createColumn(createColumnDto);
   }
 
   /*
@@ -64,7 +63,7 @@ export class ColumnController {
     @Param("id") id: number,
     @Body() updateColumnDto: UpdateColumnDto,
   ): Promise<GetColumnDto> {
-    return;
+    return await this.columnService.updateColumnById(id, updateColumnDto);
   }
 
   /*
@@ -80,8 +79,8 @@ export class ColumnController {
   async reorderColumnById(
     @Param("id") id: number,
     @Param("neworder") newOrder: number,
-  ): Promise<BasicResponceDto> {
-    return;
+  ): Promise<GetColumnDto[]> {
+    return await this.columnService.reorderColumnById(id, newOrder);
   }
 
   /*

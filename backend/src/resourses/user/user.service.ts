@@ -102,6 +102,7 @@ export class UserService {
 
     return {
       message: "User successfully deleted",
+      isSuccess: true,
     }
   }
 }

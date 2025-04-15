@@ -1,10 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, } from "@nestjs/common";
 import { DataSource, Repository } from "typeorm";
 import { UserEntity } from "./user.entity";
-import { GetUserDto, GetUserWithPasswordDto } from "./dto/get-user.dto";
-import { CreateUserDto } from "./dto/create-user.dto";
-import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from "./dto/update-user.dto";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 
 @Injectable()
@@ -59,6 +55,7 @@ export class UserRepository extends Repository<UserEntity> {
     })
     return {
       message: "Refresh token set",
+      isSuccess: true,
     };
   }
 }

@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserRepository } from "./user.repository";
 import { RoleModule } from "../role/role.module";
 import { RoleRepository } from "../role/role.repository";
+import { UserCore } from "./user.core";
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { RoleRepository } from "../role/role.repository";
     RoleModule
   ],
   controllers: [UserController],
-  providers: [UserService, UserRepository, RoleRepository],
+  providers: [UserService, UserRepository, RoleRepository, UserCore],
   exports: [UserRepository],
 })
 export class UserModule {}

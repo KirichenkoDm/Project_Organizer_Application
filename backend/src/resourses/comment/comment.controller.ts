@@ -3,15 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Res,
   Put,
+  Query,
 } from "@nestjs/common";
 import { CommentService } from "./comment.service";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { UpdateCommentDto } from "./dto/update-comment.dto";
-import { Response } from "express";
 import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetCommentDto } from "./dto/get-comment.dto";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
@@ -33,9 +31,9 @@ export class CommentController {
   )
   async getCommentsByTaskId(
     @Param("id") taskId: number,
-    @Res() response: Response,
+    @Query("page") page: number,
   ): Promise<GetCommentDto[]> {
-    return;
+    return await this.commentService.getCommentsByTaskId(taskId, page);
   }
 
   /*
@@ -50,9 +48,8 @@ export class CommentController {
   )
   async createComment(
     @Body() createCommentDto: CreateCommentDto,
-    @Res() response: Response,
   ): Promise<GetCommentDto> {
-    return;
+    return await this.commentService.createComment(createCommentDto);
   }
 
   /*
@@ -68,9 +65,8 @@ export class CommentController {
   async updateCommentById(
     @Param("id") id: number,
     @Body() updateCommentDto: UpdateCommentDto,
-    @Res() response: Response,
   ): Promise<GetCommentDto> {
-    return;
+    return await this.commentService.updateCommentById(id, updateCommentDto);
   }
 
   /*
@@ -85,8 +81,7 @@ export class CommentController {
   )
   async deleteCommentById(
     @Param("id") id: number,
-    @Res() response: Response,
   ): Promise<BasicResponceDto> {
-    return;
+    return await this.commentService.deleteCommentById(id);
   }
 }

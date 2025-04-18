@@ -26,7 +26,12 @@ export class TaskController {
    gets id of project
    returns array of not archived tasks datas
  */
-  @Get("/project/:id")
+  @Get("/project/:id") 
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getTasksByProjectId(
     @Param("id") projectId: number,
   ): Promise<GetTaskDto[]> {
@@ -38,6 +43,11 @@ export class TaskController {
    returns array of all tasks datas
  */
   @Get("/project/:id/archive")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async getTasksWithArchivedByProjectId(
     @Param("id") projectId: number,
   ): Promise<GetTaskDto[]> {
@@ -49,6 +59,11 @@ export class TaskController {
     returns created task
   */
   @Post()
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async createTask(
     @Body() createTaskDto: CreateTaskDto,
   ): Promise<GetTaskDto> {
@@ -60,6 +75,11 @@ export class TaskController {
     returns updated task
   */
   @Put(":id")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async updateTaskById(
     @Param("id") id: number,
     @Body() updateTaskDto: UpdateTaskDto,
@@ -89,6 +109,10 @@ export class TaskController {
     returns responce with success message
   */
   @Delete(":id")
+  @Roles(
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner
+  )
   async deleteTaskById(
     @Param("id") id: number
   ): Promise<BasicResponceDto> {

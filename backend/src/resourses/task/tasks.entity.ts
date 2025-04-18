@@ -1,9 +1,12 @@
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { ProjectEntity } from "../project/projects.entity";
 import { ColumnEntity } from "../column/columns.entity";
@@ -25,22 +28,22 @@ export class TaskEntity {
 
   @Column("int")
   @ManyToOne(() => ProjectEntity)
-  @JoinColumn({ name: "projectId" })
+  @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
   @Column("int")
   @ManyToOne(() => ColumnEntity)
-  @JoinColumn({ name: "columnId" })
+  @JoinColumn({ name: "column_id" })
   column: ColumnEntity;
 
   @Column({ type: "int", nullable: true })
   @ManyToOne(() => TaskEntity)
-  @JoinColumn({ name: "blockedBy" })
+  @JoinColumn({ name: "blocked_by" })
   task: TaskEntity;
 
   @Column({ type: "int", nullable: true })
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: "assignedId" })
+  @JoinColumn({ name: "assigned_id" })
   user: UserEntity;
 
   @Column({
@@ -55,16 +58,12 @@ export class TaskEntity {
   })
   end: Date;
 
-  @Column("timestamptz")
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @Column("timestamptz")
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @Column({
-    type: "timestamptz",
-    nullable: true,
-    default: null,
-  })
+  @DeleteDateColumn({ name: "archived_at" })
   archivedAt: Date;
 }

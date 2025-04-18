@@ -6,7 +6,8 @@ import { CommentModule } from "./resourses/comment/comment.module";
 import { ProjectModule } from "./resourses/project/project.module";
 import { ProjectEntity } from "./resourses/project/projects.entity";
 import { RoleEntity } from "./resourses/role/role.entity";
-import { TaskEntity, TaskModule } from "./resourses/task";
+import { TaskModule } from "./resourses/task/task.module";
+import { TaskEntity } from "./resourses/task/tasks.entity";
 import { UserEntity } from "./resourses/user/user.entity";
 import { UserModule } from "./resourses/user/user.module";
 

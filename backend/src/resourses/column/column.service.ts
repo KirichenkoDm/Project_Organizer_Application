@@ -38,7 +38,7 @@ export class ColumnService {
 
     await this.reorderColumnById(column.id, column.order);
 
-    return column;
+    return this.columnCore.mapperEntityToGetDTO(column);
   }
 
   async updateColumnById(id: number, columnData: UpdateColumnDto): Promise<GetColumnDto> {

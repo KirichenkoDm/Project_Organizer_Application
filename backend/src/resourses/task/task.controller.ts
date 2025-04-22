@@ -3,20 +3,18 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
-  Res,
   Put,
-  Query,
 } from "@nestjs/common";
 import { TaskService } from "./task.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetTaskDto } from "./dto/get-task-info-short.dto";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { Roles } from "src/shared/roles.decorator";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 @Controller("task")
 export class TaskController {
@@ -28,7 +26,7 @@ export class TaskController {
  */
   @Get("/project/:id")
   async getTasksByProjectId(
-    @Param("id") projectId: number,
+    @Param("id", ParseNumberPipe) projectId: number,
   ): Promise<GetTaskDto[]> {
     return await this.taskService.getTasksByProjectId(projectId);
   }
@@ -39,7 +37,7 @@ export class TaskController {
  */
   @Get("/project/:id/archive")
   async getTasksWithArchivedByProjectId(
-    @Param("id") projectId: number,
+    @Param("id", ParseNumberPipe) projectId: number,
   ): Promise<GetTaskDto[]> {
     return await this.taskService.getTasksWithArchivedByProjectId(projectId);
   }
@@ -61,7 +59,7 @@ export class TaskController {
   */
   @Put(":id")
   async updateTaskById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateTaskDto: UpdateTaskDto,
   ): Promise<GetTaskDto> {
     return await this.taskService.updateTaskById(id, updateTaskDto);
@@ -78,8 +76,8 @@ export class TaskController {
     RoleNamesEnum.Owner
   )
   async reorderTaskById(
-    @Param("id") id: number,
-    @Param("neworder") newOrder: number,
+    @Param("id", ParseNumberPipe) id: number,
+    @Param("neworder", ParseNumberPipe) newOrder: number,
   ): Promise<GetTaskDto[]> {
     return await this.taskService.reorderTaskById(id, newOrder);
   }
@@ -90,8 +88,8 @@ export class TaskController {
   */
   @Delete(":id")
   async deleteTaskById(
-    @Param("id") id: number
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number
+  ): Promise<BasicResponseDto> {
     return await this.taskService.deleteTaskById(id);
   }
 }

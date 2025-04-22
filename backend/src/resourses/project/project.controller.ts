@@ -10,10 +10,11 @@ import {
 import { ProjectService } from "./project.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { GetProjectDto } from "./dto/get-project.dto";
 import { Roles, SkipRoles } from "src/shared/roles.decorator";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 @Controller("project")
 export class ProjectController {
@@ -30,7 +31,7 @@ export class ProjectController {
     RoleNamesEnum.Owner
   )
   async getProjectById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
   ): Promise<GetProjectDto> {
     return await this.projectService.getProjectById(id);
   }
@@ -47,7 +48,7 @@ export class ProjectController {
     RoleNamesEnum.Owner
   )
   async getProjectsByUserId(
-    @Param("id") userId: number,
+    @Param("id", ParseNumberPipe) userId: number,
   ): Promise<GetProjectDto[]> {
     return await this.projectService.getProjectsByUserId(userId);
   }
@@ -59,7 +60,7 @@ export class ProjectController {
     RoleNamesEnum.Owner
   )
   async getProjectReportById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
   ): Promise<object> {
     return await this.projectService.getProjectReportById(id);
   }
@@ -85,7 +86,7 @@ export class ProjectController {
     RoleNamesEnum.Owner
   )
   async updateProjectById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateProjectDto: UpdateProjectDto,
   ): Promise<GetProjectDto> {
     return await this.projectService.updateProjectById(id, updateProjectDto);
@@ -100,8 +101,8 @@ export class ProjectController {
     RoleNamesEnum.Owner
   )
   async deleteProjectById(
-    @Param("id") id: number,
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number,
+  ): Promise<BasicResponseDto> {
     return await this.projectService.deleteProjectById(id);
   }
 }

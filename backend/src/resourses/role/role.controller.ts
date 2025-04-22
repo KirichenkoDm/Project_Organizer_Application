@@ -9,9 +9,10 @@ import {
 import { RoleService } from "./role.service";
 import { CreateRoleDto } from "./dto/create-role.dto";
 import { UpdateRoleDto } from "./dto/update-role.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { Roles } from "src/shared/roles.decorator";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 @Controller("role")
 export class RoleController {
@@ -28,7 +29,7 @@ export class RoleController {
   )
   async createRole(
     @Body() createRoleDto: CreateRoleDto,
-  ): Promise<BasicResponceDto> {
+  ): Promise<BasicResponseDto> {
     return await this.roleService.createRole(createRoleDto);
   }
 
@@ -42,9 +43,9 @@ export class RoleController {
     RoleNamesEnum.Owner
   )
   async updateRoleById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateRoleDto: UpdateRoleDto,
-  ): Promise<BasicResponceDto> {
+  ): Promise<BasicResponseDto> {
     return await this.roleService.updateRoleById(id, updateRoleDto);
   }
 
@@ -58,8 +59,8 @@ export class RoleController {
     RoleNamesEnum.Owner
   )
   async deleteRoleById(
-    @Param("id") id: number,
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number,
+  ): Promise<BasicResponseDto> {
     return await this.roleService.deleteRoleById(id);
   }
 

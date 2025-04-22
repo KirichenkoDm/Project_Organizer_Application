@@ -10,10 +10,11 @@ import {
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { GetUserDto, GetUserWithRoleDto } from "./dto/get-user.dto";
 import { Public } from "src/shared/public.decorator";
 import { SkipRoles } from "src/shared/roles.decorator";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 
 @Controller("user")
@@ -27,7 +28,7 @@ export class UserController {
   */
   @Get(":id")
   async getUserById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
   ): Promise<GetUserDto> {
     return await this.userService.getUserById(id);
   }
@@ -50,7 +51,7 @@ export class UserController {
   */
   @Get("/project/:id")
   async getUsersByProjectId(
-    @Param("id") projectId: number,
+    @Param("id", ParseNumberPipe) projectId: number,
   ): Promise<GetUserWithRoleDto[]> {
     return await this.userService.getUsersByProjectId(projectId);
   }
@@ -73,7 +74,7 @@ export class UserController {
   */
   @Put(":id")
   async updateUserById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<GetUserDto> {
     return this.userService.updateUserById(id, updateUserDto);
@@ -85,8 +86,8 @@ export class UserController {
   */
   @Delete(":id")
   async deleteUserById(
-    @Param("id") id: number
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number
+  ): Promise<BasicResponseDto> {
     return this.userService.deleteUserById(id);
   }
 }

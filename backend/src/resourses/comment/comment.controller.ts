@@ -10,10 +10,11 @@ import {
 import { CommentService } from "./comment.service";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { UpdateCommentDto } from "./dto/update-comment.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { GetCommentDto } from "./dto/get-comment.dto";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { Roles } from "src/shared/roles.decorator";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 @Controller("comment")
 export class CommentController {
@@ -30,8 +31,8 @@ export class CommentController {
     RoleNamesEnum.Owner
   )
   async getCommentsByTaskId(
-    @Param("id") taskId: number,
-    @Query("page") page: number,
+    @Param("id", ParseNumberPipe) taskId: number,
+    @Query("page", ParseNumberPipe) page: number,
   ): Promise<GetCommentDto[]> {
     return await this.commentService.getCommentsByTaskId(taskId, page);
   }
@@ -63,7 +64,7 @@ export class CommentController {
     RoleNamesEnum.Owner
   )
   async updateCommentById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateCommentDto: UpdateCommentDto,
   ): Promise<GetCommentDto> {
     return await this.commentService.updateCommentById(id, updateCommentDto);
@@ -80,8 +81,8 @@ export class CommentController {
     RoleNamesEnum.Owner
   )
   async deleteCommentById(
-    @Param("id") id: number,
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number,
+  ): Promise<BasicResponseDto> {
     return await this.commentService.deleteCommentById(id);
   }
 }

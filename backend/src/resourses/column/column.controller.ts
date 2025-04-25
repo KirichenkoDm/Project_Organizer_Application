@@ -10,10 +10,11 @@ import {
 import { ColumnService } from "./column.service";
 import { CreateColumnDto } from "./dto/create-column.dto";
 import { UpdateColumnDto } from "./dto/update-column.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { Roles } from "src/shared/roles.decorator";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
+import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 
 @Controller("column")
 export class ColumnController {
@@ -30,7 +31,7 @@ export class ColumnController {
     RoleNamesEnum.Owner
   )
   async getColumnsByProjectId(
-    @Param("id") projectId: number,
+    @Param("id", ParseNumberPipe) projectId: number,
   ): Promise<GetColumnDto[]> {
     return await this.columnService.getColumnsByProjectId(projectId);
   }
@@ -60,7 +61,7 @@ export class ColumnController {
     RoleNamesEnum.Owner
   )
   async updateColumnById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Body() updateColumnDto: UpdateColumnDto,
   ): Promise<GetColumnDto> {
     return await this.columnService.updateColumnById(id, updateColumnDto);
@@ -77,7 +78,7 @@ export class ColumnController {
     RoleNamesEnum.Owner
   )
   async reorderColumnById(
-    @Param("id") id: number,
+    @Param("id", ParseNumberPipe) id: number,
     @Param("neworder") newOrder: number,
   ): Promise<GetColumnDto[]> {
     return await this.columnService.reorderColumnById(id, newOrder);
@@ -93,8 +94,8 @@ export class ColumnController {
     RoleNamesEnum.Owner
   )
   async deleteColumnById(
-    @Param("id") id: number,
-  ): Promise<BasicResponceDto> {
+    @Param("id", ParseNumberPipe) id: number,
+  ): Promise<BasicResponseDto> {
     return;
   }
 }

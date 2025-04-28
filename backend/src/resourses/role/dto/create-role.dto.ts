@@ -1,7 +1,16 @@
-import { RoleNamesEnum } from "../role-names.enum";
+import { IsEnum, IsInt, IsNotEmpty } from "class-validator";
+import { RoleNamesEnum } from "../../../shared/role-names.enum";
 
 export class CreateRoleDto {
-  userid: number;
-  projectid: number;
+  @IsNotEmpty()
+  @IsInt()
+  userId: number;
+  
+  @IsNotEmpty()
+  @IsInt()
+  projectId: number;
+
+  @IsNotEmpty()
+  @IsEnum(RoleNamesEnum)
   role: RoleNamesEnum;
 }

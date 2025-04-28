@@ -2,6 +2,8 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nes
 import { Observable, tap } from "rxjs";
 import { TokensDto } from "./dto/token.dto";
 
+const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000
+
 @Injectable()
 export class SetRefreshTokenInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<TokensDto> {
@@ -16,7 +18,7 @@ export class SetRefreshTokenInterceptor implements NestInterceptor {
             secure: true,
             sameSite: 'strict',
             path: '/',
-            maxAge: 30 * 24 * 60 * 60 * 1000,
+            maxAge: THIRTY_DAYS,
           });
           delete data.refreshToken;
         }

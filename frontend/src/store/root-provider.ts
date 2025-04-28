@@ -14,3 +14,11 @@ export const useStore = () => {
   }
   return store;
 }
+
+export const useUserStore = () => {
+  return useStore().userStore;
+}
+
+export const useProjectStore = () => {
+  return useStore().projectStore;
+}

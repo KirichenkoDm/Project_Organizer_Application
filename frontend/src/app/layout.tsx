@@ -29,7 +29,7 @@ function RootLayoutBase({
 }>) {
   
   useEffect(() => {
-    rootStore.hydrate;
+    rootStore.hydrate();
   }, [])
   
   return (

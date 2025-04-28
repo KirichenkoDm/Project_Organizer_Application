@@ -3,7 +3,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { GetUserDto, GetUserWithPasswordDto, GetUserWithRoleDto } from "./dto/get-user.dto";
 import { UserRepository } from "./user.repository";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import * as bcrypt from 'bcrypt';
 import { UserCore } from "./user.core";
 import { RoleRepository } from "../role/role.repository";
@@ -88,7 +88,7 @@ export class UserService {
     return this.userCore.mapperEntityToGetDto(user);
   }
 
-  async deleteUserById(id: number): Promise<BasicResponceDto> {
+  async deleteUserById(id: number): Promise<BasicResponseDto> {
     const userToDelete = await this.userRepository.findOneBy({ id });
     if (!userToDelete) {
       throw new NotFoundException("User with this id not found");
@@ -102,6 +102,7 @@ export class UserService {
 
     return {
       message: "User successfully deleted",
+      status: 204,
       isSuccess: true,
     }
   }

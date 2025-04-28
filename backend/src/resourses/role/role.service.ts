@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { CreateRoleDto } from "./dto/create-role.dto";
 import { UpdateRoleDto } from "./dto/update-role.dto";
 import { RoleRepository } from "./role.repository";
@@ -10,7 +10,7 @@ export class RoleService {
     private readonly roleRepository: RoleRepository,
   ){ }
 
-  async createRole(roleData: CreateRoleDto): Promise<BasicResponceDto> {
+  async createRole(roleData: CreateRoleDto): Promise<BasicResponseDto> {
     const role = await this.roleRepository.save(roleData);
 
     if(!role) {
@@ -19,11 +19,12 @@ export class RoleService {
 
     return {
       message: "Role successsfully created",
+      status: 200,
       isSuccess: true,
     };
   }
 
-  async updateRoleById(id: number, roleData: UpdateRoleDto): Promise<BasicResponceDto> {
+  async updateRoleById(id: number, roleData: UpdateRoleDto): Promise<BasicResponseDto> {
       const roleToUpdate = await this.roleRepository.findOneBy({ id });
       if (!roleToUpdate) {
         throw new NotFoundException("Role with this id not found");
@@ -40,11 +41,12 @@ export class RoleService {
   
       return {
         message: "Role successsfully updated",
+        status: 200,
         isSuccess: true,
       };
     }
 
-    async deleteRoleById(id: number): Promise<BasicResponceDto> {
+    async deleteRoleById(id: number): Promise<BasicResponseDto> {
       const roleToDelete = await this.roleRepository.findOneBy({ id });
   
       if (!roleToDelete) {
@@ -59,6 +61,7 @@ export class RoleService {
   
       return {
         message: "Role successsfully deleted",
+        status: 204,
         isSuccess: true,
       }
     }

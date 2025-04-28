@@ -4,7 +4,7 @@ import { TaskCore } from "./task.core";
 import { TaskRepository } from "./task.repository";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { UpdateTaskDto } from "./dto/update-task.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 
 @Injectable()
 export class TaskService {
@@ -88,7 +88,7 @@ export class TaskService {
     return reordered.map(col => this.taskCore.mapperEntityToGetDTO(col))
   }
 
-   async deleteTaskById(id: number): Promise<BasicResponceDto> {
+   async deleteTaskById(id: number): Promise<BasicResponseDto> {
       const taskToDelete = await this.taskRepository.findOneBy({ id });
   
       if (!taskToDelete) {
@@ -103,6 +103,7 @@ export class TaskService {
   
       return {
         message: "Task successsfully deleted",
+        status: 204,
         isSuccess: true,
       }
     }

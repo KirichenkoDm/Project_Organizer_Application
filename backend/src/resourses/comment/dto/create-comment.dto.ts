@@ -1,6 +1,5 @@
 import { Type } from "class-transformer";
 import { IsInt, IsNotEmpty, IsObject, ValidateNested } from "class-validator";
-import { Delta } from "src/shared/delta";
 
 export class CreateCommentDto {
   @IsNotEmpty()
@@ -12,7 +11,5 @@ export class CreateCommentDto {
   taskId: number;
 
   @IsObject()
-  @ValidateNested()
-  @Type(() => Delta)
-  text: Delta;
+  text: object;
 }

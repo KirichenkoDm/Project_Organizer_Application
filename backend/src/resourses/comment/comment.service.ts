@@ -4,7 +4,7 @@ import { GetCommentDto } from "./dto/get-comment.dto";
 import { CommentCore } from "./comment.core";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { UpdateCommentDto } from "./dto/update-comment.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 
 @Injectable()
 export class CommentService {
@@ -51,7 +51,7 @@ export class CommentService {
       return this.commentCore.mapperEntityToGetDTO(comment);
     }
   
-  async deleteCommentById(id: number): Promise<BasicResponceDto> {
+  async deleteCommentById(id: number): Promise<BasicResponseDto> {
       const commentToDelete = await this.commentRepository.findOneBy({ id });
   
       if (!commentToDelete) {
@@ -66,6 +66,7 @@ export class CommentService {
   
       return {
         message: "Comment successsfully deleted",
+        status: 204,
         isSuccess: true,
       }
     }

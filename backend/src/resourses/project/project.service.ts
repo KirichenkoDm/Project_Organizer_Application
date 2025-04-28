@@ -3,11 +3,9 @@ import { ProjectRepository } from "./project.repository";
 import { GetProjectDto } from "./dto/get-project.dto";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
-import { ProjectEntity } from "./projects.entity";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { RoleRepository } from "../role/role.repository";
 import { RoleService } from "../role/role.service";
-import { ColumnService } from "../column/column.service";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { ProjectCore } from "./project.core";
 
@@ -17,7 +15,6 @@ export class ProjectService {
     private readonly projectRepository: ProjectRepository,
     private readonly roleRepository: RoleRepository,
     private readonly roleService: RoleService,
-    private readonly columnService: ColumnService,
     private readonly projectCole: ProjectCore,
   ) { }
 
@@ -87,7 +84,7 @@ export class ProjectService {
     return this.projectCole.mapperEntityToGetDTO(project);
   }
 
-  async deleteProjectById(id: number): Promise<BasicResponceDto> {
+  async deleteProjectById(id: number): Promise<BasicResponseDto> {
     const projectToDelete = await this.projectRepository.findOneBy({ id });
 
     if (!projectToDelete) {
@@ -102,6 +99,7 @@ export class ProjectService {
 
     return {
       message: "Project successsfully deleted",
+      status: 204,
       isSuccess: true,
     }
   }

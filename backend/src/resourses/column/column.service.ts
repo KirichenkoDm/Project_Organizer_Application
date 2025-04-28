@@ -4,7 +4,7 @@ import { CreateColumnDto } from "./dto/create-column.dto";
 import { GetColumnDto } from "./dto/get-column.dto";
 import { ColumnCore } from "./column.core";
 import { UpdateColumnDto } from "./dto/update-column.dto";
-import { BasicResponceDto } from "src/shared/dto/basic-responce.dto";
+import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 
 const defaultColumnNames = [
   "To Do",
@@ -87,7 +87,7 @@ export class ColumnService {
     return reordered.map(col => this.columnCore.mapperEntityToGetDTO(col))
   }
 
-  async deleteColumnById(id: number): Promise<BasicResponceDto> {
+  async deleteColumnById(id: number): Promise<BasicResponseDto> {
     const columnToDelete = await this.columnRepository.findOneBy({ id });
 
     if (!columnToDelete) {
@@ -102,6 +102,7 @@ export class ColumnService {
 
     return {
       message: "Column successsfully deleted",
+      status: 204,
       isSuccess: true,
     }
   }

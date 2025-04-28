@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from "@nestjs/common";
-import { BasicResponseDto } from "./dto/basic-responce.dto";
+import { BasicResponseDto } from "./dto/basic-response.dto";
 import { Response } from 'express';
 
 // interface Response {

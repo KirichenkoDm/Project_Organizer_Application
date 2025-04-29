@@ -1,12 +1,10 @@
 import { destroy, flow, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
-import { jwtDecode } from "jwt-decode";
 import { BASIC_BACKEND_URL } from "@/shared/constants";
 import { Credentials } from "@/shared/types/credentials";
 import axios from "axios";
-import { setCookie } from "nookies";
-
-const ONE_HOUR = 60*60;
+import { CreateUser } from "@/shared/types/create-user";
+import { initialiseUser } from "@/shared/functions/initialise-user";
 
 export const UserStore = types
   .model("UserStore", {
@@ -29,33 +27,27 @@ export const UserStore = types
         }
       },
 
+      register: flow(function* (userData: CreateUser) {
+        try {
+          const response =  yield axios.post(
+            BASIC_BACKEND_URL + "/user", 
+            userData,
+          );
+          actions.setUser(initialiseUser(response.body));
+        } catch (error) {
+          
+        } finally {
+          
+        }
+      }),
+
       login: flow(function* (credentials: Credentials) {
         try {
           const response = yield axios.post(
-            BASIC_BACKEND_URL + "/auth/login", {
-              body: JSON.stringify(credentials),
-            }
+            BASIC_BACKEND_URL + "/auth/login", 
+            credentials,
           );
-
-          const { accessToken } = response.data;
-
-          setCookie(null, "accessToken", accessToken, {
-            maxAge: ONE_HOUR, 
-            path: "/",
-          });
-
-
-          const payload = jwtDecode<AccessTokenPayload>(accessToken)
-
-          const user = User.create({
-            id: payload.sub,
-            email: payload.email,
-            firstName: payload.firstName,
-            lastName: payload.lastName,
-          });
-
-          actions.setUser(user);
-
+          actions.setUser(initialiseUser(response.data));
         } catch (error) {
           
         } finally {

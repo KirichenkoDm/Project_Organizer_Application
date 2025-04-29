@@ -1,27 +1,42 @@
 "use client";
 
-import React, { JSX, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useStore } from "@/store/root-provider";
+import { useUserStore } from "@/store/root-provider";
 
 const PUBLIC_ROUTES = ["/auth"];
 
-function withGuard<P>(Component: React.ComponentType<P>) {
-  return function GuardedComponent(props: P & JSX.IntrinsicAttributes) {
+function withGuard<P extends object>(Component: React.ComponentType<P>) {
+
+  return function GuardedComponent(props: P) {
     const router = useRouter();
     const pathname = usePathname();
-    const store = useStore();
-
-    const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+    const userStore = useUserStore();
+    const [isClient, setIsClient] = useState(false);
+    const [isGuardPassed, setIsGuardPassed] = useState(false);
 
     useEffect(() => {
-      if (!store.isAuthenticated && !isPublicRoute) {
-        router.replace("/auth");
-      }
-    }, [store.isAuthenticated, router]);
+      setIsClient(true);
+    }, []);
 
-    if (!store.isAuthenticated && !isPublicRoute) {
-      return null;
+    useEffect(() => {
+      if (!isClient) return;
+      
+      try {
+        const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+        
+        if (!userStore.isAuthenticated && !isPublicRoute) {
+          router.replace("/auth");
+        } else {
+          setIsGuardPassed(true);
+        }
+      } catch (error) {
+        console.error("Authentication guard error:", error);
+      }
+    }, [isClient, pathname, router]);
+
+    if (!isClient || !isGuardPassed) {
+      return null; // return loading
     }
 
     return <Component {...props} />;

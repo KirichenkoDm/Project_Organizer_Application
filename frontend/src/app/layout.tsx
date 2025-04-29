@@ -32,7 +32,6 @@ type ChildrenProps = {
   children: React.ReactNode;
 };
 
-// Создаем компонент с явной типизацией
 const ChildrenComponent = ({ children }: ChildrenProps) => <>{children}</>;
 
 const GuardedContent = withGuard(ChildrenComponent);

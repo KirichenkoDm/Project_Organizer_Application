@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "@/shared/styles/form.module.css";
 import { Field } from 'formik';
+import { Label } from 'radix-ui';
 
 interface InputGroupProps {
   id: string;
@@ -19,7 +20,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
 }) => {
   return (
     <div className={styles.inputGroup}>
-      <label htmlFor={id}>{label}:</label>
+      <Label.Root htmlFor={id}>{label}:</Label.Root>
       <Field
         type={type}
         id={id}

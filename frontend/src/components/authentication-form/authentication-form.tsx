@@ -6,6 +6,7 @@ import { authValidationSchema } from "./authentication-validation";
 import { useUserStore } from "@/store/root-provider";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
+import { useRouter } from "next/navigation";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,14 +14,16 @@ type AuthenticationFormProps = {
 
 const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
   const userStore = useUserStore()
+  const router = useRouter();
   return (
     <div className={styles.formWrapper}>
       <h2>Sign In</h2>
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={authValidationSchema}
-        onSubmit={(values) => {
-          userStore.login(values);
+        onSubmit={async(values) => {
+          await userStore.login(values);
+          router.replace("/auth");
         }}
       >
         {({touched, errors}) => (

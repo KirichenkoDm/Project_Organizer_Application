@@ -4,7 +4,7 @@ import { BASIC_BACKEND_URL } from "@/shared/constants";
 import { Credentials } from "@/shared/types/credentials";
 import axios from "axios";
 import { CreateUser } from "@/shared/types/create-user";
-import { initialiseUser } from "@/shared/functions/initialise-user";
+import { initialiseUser } from "./initialise-user";
 
 export const UserStore = types
   .model("UserStore", {

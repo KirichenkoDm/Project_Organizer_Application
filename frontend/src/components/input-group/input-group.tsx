@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import styles from "@/shared/styles/form.module.css";
 import { Field } from 'formik';

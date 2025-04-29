@@ -20,6 +20,7 @@ export const UserStore = types
       setUser(user: UserInstance | null) {
         if (user) {
           self.user = user;
+          console.log(self.user);
           localStorage.setItem("user", JSON.stringify(user));
         } else {
           destroy(self.user);
@@ -28,31 +29,21 @@ export const UserStore = types
       },
 
       register: flow(function* (userData: CreateUser) {
-        try {
-          const response =  yield axios.post(
-            BASIC_BACKEND_URL + "/user", 
-            userData,
-          );
-          actions.setUser(initialiseUser(response.body));
-        } catch (error) {
-          
-        } finally {
-          
-        }
+
+        const response = yield axios.post(
+          BASIC_BACKEND_URL + "/user",
+          userData,
+        );
+        actions.setUser(initialiseUser(response.body));
+
       }),
 
       login: flow(function* (credentials: Credentials) {
-        try {
-          const response = yield axios.post(
-            BASIC_BACKEND_URL + "/auth/login", 
-            credentials,
-          );
-          actions.setUser(initialiseUser(response.data));
-        } catch (error) {
-          
-        } finally {
-          
-        }
+        const response = yield axios.post(
+          BASIC_BACKEND_URL + "/auth/login",
+          credentials,
+        );
+        actions.setUser(initialiseUser(response.data));
       }),
     }
     return actions;

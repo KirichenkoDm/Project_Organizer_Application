@@ -7,7 +7,7 @@ const HomePage = () => {
     <div>
       <HomeHeader />
       <main>
-        <h1>Your projects</h1>
+        <h2>Your projects</h2>
         {/* todo: home projects list */}
       </main>
       {/* todo: home footer */}

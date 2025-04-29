@@ -3,8 +3,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #f9f9f9;
+  background-color: #eee;
   border-bottom: 1px solid #eaeaea;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -17,15 +18,16 @@
 .userBadge {
   display: flex;
   align-items: center;
-  background-color: #f0f0f0;
-  border-radius: 9999px;
+  gap: 10px;
+  background-color: #eee;
+  border-radius: 50px;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s;
 }
 
 .userBadge:hover {
-  background-color: #e0e0e0;
+  background-color: #ddd;
 }
 
 .userName {
@@ -41,6 +43,5 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 0.5rem;
   font-weight: 500;
 }

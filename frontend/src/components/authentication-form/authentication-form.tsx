@@ -23,7 +23,7 @@ const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
         validationSchema={authValidationSchema}
         onSubmit={async(values) => {
           await userStore.login(values);
-          router.replace("/auth");
+          router.replace("/home");
         }}
       >
         {({touched, errors}) => (

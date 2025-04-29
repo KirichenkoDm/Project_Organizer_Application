@@ -9,9 +9,9 @@ export class DefaultColumnTrigger1744647861089 implements MigrationInterface {
         BEGIN
           INSERT INTO public.columns ("project_id", "name", "order", "is_custom")
           VALUES
-            (NEW.id, "To Do", 1, false),
-            (NEW.id, "In Progress", 1, false),
-            (NEW.id, "Finished", 1, false);
+            (NEW.id,  'To Do', 1, false),
+            (NEW.id, 'In Progress', 2, false),
+            (NEW.id, 'Finished', 3, false);
           RETURN NEW;
         END;
         $$ LANGUAGE plpgsql;

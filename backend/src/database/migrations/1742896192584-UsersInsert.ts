@@ -2,14 +2,15 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class UsersInsert1742896192584 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
+    console.log("Inserting users");
     await queryRunner.query(/* sql */ `
-        INSERT INTO public.users ("email", "password", "salt", "firstname", "lastname")
+        INSERT INTO public.users ("email", "password", "first_name", "last_name")
         VALUES
-        ('Kyrychenko@example.com', 'qwerty', '12345', 'Dmytro', 'Kyrychenko'),
-        ('Serhiyenko@example.com', 'qwerty', '12345', 'Serhiy', 'Serhiyenko'),
-        ('Egorenko@example.com', 'qwerty', '12345', 'Egor', 'Egorenko'),
-        ('Viktorenko@example.com', 'qwerty', '12345', 'Viktor', 'Viktorenko'),
-        ('Volodymyrenko@example.com', 'qwerty', '12345', 'Volodymyr', 'Volodymyrenko');
+        ('kyrychenko@example.com', 'qwerty', 'Dmytro', 'Kyrychenko'),
+        ('serhiyenko@example.com', 'qwerty', 'Serhiy', 'Serhiyenko'),
+        ('egorenko@example.com', 'qwerty', 'Egor', 'Egorenko'),
+        ('viktorenko@example.com', 'qwerty', 'Viktor', 'Viktorenko'),
+        ('volodymyrenko@example.com', 'qwerty', 'Volodymyr', 'Volodymyrenko');
       `);
   }
 

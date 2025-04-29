@@ -20,10 +20,10 @@ export const UserStore = types
       setUser(user: UserInstance | null) {
         if (user) {
           self.user = user;
-          localStorage.setItem("currentUser", JSON.stringify(user));
+          localStorage.setItem("user", JSON.stringify(user));
         } else {
           destroy(self.user);
-          localStorage.removeItem("currentUser");
+          localStorage.removeItem("user");
         }
       },
 

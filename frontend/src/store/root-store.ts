@@ -12,7 +12,7 @@ export const RootStore = types
   .actions((self) => {
     const actions = {
       hydrate() {
-        const userJson = localStorage.getItem("currentUser");
+        const userJson = localStorage.getItem("user");
         if (userJson) {
           try {
             const parsed = JSON.parse(userJson);

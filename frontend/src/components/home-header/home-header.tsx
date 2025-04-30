@@ -1,13 +1,12 @@
 "use client";
 
-import { useUserStore } from '@/store/root-provider'
 import React, { FC } from 'react'
 import styles from "./home-header.module.css"
 import { Avatar } from 'radix-ui';
-import { observer } from 'mobx-react-lite';
 import Link from 'next/link';
+import { useUserStore } from '@/store/user-store';
 
-const HomeHeader: FC = observer(() => {
+const HomeHeader: FC = () => {
   const userStore = useUserStore();
   const user = userStore.user!;
 
@@ -27,6 +26,6 @@ const HomeHeader: FC = observer(() => {
       </Link>
     </header>
   )
-})
+}
 
 export default HomeHeader;

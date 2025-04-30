@@ -1,5 +1,6 @@
 "use client";
 import HomeHeader from "@/components/home-header/home-header";
+import HomeProjectsList from "@/components/home-projects-list/home-projects-list";
 import React from "react";
 
 const HomePage = () => {
@@ -8,9 +9,8 @@ const HomePage = () => {
       <HomeHeader />
       <main>
         <h2>Your projects</h2>
-        {/* todo: home projects list */}
+        <HomeProjectsList />
       </main>
-      {/* todo: home footer */}
     </div>
     
   );

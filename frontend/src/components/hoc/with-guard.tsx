@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useUserStore } from "@/store/root-provider";
+import { useUserStore } from "@/store/user-store";
 
-const PUBLIC_ROUTES = ["/auth"];
+const PUBLIC_ROUTES = ["/auth", "/home"];
 
 function withGuard<P extends object>(Component: React.ComponentType<P>) {
 

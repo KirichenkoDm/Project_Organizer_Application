@@ -1,10 +1,10 @@
 import { destroy, flow, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
-import { BASIC_BACKEND_URL } from "@/shared/constants";
 import { Credentials } from "@/shared/types/credentials";
 import axios from "axios";
 import { CreateUser } from "@/shared/types/create-user";
 import { initialiseUser } from "./initialise-user";
+import { useStore } from "./root-provider";
 
 export const UserStore = types
   .model("UserStore", {
@@ -29,9 +29,8 @@ export const UserStore = types
       },
 
       register: flow(function* (userData: CreateUser) {
-
         const response = yield axios.post(
-          BASIC_BACKEND_URL + "/user",
+          process.env.NEXT_PUBLIC_BACKEND_URL + "/user",
           userData,
         );
         actions.setUser(initialiseUser(response.body));
@@ -40,7 +39,7 @@ export const UserStore = types
 
       login: flow(function* (credentials: Credentials) {
         const response = yield axios.post(
-          BASIC_BACKEND_URL + "/auth/login",
+          process.env.NEXT_PUBLIC_BACKEND_URL + "/auth/login",
           credentials,
         );
         actions.setUser(initialiseUser(response.data));
@@ -48,3 +47,7 @@ export const UserStore = types
     }
     return actions;
   })
+
+export const useUserStore = () => {
+  return useStore().userStore;
+}

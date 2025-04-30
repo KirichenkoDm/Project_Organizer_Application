@@ -3,10 +3,10 @@
 import { Form, Formik } from "formik";
 import React, { FC } from "react";
 import { authValidationSchema } from "./authentication-validation";
-import { useUserStore } from "@/store/root-provider";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/user-store";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,0 +1,28 @@
+.projectCard {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.projectCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.projectName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.projectTheme {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.projectDescription {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}

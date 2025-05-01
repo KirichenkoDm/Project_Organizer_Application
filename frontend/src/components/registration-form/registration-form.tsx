@@ -6,29 +6,44 @@ import { RegistrationValidationSchema } from "./registration-validation";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
 import { useUserStore } from "@/store/user-store";
+import {useRouter} from "next/navigation";
+import { CreateUser } from "@/shared/types/create-user";
 
 interface RegistrationFormProps {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const initialValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+}
 
 const RegistrationForm: FC<RegistrationFormProps> = ({ setIsNewAccount }) => {
+  const router = useRouter()
   const userStore = useUserStore();
+
+  const handleSubmit = async (values: typeof initialValues) => {
+    const data: CreateUser = {
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      password: values.password
+    } 
+    console.log(data)
+    await userStore.register(data);
+    router.replace("/home");
+  }
+
   return (
     <div className={styles.formWrapper}>
       <h2>Sign Up</h2>
       <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        }}
+        initialValues={initialValues}
         validationSchema={RegistrationValidationSchema}
-        onSubmit={(values) => {
-          userStore.register(values);
-        }}
+        onSubmit={handleSubmit}
       >
         {({ touched, errors }) => (
           <Form>

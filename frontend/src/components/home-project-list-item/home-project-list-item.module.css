@@ -1,5 +1,6 @@
 .projectCardLink{
   width: 100%;
+  margin: 15px 0px;
   display: flex;
   justify-content: center;
 }
@@ -7,9 +8,8 @@
 .projectCard {
   border: 1px solid #eaeaea;
   background-color: #F8F9FA;
-  border-radius: 8px;
+  border-radius: 15px;
   padding: 1.5rem;
-  margin: 15px 0px;
   width: 97%;
   transition: 
     box-shadow 0.2s, 

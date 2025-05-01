@@ -5,9 +5,9 @@ import React, { FC } from "react";
 import { authValidationSchema } from "./authentication-validation";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
-import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/user-store";
 import { Box, Button, Heading, Text } from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +17,7 @@ const initialValues = { email: "", password: "" }
 
 const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
   const userStore = useUserStore()
-  const router = useRouter();
-
+  const router = useRouter()
   const handleSubmit = async (values: typeof initialValues) => {
     await userStore.login(values);
     router.replace("/home");

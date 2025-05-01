@@ -1,13 +1,29 @@
+.projectCardLink{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .projectCard {
   border: 1px solid #eaeaea;
+  background-color: #F8F9FA;
   border-radius: 8px;
   padding: 1.5rem;
-  transition: box-shadow 0.2s, transform 0.2s;
+  margin: 15px 0px;
+  width: 97%;
+  transition: 
+    box-shadow 0.2s, 
+    transform 0.2s,
+    width 0.2s,
+    background-color 0.2s
+  ;
 }
 
 .projectCard:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  background-color: #fff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  transform: translateY(-7px);
 }
 
 .projectName {

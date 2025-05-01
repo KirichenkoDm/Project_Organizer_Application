@@ -1,3 +1,7 @@
+.homeHeadercContaner {
+  width: 100%;
+}
+
 .homeHeader {
   display: flex;
   justify-content: space-between;

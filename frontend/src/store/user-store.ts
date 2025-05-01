@@ -1,10 +1,10 @@
 import { destroy, flow, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
-import { BASIC_BACKEND_URL } from "@/shared/constants";
 import { Credentials } from "@/shared/types/credentials";
-import axios from "axios";
 import { CreateUser } from "@/shared/types/create-user";
-import { initialiseUser } from "@/shared/functions/initialise-user";
+import { initialiseUser } from "./initialise-user";
+import { useStore } from "./root-provider";
+import axiosController from "./axios-controller";
 
 export const UserStore = types
   .model("UserStore", {
@@ -20,6 +20,7 @@ export const UserStore = types
       setUser(user: UserInstance | null) {
         if (user) {
           self.user = user;
+          console.log(self.user);
           localStorage.setItem("user", JSON.stringify(user));
         } else {
           destroy(self.user);
@@ -28,32 +29,19 @@ export const UserStore = types
       },
 
       register: flow(function* (userData: CreateUser) {
-        try {
-          const response =  yield axios.post(
-            BASIC_BACKEND_URL + "/user", 
-            userData,
-          );
-          actions.setUser(initialiseUser(response.body));
-        } catch (error) {
-          
-        } finally {
-          
-        }
+        const user = yield axiosController.register(userData);
+        actions.setUser(initialiseUser(user));
+
       }),
 
       login: flow(function* (credentials: Credentials) {
-        try {
-          const response = yield axios.post(
-            BASIC_BACKEND_URL + "/auth/login", 
-            credentials,
-          );
-          actions.setUser(initialiseUser(response.data));
-        } catch (error) {
-          
-        } finally {
-          
-        }
+        const userData = yield axiosController.login(credentials);
+        actions.setUser(initialiseUser(userData));
       }),
     }
     return actions;
   })
+
+export const useUserStore = () => {
+  return useStore().userStore;
+}

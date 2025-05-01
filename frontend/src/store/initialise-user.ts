@@ -1,7 +1,7 @@
 import { setCookie } from "nookies";
-import { AccessTokenBody, AccessTokenPayload } from "../types/access-token";
 import { jwtDecode } from "jwt-decode";
 import { User, UserInstance } from "@/store/models/user";
+import { AccessTokenBody, AccessTokenPayload } from "@/shared/types/access-token";
 
 const ONE_HOUR = 60*60;
 

@@ -3,25 +3,36 @@
 import { Form, Formik } from "formik";
 import React, { FC } from "react";
 import { authValidationSchema } from "./authentication-validation";
-import { useUserStore } from "@/store/root-provider";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/user-store";
+import { Box, Button, Heading, Text } from "@radix-ui/themes";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const initialValues = { email: "", password: "" }
+
 const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
   const userStore = useUserStore()
+  const router = useRouter();
+
+  const handleSubmit = async (values: typeof initialValues) => {
+    await userStore.login(values);
+    router.replace("/home");
+  }
+
   return (
-    <div className={styles.formWrapper}>
-      <h2>Sign In</h2>
+    <Box className={styles.formWrapper}>
+
+      <Heading as="h2">Sign In</Heading>
+
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={initialValues}
         validationSchema={authValidationSchema}
-        onSubmit={(values) => {
-          userStore.login(values);
-        }}
+        onSubmit={handleSubmit}
       >
         {({touched, errors}) => (
           <Form>
@@ -41,22 +52,27 @@ const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
               label = "Password"
             />
 
-            <div>
-              <button type="submit" className={styles.submitButton}>Confirm</button>
-            </div>
+            <Box>
+              <Button 
+                type="submit" 
+                className={styles.submitButton}
+              >
+                Confirm
+              </Button>
+            </Box>
 
-            <div className={styles.switchLink}>
+            <Box className={styles.switchLink}>
               Don't have an account?{" "}
-              <span
+              <Text
                 onClick={() => setIsNewAccount(true)}
               >
                 Sign up
-              </span>
-            </div>
+              </Text>
+            </Box>
           </Form>
         )}
       </Formik>
-    </div>
+    </Box>
   );
 };
 

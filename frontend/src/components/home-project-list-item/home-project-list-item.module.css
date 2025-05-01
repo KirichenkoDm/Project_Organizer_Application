@@ -1,0 +1,44 @@
+.projectCardLink{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.projectCard {
+  border: 1px solid #eaeaea;
+  background-color: #F8F9FA;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 15px 0px;
+  width: 97%;
+  transition: 
+    box-shadow 0.2s, 
+    transform 0.2s,
+    width 0.2s,
+    background-color 0.2s
+  ;
+}
+
+.projectCard:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  transform: translateY(-7px);
+}
+
+.projectName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.projectTheme {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.projectDescription {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}

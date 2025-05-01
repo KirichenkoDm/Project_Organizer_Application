@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useUserStore } from "@/store/root-provider";
+import { useUserStore } from "@/store/user-store";
 
 const PUBLIC_ROUTES = ["/auth"];
 
@@ -36,7 +36,7 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
     }, [isClient, pathname, router]);
 
     if (!isClient || !isGuardPassed) {
-      return null; // return loading
+      return null;
     }
 
     return <Component {...props} />;

@@ -42,11 +42,7 @@ export class ProjectController {
     returns array of project id, name, theme and description
   */
   @Get("/user/:id")
-  @Roles(
-    RoleNamesEnum.Member,
-    RoleNamesEnum.ProjectManager,
-    RoleNamesEnum.Owner
-  )
+  @SkipRoles()
   async getProjectsByUserId(
     @Param("id", ParseNumberPipe) userId: number,
   ): Promise<GetProjectDto[]> {

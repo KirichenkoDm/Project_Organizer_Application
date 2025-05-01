@@ -1,10 +1,10 @@
 import { destroy, flow, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
 import { Credentials } from "@/shared/types/credentials";
-import axios from "axios";
 import { CreateUser } from "@/shared/types/create-user";
 import { initialiseUser } from "./initialise-user";
 import { useStore } from "./root-provider";
+import axiosController from "./axios-controller";
 
 export const UserStore = types
   .model("UserStore", {
@@ -29,20 +29,14 @@ export const UserStore = types
       },
 
       register: flow(function* (userData: CreateUser) {
-        const response = yield axios.post(
-          process.env.NEXT_PUBLIC_BACKEND_URL + "/user",
-          userData,
-        );
-        actions.setUser(initialiseUser(response.body));
+        const user = yield axiosController.register(userData);
+        actions.setUser(initialiseUser(user));
 
       }),
 
       login: flow(function* (credentials: Credentials) {
-        const response = yield axios.post(
-          process.env.NEXT_PUBLIC_BACKEND_URL + "/auth/login",
-          credentials,
-        );
-        actions.setUser(initialiseUser(response.data));
+        const userData = yield axiosController.login(credentials);
+        actions.setUser(initialiseUser(userData));
       }),
     }
     return actions;

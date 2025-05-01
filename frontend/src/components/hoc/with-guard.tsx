@@ -9,9 +9,9 @@ const PUBLIC_ROUTES = ["/auth"];
 function withGuard<P extends object>(Component: React.ComponentType<P>) {
 
   return function GuardedComponent(props: P) {
-    const router = useRouter();
     const pathname = usePathname();
     const userStore = useUserStore();
+    const router = useRouter();
     const [isClient, setIsClient] = useState(false);
     const [isGuardPassed, setIsGuardPassed] = useState(false);
 
@@ -26,14 +26,15 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
         const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
         
         if (!userStore.isAuthenticated && !isPublicRoute) {
-          router.replace("/auth");
+          console.log(userStore.user)
+          router.replace("/auth")
         } else {
           setIsGuardPassed(true);
         }
       } catch (error) {
         console.error("Authentication guard error:", error);
       }
-    }, [isClient, pathname, router]);
+    }, [isClient, pathname]);
 
     if (!isClient || !isGuardPassed) {
       return null;

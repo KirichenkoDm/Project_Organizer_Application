@@ -3,8 +3,9 @@ import { parseCookies, setCookie } from "nookies";
 import { HomeProjectListItemInstance } from "./models/home-project-list-item";
 import { CreateUser } from "@/shared/types/create-user";
 import { Credentials } from "@/shared/types/credentials";
+import { EditUser } from "@/shared/types/edit-user";
 
-const ONE_HOUR = 60*60;
+const ONE_HOUR = 60*1;
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -17,23 +18,11 @@ async function sendRefresh(): Promise<string> {
   return response.data.accessToken;
 } 
 
-let isRefreshing = false;
-let failedQueue: {
-  resolve: (value: unknown) => void;
-  reject: (reason?: unknown) => void;
-  config: InternalAxiosRequestConfig;
-}[] = [];
-
-
-
 axiosInstance.interceptors.response.use(
   async (response: AxiosResponse) => {
     return response;
   },
   async (error: AxiosError) => {
-    console.log(error);
-    const originalRequest = error.config as InternalAxiosRequestConfig;
-
     if(error.response?.status === 401) {
       const newToken = await sendRefresh()
 
@@ -42,9 +31,8 @@ axiosInstance.interceptors.response.use(
         path: "/",
       });
 
-      if (originalRequest && originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-      }
+      const originalRequest = error.config!;
+      originalRequest.headers['Authorization'] = `Bearer ${newToken}`;
 
       return axiosInstance(originalRequest);
     }
@@ -74,6 +62,29 @@ class AxiosController {
     const response = await axiosInstance.post("/auth/login/", credentials);
     return response.data;
   };
+
+  async deleteUser(id: number) {
+    const accessToken = parseCookies().accessToken;
+    const response = await axiosInstance.delete(`/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  }
+
+  async updateUser(id:number, userData: EditUser) {
+    const accessToken = parseCookies().accessToken;
+    console.log(accessToken);
+    const responce = await axiosInstance.put(`/user/${id}`,
+      userData,
+      {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return responce.data;
+  }
 }
 
 export default new AxiosController;

@@ -1,16 +1,18 @@
-"use client";
-import React from "react";
+import ProfileInfo from "@/components/profile-info/profile-info";
+import { Box, Flex, Heading } from "@radix-ui/themes";
+import React, { FC } from "react";
+import styles from "./prifile.module.css"
+import AppLogo from "@/components/app-logo/app-logo";
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   return (
-    <main>
-      <h1>Your info:</h1>
-      {/* todo: current user info */}
-      <div>
-        <button>Edit</button>
-        <button>Delete</button>
-      </div>
-    </main>
+    <Box className={styles.profilePageContainer}>
+      <AppLogo />
+      <Flex direction="column" gap="5" className={styles.profileContainer}>
+        <Heading as="h2">Your info:</Heading>
+        <ProfileInfo />
+      </Flex>
+    </Box>
   );
 }
 

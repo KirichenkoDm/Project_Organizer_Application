@@ -5,7 +5,8 @@ import styles from "./home-header.module.css"
 import { Avatar } from 'radix-ui';
 import Link from 'next/link';
 import { useUserStore } from '@/store/user-store';
-import { Box, Heading } from '@radix-ui/themes';
+import { Box, Heading, Text } from '@radix-ui/themes';
+import AppLogo from '../app-logo/app-logo';
 
 const HomeHeader: FC = () => {
   const userStore = useUserStore();
@@ -17,9 +18,9 @@ const HomeHeader: FC = () => {
   return (
     <Box className={styles.homeHeadercContaner}>
       <header className={styles.homeHeader}>
-        <Heading as="h1" className={styles.logo}>Project Organizer APP</Heading>
+        <AppLogo />
         <Link href="/profile" className={styles.userBadge}>
-          <span className={styles.userName}>{displayName}</span>
+          <Text className={styles.userName}>{displayName}</Text>
           <Avatar.Root className={styles.avatar}>
             <Avatar.Fallback>
               {avatarFallback}

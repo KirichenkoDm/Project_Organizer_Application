@@ -6,6 +6,7 @@ import { Field } from 'formik';
 import { Label } from 'radix-ui';
 
 interface InputGroupProps {
+  placeholder?: string;
   id: string;
   type: string;
   touched?: boolean;
@@ -14,6 +15,7 @@ interface InputGroupProps {
 }
 
 const InputGroup: React.FC<InputGroupProps> = ({
+  placeholder,
   id,
   type,
   touched,
@@ -24,6 +26,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
     <div className={styles.inputGroup}>
       <Label.Root htmlFor={id}>{label}:</Label.Root>
       <Field
+        placeholder={placeholder}
         type={type}
         id={id}
         name={id}

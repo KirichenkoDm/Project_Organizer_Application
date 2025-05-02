@@ -18,15 +18,16 @@ const HomeProjectListHeading: FC = () => {
           </Dialog.Description>
 
           <div>here will be form</div>
-
-          <Dialog.Close>
-            <Button variant="soft" color="red">
-              Cancel
-            </Button>
-          </Dialog.Close>
-          <Dialog.Close>
-            <Button>Save</Button>
-          </Dialog.Close>
+          <Flex justify="end" gap="3">
+            <Dialog.Close>
+              <Button variant="soft" color="red">
+                Cancel
+              </Button>
+            </Dialog.Close>
+            <Dialog.Close>
+              <Button>Save</Button>
+            </Dialog.Close>
+          </Flex>
         </Dialog.Content>
       </Dialog.Root>
     </Flex>

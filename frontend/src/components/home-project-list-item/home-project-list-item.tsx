@@ -1,8 +1,10 @@
+"use client"
+
 import { ProjectThemeEnum } from "@/shared/project-theme.enum";
 import Link from "next/link";
 import React, { FC } from "react";
 import styles from "./home-project-list-item.module.css";
-import { Box, Heading, Text } from "@radix-ui/themes";
+import { Card, Heading, Text } from "@radix-ui/themes";
 
 interface HomeProjectListItemProps {
   id: number;
@@ -20,11 +22,11 @@ const HomeProjectListItem: FC<HomeProjectListItemProps> = ({
 
   return (
     <Link href={`/projects/${id}`} className={styles.projectCardLink}>
-      <Box className={styles.projectCard}>
+      <Card className={styles.projectCard}>
         <Heading as="h3" className={styles.projectName}>{name}</Heading>
         <Text>{theme}</Text>
         <Text as="p" className={styles.projectDescription}>{description}</Text>
-      </Box>
+      </Card>
     </Link>
   );
 };

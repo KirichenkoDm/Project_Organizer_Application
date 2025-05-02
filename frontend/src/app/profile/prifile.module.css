@@ -1,0 +1,9 @@
+.profileContainer {
+  align-items: center;
+  height: 100vh;
+  justify-content: center;
+}
+
+.profilePageContainer {
+  padding: 19px 32px;
+}

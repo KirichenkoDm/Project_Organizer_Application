@@ -16,7 +16,7 @@ const ProfileInfo: FC = observer(() => {
   const router = useRouter();
   const handleDelete = async () => {
     await userStore.deleteUser();
-    router.replace("/auth");
+    // router.replace("/auth");
   };
 
   let content

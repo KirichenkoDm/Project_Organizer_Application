@@ -5,7 +5,7 @@ import { CreateUser } from "@/shared/types/create-user";
 import { Credentials } from "@/shared/types/credentials";
 import { EditUser } from "@/shared/types/edit-user";
 
-const ONE_HOUR = 60*1;
+const ONE_HOUR = 60*60;
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,

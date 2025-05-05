@@ -8,6 +8,8 @@ import InputGroup from "../input-group/input-group";
 import { useUserStore } from "@/store/user-store";
 import {useRouter} from "next/navigation";
 import { CreateUser } from "@/shared/types/create-user";
+import { Button } from "@radix-ui/themes";
+import AppButton from "../app-button/app-button";
 
 interface RegistrationFormProps {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
@@ -87,9 +89,8 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ setIsNewAccount }) => {
               label = "Confirm Password"
             />
 
-            <div>
-              <button type="submit" className={styles.submitButton}>Confirm</button>
-            </div>
+            <AppButton type="submit">Confirm</AppButton>
+          
 
             <div className={styles.switchLink}>
               Already have an account?{" "}

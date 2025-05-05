@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  UseInterceptors,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -15,6 +16,8 @@ import { GetUserDto, GetUserWithRoleDto } from "./dto/get-user.dto";
 import { Public } from "src/shared/public.decorator";
 import { SkipRoles } from "src/shared/roles.decorator";
 import { ParseNumberPipe } from "src/shared/parse-number.pipe";
+import { TokensDto } from "src/shared/dto/token.dto";
+import { SetRefreshTokenInterceptor } from "src/shared/refresh-token.interceptor";
 
 
 @Controller("user")
@@ -62,9 +65,10 @@ export class UserController {
   */
   @Post()
   @Public()
+  @UseInterceptors(SetRefreshTokenInterceptor)
   async createUser(
     @Body() createUserDto: CreateUserDto,
-  ): Promise<GetUserDto> {
+  ): Promise<TokensDto> {
     return await this.userService.createUser(createUserDto);
   }
 

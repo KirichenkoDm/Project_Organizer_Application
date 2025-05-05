@@ -13,7 +13,10 @@ export const HomeProjectsStore = types
   .actions((self) => {
     const actions = {
       getHomeProjects: flow(function* (userId: number) {
-        self.homeProjects = yield AxiosController.fetchHomeProjects(userId);
+        const projects = yield AxiosController.fetchHomeProjects(userId);
+        if (projects) {
+          self.homeProjects = projects;
+        }
       }),
 
     };

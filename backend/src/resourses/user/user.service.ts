@@ -7,6 +7,8 @@ import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import * as bcrypt from 'bcrypt';
 import { UserCore } from "./user.core";
 import { RoleRepository } from "../role/role.repository";
+import { TokensDto } from "../../shared/dto/token.dto";
+import { generateTokens } from "src/shared/generate-tokens";
 
 @Injectable()
 export class UserService {
@@ -56,7 +58,7 @@ export class UserService {
     return users;
   }
 
-  async createUser(userData: CreateUserDto): Promise<GetUserDto> {
+  async createUser(userData: CreateUserDto): Promise<TokensDto> {
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
 
@@ -66,7 +68,10 @@ export class UserService {
       throw new BadRequestException("User was not created");
     }
 
-    return this.userCore.mapperEntityToGetDto(user);
+    const tokens = await generateTokens(user);
+    await this.userRepository.setRefreshToken(user.id, tokens.refreshToken);
+    
+    return tokens;
   }
 
   async updateUserById(id: number, userData: UpdateUserDto): Promise<GetUserDto> {

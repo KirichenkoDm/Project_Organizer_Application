@@ -8,6 +8,7 @@ import InputGroup from "../input-group/input-group";
 import { useUserStore } from "@/store/user-store";
 import { Box, Button, Heading, Text } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
+import AppButton from "../app-button/app-button";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +16,7 @@ type AuthenticationFormProps = {
 
 const initialValues = { email: "", password: "" }
 
-const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
+const AuthenticationForm: FC<AuthenticationFormProps> = ({ setIsNewAccount }) => {
   const userStore = useUserStore()
   const router = useRouter()
   const handleSubmit = async (values: typeof initialValues) => {
@@ -33,32 +34,30 @@ const AuthenticationForm: FC<AuthenticationFormProps> = ({setIsNewAccount}) => {
         validationSchema={authValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({touched, errors}) => (
+        {({ touched, errors }) => (
           <Form>
-            <InputGroup 
-              id = "email"
-              type = "email"
-              touched = {touched.email}
-              errors = {errors.email}
-              label = "Email"
+            <InputGroup
+              id="email"
+              type="email"
+              touched={touched.email}
+              errors={errors.email}
+              label="Email"
             />
 
-            <InputGroup 
-              id = "password"
-              type = "password"
-              touched = {touched.password}
-              errors = {errors.password}
-              label = "Password"
+            <InputGroup
+              id="password"
+              type="password"
+              touched={touched.password}
+              errors={errors.password}
+              label="Password"
             />
 
-            <Box>
-              <Button 
-                type="submit" 
-                className={styles.submitButton}
-              >
-                Confirm
-              </Button>
-            </Box>
+            <AppButton
+              type="submit"
+            >
+              Confirm
+            </AppButton>
+
 
             <Box className={styles.switchLink}>
               Don't have an account?{" "}

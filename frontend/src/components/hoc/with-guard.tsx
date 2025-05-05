@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store/user-store";
+import { observer } from "mobx-react-lite";
+import LoadingRedirect from "../loading-redirect/loading-redirect";
 
 const PUBLIC_ROUTES = ["/auth"];
 
 function withGuard<P extends object>(Component: React.ComponentType<P>) {
 
-  return function GuardedComponent(props: P) {
+  function GuardedComponent(props: P) {
     const pathname = usePathname();
     const userStore = useUserStore();
     const router = useRouter();
@@ -26,22 +28,26 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
         const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
         
         if (!userStore.isAuthenticated && !isPublicRoute) {
-          console.log(userStore.user)
+          console.log("Authentication failed, redirecting to /auth");
           router.replace("/auth")
         } else {
           setIsGuardPassed(true);
         }
       } catch (error) {
         console.error("Authentication guard error:", error);
+        router.replace("/auth");
+        return;
       }
-    }, [isClient, pathname]);
+    }, [isClient, pathname, userStore.user]);
 
     if (!isClient || !isGuardPassed) {
-      return null;
+      return <LoadingRedirect isLoading={true}/>;
     }
 
     return <Component {...props} />;
   };
+
+  return observer(GuardedComponent)
 }
 
 export default withGuard;

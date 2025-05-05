@@ -41,15 +41,14 @@ axiosInstance.interceptors.response.use(
 
 class AxiosController {
   // Home Projects List
-  async fetchHomeProjects(userId: number): Promise<HomeProjectListItemInstance[]> {
+  async fetchHomeProjects(userId: number): Promise<HomeProjectListItemInstance[] | null> {
     const accessToken = parseCookies().accessToken;
     const response = await axiosInstance.get(`/project/user/${userId}`,{
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-
-    return response.data
+    return response?.data ?? null;
   };
 
   //User

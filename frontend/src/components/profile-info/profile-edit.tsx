@@ -70,7 +70,6 @@ const ProfileEdit: FC<ProfileEditProps> = ({
           />
 
           <Flex gap="3" mt="2" justify="end">
-            <AppButton type="submit" variant="solid">Save</AppButton>
             <AppButton
               type="button"
               variant="soft"
@@ -78,6 +77,7 @@ const ProfileEdit: FC<ProfileEditProps> = ({
             >
               Cancel
             </AppButton>
+            <AppButton type="submit" variant="solid">Save</AppButton>
           </Flex>
         </Form>
       )}

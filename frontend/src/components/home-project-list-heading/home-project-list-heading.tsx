@@ -1,6 +1,7 @@
 import { Button, Flex, Heading, Dialog } from "@radix-ui/themes";
 import React, { FC } from "react";
 import styles from "./home-project-list-heading.module.css"
+import ProjectCreationForm from "../project-creation-form/project-creation-form";
 
 const HomeProjectListHeading: FC = () => {
   return (
@@ -11,22 +12,10 @@ const HomeProjectListHeading: FC = () => {
           <Button variant="solid">Create new project</Button>
         </Dialog.Trigger>
 
-        <Dialog.Content>
-          <Dialog.Title>Input new project data</Dialog.Title>
-          <Dialog.Description>
-            You will become owner of new project after creation
-          </Dialog.Description>
-
-          <div>here will be form</div>
-          <Flex justify="end" gap="3">
-            <Dialog.Close>
-              <Button variant="soft" color="red">
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button>Save</Button>
-            </Dialog.Close>
+        <Dialog.Content maxWidth="400px">
+          <Flex direction="column" align="center">
+            <Dialog.Title>Input new project data</Dialog.Title>
+            <ProjectCreationForm />
           </Flex>
         </Dialog.Content>
       </Dialog.Root>

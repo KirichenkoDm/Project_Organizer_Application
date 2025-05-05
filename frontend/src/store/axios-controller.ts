@@ -4,6 +4,7 @@ import { HomeProjectListItemInstance } from "./models/home-project-list-item";
 import { CreateUser } from "@/shared/types/create-user";
 import { Credentials } from "@/shared/types/credentials";
 import { EditUser } from "@/shared/types/edit-user";
+import { CreateProject } from "@/shared/types/create-project";
 
 const ONE_HOUR = 60*60;
 
@@ -74,7 +75,6 @@ class AxiosController {
 
   async updateUser(id:number, userData: EditUser) {
     const accessToken = parseCookies().accessToken;
-    console.log(accessToken);
     const responce = await axiosInstance.put(`/user/${id}`,
       userData,
       {
@@ -84,6 +84,20 @@ class AxiosController {
     });
     return responce.data;
   }
+
+  //project
+  async createProject(projectData: CreateProject) {
+    const accessToken = parseCookies().accessToken;
+    const responce = await axiosInstance.post(`/project`,
+      projectData,
+      {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return responce.data;
+  }
+
 }
 
 export default new AxiosController;

@@ -4,6 +4,7 @@ import React from 'react';
 import styles from "@/shared/styles/form.module.css";
 import { Field } from 'formik';
 import { Label } from 'radix-ui';
+import { Box } from '@radix-ui/themes';
 
 interface InputGroupProps {
   placeholder?: string;
@@ -12,6 +13,9 @@ interface InputGroupProps {
   touched?: boolean;
   errors?: string;
   label: string;
+  as?: string;
+  rows?: number;
+  children?: React.ReactNode;
 }
 
 const InputGroup: React.FC<InputGroupProps> = ({
@@ -20,24 +24,31 @@ const InputGroup: React.FC<InputGroupProps> = ({
   type,
   touched,
   errors,
-  label
+  label,
+  as,
+  rows = 4,
+  children
 }) => {
   return (
-    <div className={styles.inputGroup}>
+    <Box className={styles.inputGroup}>
       <Label.Root htmlFor={id}>{label}:</Label.Root>
       <Field
         placeholder={placeholder}
-        type={type}
+        type={as ? undefined : type} 
         id={id}
         name={id}
+        as={as}
+        rows={as === "textarea" ? rows : undefined}
         className={touched && errors ? styles.inputError : ""}
-      />
-      <div
+      >
+        {children}
+      </Field>
+      <Box
         className={`${styles.errorMessage} ${touched && errors ? styles.errorMessageVisible : ''}`}
       >
         {errors}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 };
 

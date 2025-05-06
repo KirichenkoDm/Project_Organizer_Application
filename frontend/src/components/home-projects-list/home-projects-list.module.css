@@ -35,7 +35,7 @@
   overflow: hidden;
 }
 
-.projectsListViewport {
+.projectsListBox {
   width: 100%;
   height: 100%;
   display: flex;
@@ -43,53 +43,4 @@
   flex-direction: row;
   gap: 20px;
   padding: 0px 15px;
-}
-
-.projectsList::-webkit-scrollbar {
-  width: 12px;
-}
-
-.projectsList::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.projectsList::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.projectsList::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.ScrollAreaScrollbar {
-  display: flex;
-  user-select: none;
-  touch-action: none;
-  padding: 2px;
-  background: rgba(0, 0, 0, 0.05);
-  transition: background 160ms ease-out;
-}
-
-.ScrollAreaScrollbar:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.ScrollAreaScrollbar[data-orientation="vertical"] {
-  width: 10px;
-}
-
-.ScrollAreaScrollbar[data-orientation="horizontal"] {
-  flex-direction: column;
-  height: 10px;
-}
-
-.ScrollAreaThumb {
-  flex: 1;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  position: relative;
-}
-
-.ScrollAreaThumb:hover {
-  background: rgba(0, 0, 0, 0.3);
 }

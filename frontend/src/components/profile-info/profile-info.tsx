@@ -7,18 +7,12 @@ import React, { FC, useState } from "react";
 import InfoControls from "../info-controls/info-controls";
 import ProfileView from "./profile-view";
 import ProfileEdit from "./profile-edit";
-import LoadingRedirect from "../loading-redirect/loading-redirect";
 
 const ProfileInfo: FC = observer(() => {
   const [isEditMode, setIsEditMode] = useState(false);
   const userStore = useUserStore();
 
   let content
-
-  if (!userStore.getUserData) {
-    content = <LoadingRedirect isLoading={false} />
-    return content;
-  }
 
   const user = userStore.getUserData!;
 

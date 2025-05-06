@@ -5,12 +5,12 @@ export const ProjectValidationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Project name must not be empty")
     .min(5, "Project name is too short")
-    .min(5, "Project name is too long"),
+    .max(50, "Project name is too long"),
   theme: Yup.string()
     .required("Theme is required")
     .oneOf(Object.values(ProjectThemeEnum), "Invalid theme"),
   description: Yup.string()
     .required("Description must not be empty")
     .min(5, "Description is too short")
-    .max(50, "Description is too long"),
+    .max(70, "Description is too long"),
 });

@@ -1,17 +1,3 @@
-.homeHeadercContaner {
-  width: 100%;
-}
-
-.homeHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: #eee;
-  border-bottom: 1px solid #eaeaea;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .userBadge {
   display: flex;
   align-items: center;

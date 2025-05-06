@@ -13,12 +13,6 @@ interface ProfileViewProps {
 }
 
 const ProfileView: FC<ProfileViewProps> = observer(({ user }) => {
-  const userStore = useUserStore();
-  
-  const handleLogOut = () => {
-    userStore.logout();
-  }
-
   return (
     <Flex direction="column" align="end" gap="2">
       <Box p="4" className={styles.profileViewContainer}>
@@ -40,9 +34,6 @@ const ProfileView: FC<ProfileViewProps> = observer(({ user }) => {
           </Flex>
         </Flex>
       </Box>
-      <AppButton onClick={handleLogOut}>
-        Log out
-      </AppButton>
     </Flex>
 
   );

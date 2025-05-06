@@ -21,7 +21,10 @@ const HomeProjectListItem: FC<HomeProjectListItemProps> = ({
 }) => {
 
   return (
-    <Link href={`/projects/${id}`} className={styles.projectCardLink}>
+    <Link 
+      href={`/project/${id}/board`} 
+      className={styles.projectCardLink}
+    >
       <Card className={styles.projectCard}>
         <Heading as="h3" className={styles.projectName}>{name}</Heading>
         <Text>{theme}</Text>

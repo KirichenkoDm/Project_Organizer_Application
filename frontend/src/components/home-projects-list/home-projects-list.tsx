@@ -3,20 +3,19 @@
 import { observer } from "mobx-react-lite";
 import React, { FC, useEffect } from "react";
 import styles from "./home-projects-list.module.css";
-import { ScrollArea } from "radix-ui";
 import HomeProjectListItem from "../home-project-list-item/home-project-list-item";
 import EmptyList from "./empty-list";
 import { useHomeProjectsStore } from "@/store/home-projects-store";
 import { useUserStore } from "@/store/user-store";
-import { Box } from "@radix-ui/themes";
+import { Box, ScrollArea } from "@radix-ui/themes";
 
 
 const HomeProjectsList: FC = observer(() => {
-  const { homeProjects, getHomeProjects } = useHomeProjectsStore()
+  const { homeProjects, fetchHomeProjects } = useHomeProjectsStore()
   const { user } = useUserStore()
 
   useEffect(() => {
-    getHomeProjects(user!.id)
+    fetchHomeProjects(user!.id)
   }, []);
 
   let content;
@@ -26,8 +25,8 @@ const HomeProjectsList: FC = observer(() => {
   } else {
     content =
       <Box className={styles.projectsListContainer}>
-        <ScrollArea.Root className={styles.projectsList}>
-          <ScrollArea.Viewport className={styles.projectsListViewport}>
+        <ScrollArea className={styles.projectsList}>
+          <Box className={styles.projectsListBox}>
             {homeProjects.map((project) => (
               <HomeProjectListItem
                 id={project.id}
@@ -37,11 +36,8 @@ const HomeProjectsList: FC = observer(() => {
                 key={project.id}
               />
             ))}
-          </ScrollArea.Viewport>
-          <ScrollArea.Scrollbar className={styles.ScrollAreaScrollbar}>
-            <ScrollArea.Thumb className={styles.ScrollAreaThumb} />
-          </ScrollArea.Scrollbar>
-        </ScrollArea.Root>
+          </Box>
+        </ScrollArea>
       </Box>
   }
 

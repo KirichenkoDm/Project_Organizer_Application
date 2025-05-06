@@ -71,6 +71,7 @@ const ProfileEdit: FC<ProfileEditProps> = ({
 
           <Flex gap="3" mt="2" justify="end">
             <AppButton
+              color="red"
               type="button"
               variant="soft"
               onClick={() => setIsEditMode(false)}

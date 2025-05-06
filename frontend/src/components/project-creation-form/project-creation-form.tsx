@@ -10,6 +10,7 @@ import { ProjectValidationSchema } from "./project-validation";
 import InputGroup from "../input-group/input-group";
 import { Dialog, Flex } from "@radix-ui/themes";
 import AppButton from "../app-button/app-button";
+import { useHomeProjectsStore } from "@/store/home-projects-store";
 
 const initialValues = {
   name: "",
@@ -19,7 +20,7 @@ const initialValues = {
 
 const ProjectCreationForm: FC = () => {
   const userStore = useUserStore();
-  const projectStore = useProjectStore()
+  const homeProjectsStore = useHomeProjectsStore()
   
   const handleSubmit = (values: typeof initialValues) => {
     const projectData = {
@@ -27,7 +28,7 @@ const ProjectCreationForm: FC = () => {
       creatorId: userStore.user!.id
     };
     
-    projectStore.createProject(projectData)
+    homeProjectsStore.createProject(projectData)
   }
 
   return (
@@ -77,7 +78,9 @@ const ProjectCreationForm: FC = () => {
                   Cancel
                 </AppButton>
               </Dialog.Close>
-              <AppButton type="submit">Create Project</AppButton>
+              <Dialog.Close>
+                <AppButton type="submit">Create Project</AppButton>
+              </Dialog.Close>
             </Flex>
           </Form>
         )}

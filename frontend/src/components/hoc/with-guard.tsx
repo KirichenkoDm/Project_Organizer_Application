@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store/user-store";
 import { observer } from "mobx-react-lite";
-import LoadingRedirect from "../loading-redirect/loading-redirect";
+import AppLoadingPlaceholder from "../app-loading-placeholder/app-loading-placeholder";
 
 const PUBLIC_ROUTES = ["/auth"];
 
@@ -30,6 +30,8 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
         if (!userStore.isAuthenticated && !isPublicRoute) {
           console.log("Authentication failed, redirecting to /auth");
           router.replace("/auth")
+        } else if (userStore.isAuthenticated && pathname === "/auth") {
+          router.replace("/home");
         } else {
           setIsGuardPassed(true);
         }
@@ -41,7 +43,9 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
     }, [isClient, pathname, userStore.user]);
 
     if (!isClient || !isGuardPassed) {
-      return <LoadingRedirect isLoading={true}/>;
+      return <AppLoadingPlaceholder 
+      text="Application is starting up. You will be redirected in a moment..."
+      />;
     }
 
     return <Component {...props} />;

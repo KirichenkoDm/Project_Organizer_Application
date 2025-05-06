@@ -8,7 +8,7 @@ const ONE_HOUR = 60*60;
 
 export const initialiseUser = (responseData: AccessTokenBody): UserInstance => {
   const { accessToken } = responseData;
-  console.log(accessToken);
+
   setCookie(null, COOKIE_ACCESS_TOKEN_KEY, accessToken, {
     maxAge: ONE_HOUR,
     path: "/",

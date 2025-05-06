@@ -4,10 +4,11 @@ import { Credentials } from "@/shared/types/credentials";
 import { CreateUser } from "@/shared/types/create-user";
 import { initialiseUser } from "./initialise-user";
 import { useStore } from "./root-provider";
-import axiosController from "./axios-controller";
+import AxiosController from "./axios-controller";
 import { EditUser } from "@/shared/types/edit-user";
 import { destroyCookie } from "nookies";
 import { COOKIE_ACCESS_TOKEN_KEY, LOCAL_STORAGE_USER_KEY } from "@/shared/constants";
+import { AccessTokenBody } from "@/shared/types/access-token";
 
 export const UserStore = types
   .model("UserStore", {
@@ -17,6 +18,7 @@ export const UserStore = types
     get isAuthenticated() {
       return self.user !== undefined;
     },
+    
     get getUserData() {
       if(self.user) {
         return self.user;
@@ -31,31 +33,50 @@ export const UserStore = types
       },
 
       logout() {
-        destroy(self.user);
         destroyCookie(null, COOKIE_ACCESS_TOKEN_KEY);
         localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+        destroy(self.user);
       },
 
       register: flow(function* (userData: CreateUser) {
-        const user = yield axiosController.register(userData);
+        const user = yield AxiosController.post<AccessTokenBody>(
+          "/user",
+          userData,
+          false
+        );
         actions.setUser(initialiseUser(user));
       }),
 
       login: flow(function* (credentials: Credentials) {
-        const userData = yield axiosController.login(credentials);
+        const userData = yield AxiosController.post<AccessTokenBody>(
+          "/auth/login/",
+          credentials,
+          false
+        );
         actions.setUser(initialiseUser(userData));
       }),
 
       deleteUser: flow(function* () {
-        const responce = yield axiosController.deleteUser(self.user!.id)
+        const responce = yield AxiosController.delete(
+          `/user/${self.user?.id}`,
+          true
+        )
         actions.logout()
       }),
 
       editUser: flow(function* (userData: EditUser) {
-        const user = yield axiosController.updateUser(self.user!.id, userData)
-        console.log(user);
+        const user = yield AxiosController.put<UserInstance>(
+          `/user/${self.user?.id}`,
+          userData,
+          true
+        );
         actions.setUser(user);
-      })
+      }),
+
+      refresh: flow(function* () {
+        const user = yield AxiosController.sendRefresh()
+        actions.setUser(initialiseUser(user));
+      }),
     }
     return actions;
   })

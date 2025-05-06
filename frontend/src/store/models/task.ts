@@ -1,4 +1,4 @@
-import { types } from "mobx-state-tree";
+import { Instance, types } from "mobx-state-tree";
 
 export const Task = types.model("Task", {
   id: types.identifierNumber,
@@ -9,6 +9,8 @@ export const Task = types.model("Task", {
   blockedBy: types.maybe(types.number),
   blockedByName: types.maybe(types.string),
   assignedId: types.maybe(types.number),
-  start: types.maybeNull(types.Date),
-  end: types.maybeNull(types.Date),
+  start: types.maybe(types.Date),
+  end: types.maybe(types.Date),
 });
+
+export type TaskInstance = Instance<typeof Task>;

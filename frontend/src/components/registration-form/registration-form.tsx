@@ -8,7 +8,7 @@ import InputGroup from "../input-group/input-group";
 import { useUserStore } from "@/store/user-store";
 import {useRouter} from "next/navigation";
 import { CreateUser } from "@/shared/types/create-user";
-import { Button } from "@radix-ui/themes";
+import { Box, Heading, Text } from "@radix-ui/themes";
 import AppButton from "../app-button/app-button";
 
 interface RegistrationFormProps {
@@ -34,14 +34,14 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ setIsNewAccount }) => {
       lastName: values.lastName,
       password: values.password
     } 
-    console.log(data)
+
     await userStore.register(data);
     router.replace("/home");
   }
 
   return (
-    <div className={styles.formWrapper}>
-      <h2>Sign Up</h2>
+    <Box className={styles.formWrapper}>
+      <Heading as="h2">Sign Up</Heading>
       <Formik
         initialValues={initialValues}
         validationSchema={RegistrationValidationSchema}
@@ -92,18 +92,18 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ setIsNewAccount }) => {
             <AppButton type="submit">Confirm</AppButton>
           
 
-            <div className={styles.switchLink}>
+            <Box className={styles.switchLink}>
               Already have an account?{" "}
-              <span
+              <Text
                 onClick={() => setIsNewAccount(false)}
               >
                 Sign in
-              </span>
-            </div>
+              </Text>
+            </Box>
           </Form>
         )}
       </Formik>
-    </div>
+    </Box>
   );
 }
 

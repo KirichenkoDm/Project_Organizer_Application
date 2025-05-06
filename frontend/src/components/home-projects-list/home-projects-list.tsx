@@ -28,7 +28,7 @@ const HomeProjectsList: FC = observer(() => {
       <Box className={styles.projectsListContainer}>
         <ScrollArea.Root className={styles.projectsList}>
           <ScrollArea.Viewport className={styles.projectsListViewport}>
-            {homeProjects.map((project) =>
+            {homeProjects.map((project) => (
               <HomeProjectListItem
                 id={project.id}
                 name={project.name}
@@ -36,7 +36,7 @@ const HomeProjectsList: FC = observer(() => {
                 description={project.description}
                 key={project.id}
               />
-            )}
+            ))}
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar className={styles.ScrollAreaScrollbar}>
             <ScrollArea.Thumb className={styles.ScrollAreaThumb} />

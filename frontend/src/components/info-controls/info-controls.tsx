@@ -16,8 +16,6 @@ const InfoControls: FC<InfoControlsProps> = ({
   deleteTarget
 }) => (
   <Flex justify="end" gap="2">
-    <AppButton variant="soft" onClick={() => setIsEditMode(true)}>Edit</AppButton>
-
     <AlertDialog.Root>
       <AlertDialog.Trigger>
         <AppButton color="red" variant="soft">Delete</AppButton>
@@ -47,8 +45,8 @@ const InfoControls: FC<InfoControlsProps> = ({
           </AlertDialog.Action>
         </Flex>
       </AlertDialog.Content>
-
     </AlertDialog.Root>
+    <AppButton variant="soft" onClick={() => setIsEditMode(true)}>Edit</AppButton>
   </Flex>
 )
 

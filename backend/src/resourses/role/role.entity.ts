@@ -19,12 +19,10 @@ export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
-  @Column("int")
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "user_id" })
   user: UserEntity;

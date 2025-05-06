@@ -26,23 +26,19 @@ export class TaskEntity {
   @Column("int")
   order: number;
 
-  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
-  @Column("int")
   @ManyToOne(() => ColumnEntity)
   @JoinColumn({ name: "column_id" })
   column: ColumnEntity;
 
-  @Column({ type: "int", nullable: true })
-  @ManyToOne(() => TaskEntity)
+  @ManyToOne(() => TaskEntity, { nullable: true })
   @JoinColumn({ name: "blocked_by" })
   task: TaskEntity;
 
-  @Column({ type: "int", nullable: true })
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity, { nullable: true }) 
   @JoinColumn({ name: "assigned_id" })
   user: UserEntity;
 

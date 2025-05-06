@@ -17,7 +17,6 @@ export class ColumnEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "project_id" })
   project: ProjectEntity;

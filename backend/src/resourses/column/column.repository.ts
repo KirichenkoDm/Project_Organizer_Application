@@ -22,6 +22,9 @@ export class ColumnRepository extends Repository<ColumnEntity> {
         order: true,
         isCustom: true,
       },
+      relations: {
+        project: true
+      },
       order: { order: "ASC" },
     })
   }

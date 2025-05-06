@@ -42,12 +42,17 @@ export class RoleRepository extends Repository<RoleEntity> {
     const role = await this.findOne({
       select: {
         role: true,
-      }, 
+      },
       where: {
-        user: {id: userId},
-        project: {id: projectId}
-      }
-     })
-     return role.role;
+        user: { id: userId },
+        project: { id: projectId }
+      },
+      relations: {
+        user: true,
+        project: true,
+      },
+    });
+    
+    return role.role;
   }
 }

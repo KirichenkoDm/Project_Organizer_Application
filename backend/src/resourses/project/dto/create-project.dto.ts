@@ -5,7 +5,7 @@ export class CreateProjectDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(5)
-  @MaxLength(30)
+  @MaxLength(50)
   name: string;
 
   @IsNotEmpty()
@@ -15,7 +15,7 @@ export class CreateProjectDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(5)
-  @MaxLength(50)
+  @MaxLength(70)
   description: string;
 
   @IsNotEmpty()

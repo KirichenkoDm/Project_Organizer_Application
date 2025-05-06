@@ -8,6 +8,7 @@ import { RoleRepository } from "../role/role.repository";
 import { RoleService } from "../role/role.service";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { ProjectCore } from "./project.core";
+import { CreateRoleDto } from "../role/dto/create-role.dto";
 
 @Injectable()
 export class ProjectService {
@@ -56,11 +57,10 @@ export class ProjectService {
     }
 
     const roleData = {
-      userId: projectData.creatorId,
-      projectId: project.id,
+      user: {id: projectData.creatorId},
+      project: {id: project.id},
       role: RoleNamesEnum.Owner
-    }
-    
+    } as CreateRoleDto;
     await this.roleService.createRole(roleData);
 
     return this.projectCole.mapperEntityToGetDTO(project);

@@ -1,24 +1,22 @@
 "use client"
 
 import { UserInstance } from "@/store/models/user";
-import { Box, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 import React, { FC } from "react";
 import styles from "./profile-info.module.css"
 import AppButton from "../app-button/app-button";
 import { useUserStore } from "@/store/user-store";
-import { useRouter } from "next/navigation";
+import { observer } from "mobx-react-lite";
 
 interface ProfileViewProps {
   user: UserInstance
 }
 
-const ProfileView: FC<ProfileViewProps> = ({ user }) => {
+const ProfileView: FC<ProfileViewProps> = observer(({ user }) => {
   const userStore = useUserStore();
-  const router = useRouter();
   
   const handleLogOut = () => {
-    router.replace("/auth");
-    userStore.setUser(null);
+    userStore.logout();
   }
 
   return (
@@ -48,6 +46,6 @@ const ProfileView: FC<ProfileViewProps> = ({ user }) => {
     </Flex>
 
   );
-}
+})
 
 export default ProfileView;

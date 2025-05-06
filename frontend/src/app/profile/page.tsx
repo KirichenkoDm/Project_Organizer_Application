@@ -1,7 +1,7 @@
 import ProfileInfo from "@/components/profile-info/profile-info";
 import { Box, Flex, Heading } from "@radix-ui/themes";
 import React, { FC } from "react";
-import styles from "./prifile.module.css"
+import styles from "./profile.module.css"
 import AppLogo from "@/components/app-logo/app-logo";
 
 const ProfilePage: FC = () => {

@@ -7,6 +7,7 @@ import { useStore } from "./root-provider";
 import axiosController from "./axios-controller";
 import { EditUser } from "@/shared/types/edit-user";
 import { destroyCookie } from "nookies";
+import { COOKIE_ACCESS_TOKEN_KEY, LOCAL_STORAGE_USER_KEY } from "@/shared/constants";
 
 export const UserStore = types
   .model("UserStore", {
@@ -24,19 +25,18 @@ export const UserStore = types
   }))
   .actions((self) => {
     const actions = {
-      setUser(user: UserInstance | null) {
-        if (user) {
+      setUser(user: UserInstance) {
           self.user = user;
-          localStorage.setItem("user", JSON.stringify(user));
-        } else {
-          destroy(self.user);
-          destroyCookie(null, "accessToken");
-          localStorage.removeItem("user");
-        }
+          localStorage.setItem(LOCAL_STORAGE_USER_KEY, JSON.stringify(user));
+      },
+
+      logout() {
+        destroy(self.user);
+        destroyCookie(null, COOKIE_ACCESS_TOKEN_KEY);
+        localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
       },
 
       register: flow(function* (userData: CreateUser) {
-        console.log("how?");
         const user = yield axiosController.register(userData);
         actions.setUser(initialiseUser(user));
       }),
@@ -48,7 +48,7 @@ export const UserStore = types
 
       deleteUser: flow(function* () {
         const responce = yield axiosController.deleteUser(self.user!.id)
-        actions.setUser(null)
+        actions.logout()
       }),
 
       editUser: flow(function* (userData: EditUser) {

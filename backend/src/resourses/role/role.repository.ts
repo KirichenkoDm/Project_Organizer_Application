@@ -40,9 +40,6 @@ export class RoleRepository extends Repository<RoleEntity> {
 
   async findRole(userId: number, projectId: number): Promise<RoleNamesEnum> {
     const role = await this.findOne({
-      select: {
-        role: true,
-      },
       where: {
         user: { id: userId },
         project: { id: projectId }

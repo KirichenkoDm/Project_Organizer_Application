@@ -23,10 +23,12 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
+    console.log(error.response?.data);
     if (error.response?.status === 400) {
       return error.response.data;
     }
     if (error.response?.status === 401) {
+      
       const data = await AxiosController.sendRefresh();
 
       setCookie(
@@ -82,19 +84,19 @@ class AxiosController {
     return responce.data;
   }
 
-  static async get<T>(url: string, query?: Record<string, any>, withAuth = true) {
+  static async get<T>(url: string, query?: Record<string, any>, withAuth = true): Promise<T> {
     return await this.request<T>({ method: 'get', url, query, withAuth });
   }
   
-  static async post<T>(url: string, data?: any, withAuth = true) {
+  static async post<T>(url: string, data?: any, withAuth = true): Promise<T> {
     return await this.request<T>({ method: 'post', url, data, withAuth });
   }
   
-  static async put<T>(url: string, data?: any, withAuth = true) {
+  static async put<T>(url: string, data?: any, withAuth = true): Promise<T> {
     return await this.request<T>({ method: 'put', url, data, withAuth });
   }
   
-  static async delete<T>(url: string, withAuth = true) {
+  static async delete<T>(url: string, withAuth = true): Promise<T> {
     return await this.request<T>({ method: 'delete', url, withAuth });
   }
 

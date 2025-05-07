@@ -5,6 +5,8 @@ import Link from "next/link";
 import React, { FC } from "react";
 import styles from "./home-project-list-item.module.css";
 import { Card, Heading, Text } from "@radix-ui/themes";
+import { useProjectStore } from "@/store/project-store";
+import { Project } from "@/store/models/project";
 
 interface HomeProjectListItemProps {
   id: number;
@@ -19,11 +21,19 @@ const HomeProjectListItem: FC<HomeProjectListItemProps> = ({
   theme,
   description 
 }) => {
+  const projectStore = useProjectStore();
+
+  const handleOpenProject = () => {
+    projectStore.setProject(Project.create({
+      id, name, theme, description
+    }));
+  }
 
   return (
     <Link 
       href={`/project/${id}/board`} 
       className={styles.projectCardLink}
+      onClick={handleOpenProject}
     >
       <Card className={styles.projectCard}>
         <Heading as="h3" className={styles.projectName}>{name}</Heading>

@@ -36,6 +36,11 @@ export const UserStore = types
         destroyCookie(null, COOKIE_ACCESS_TOKEN_KEY);
         localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
         destroy(self.user);
+        AxiosController.post<void> (
+          "/auth/logout",
+          undefined,
+          true
+        )
       },
 
       register: flow(function* (userData: CreateUser) {

@@ -7,9 +7,9 @@ import withGuard from "@/components/hoc/with-guard";
 import { useEffect } from "react";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
-import { Toast } from "radix-ui";
 import AppToast from "@/components/app-toast/app-toast";
-
+import Head from "next/head";
+import "react-datepicker/dist/react-datepicker.css";
 
 function RootLayout({
   children,
@@ -19,10 +19,13 @@ function RootLayout({
 
   useEffect(() => {
     rootStore.hydrate();
-  }, [])
+  })
 
   return (
     <html lang="en">
+      <Head>
+        <title>Project Organizer App</title>
+      </Head>
       <StoreProvider value={rootStore}>
         <body>
           <Theme accentColor="sky" radius="large">

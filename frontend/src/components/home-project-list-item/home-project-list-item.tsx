@@ -7,6 +7,7 @@ import styles from "./home-project-list-item.module.css";
 import { Card, Heading, Text } from "@radix-ui/themes";
 import { useProjectStore } from "@/store/project-store";
 import { Project } from "@/store/models/project";
+import { useUserStore } from "@/store/user-store";
 
 interface HomeProjectListItemProps {
   id: number;
@@ -22,11 +23,12 @@ const HomeProjectListItem: FC<HomeProjectListItemProps> = ({
   description 
 }) => {
   const projectStore = useProjectStore();
-
+  const userStore = useUserStore()
   const handleOpenProject = () => {
     projectStore.setProject(Project.create({
       id, name, theme, description
     }));
+    userStore.fetchRole(id);
   }
 
   return (

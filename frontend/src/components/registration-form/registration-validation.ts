@@ -1,5 +1,7 @@
 import * as Yup from "yup";
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 export const RegistrationValidationSchema = Yup.object({
   firstName: Yup.string()
     .min(3, "First name is too short")
@@ -12,7 +14,7 @@ export const RegistrationValidationSchema = Yup.object({
     .required("Last name must not be empty"),
 
   email: Yup.string()
-    .email("Email must be a valid email address")
+    .matches(emailRegex, "Email must be a valid email address")
     .required("Email is required"),
 
   password: Yup.string()

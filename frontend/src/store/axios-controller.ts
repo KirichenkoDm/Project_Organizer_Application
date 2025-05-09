@@ -1,14 +1,11 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { parseCookies, setCookie } from "nookies";
-import { HomeProjectListItemInstance } from "./models/home-project-list-item";
-import { CreateUser } from "@/shared/types/create-user";
-import { Credentials } from "@/shared/types/credentials";
-import { EditUser } from "@/shared/types/edit-user";
-import { CreateProject } from "@/shared/types/create-project";
 import { COOKIE_ACCESS_TOKEN_KEY } from "@/shared/constants";
-import { headers } from "next/headers";
+import { AccessTokenBody } from "@/shared/types/access-token";
 
 const ONE_HOUR = 60 * 60;
+
+let wasRetry: boolean = false;
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -23,18 +20,24 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
-    console.log(error.response?.data);
     if (error.response?.status === 400) {
-      return error.response.data;
+      error.response.data;
     }
     if (error.response?.status === 401) {
-      
-      const data = await AxiosController.sendRefresh();
+      if (wasRetry) {
+        console.log("Retry does not help.");
+        wasRetry = false;
+        return error.response.data
+      }
+
+      wasRetry = true;
+      console.log("refreshing");
+      const accessToken = await AxiosController.sendRefresh();
 
       setCookie(
         null,
         COOKIE_ACCESS_TOKEN_KEY,
-        data.accessToken,
+        accessToken,
         {
           maxAge: ONE_HOUR,
           path: "/",
@@ -42,10 +45,11 @@ axiosInstance.interceptors.response.use(
       );
 
       const originalRequest = error.config!;
-      originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+      originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
 
       return axiosInstance(originalRequest);
     }
+    return error.response?.data;
   }
 );
 
@@ -87,23 +91,32 @@ class AxiosController {
   static async get<T>(url: string, query?: Record<string, any>, withAuth = true): Promise<T> {
     return await this.request<T>({ method: 'get', url, query, withAuth });
   }
-  
-  static async post<T>(url: string, data?: any, withAuth = true): Promise<T> {
-    return await this.request<T>({ method: 'post', url, data, withAuth });
+
+  static async post<T>(url: string, query?: Record<string, any>, data?: any, withAuth = true): Promise<T> {
+    return await this.request<T>({ method: 'post', url, query, data, withAuth });
   }
-  
-  static async put<T>(url: string, data?: any, withAuth = true): Promise<T> {
-    return await this.request<T>({ method: 'put', url, data, withAuth });
+
+  static async put<T>(url: string, query?: Record<string, any>, data?: any, withAuth = true): Promise<T> {
+    return await this.request<T>({ method: 'put', url, query, data, withAuth });
   }
-  
-  static async delete<T>(url: string, withAuth = true): Promise<T> {
-    return await this.request<T>({ method: 'delete', url, withAuth });
+
+  static async delete<T>(url: string, query?: Record<string, any>, withAuth = true): Promise<T> {
+    return await this.request<T>({ method: 'delete', url, query, withAuth });
   }
 
   static async sendRefresh() {
-    const response = await axiosInstance.post("/auth/refresh") 
-    return response.data;
-  } 
+    const response: AccessTokenBody = await this.post<AccessTokenBody>(
+      "/auth/refresh",
+      undefined,
+      undefined,
+      false
+    )
+    console.log(response);
+    if (response) {
+      return response.accessToken;
+    }
+    return "";
+  }
 }
 
 export default AxiosController;

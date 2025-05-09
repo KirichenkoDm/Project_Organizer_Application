@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CredentialDto } from "./dto/credential.dto";
 import * as bcrypt from 'bcrypt';
 import { GetUserDto } from "../user/dto/get-user.dto";
@@ -17,9 +17,13 @@ export class AuthService {
   async validateUser(loginData: CredentialDto): Promise<GetUserDto> {
     const user = await this.userRepository.findByEmailWithPassword(loginData.email);
 
+    if (!user) {
+      throw new NotFoundException("Invalid credentials");
+    }
+
     const isPasswordValid = await bcrypt.compare(loginData.password, user.password);
     if (!isPasswordValid) {
-      throw new BadRequestException("The password is wrong.");
+      throw new BadRequestException("Invalid credentials");
     }
 
     return user;
@@ -33,6 +37,11 @@ export class AuthService {
     return tokens;
   }
 
+  async logout(id: number): Promise<TokensDto> {
+    const refreshToken = (await this.userRepository.findOneBy({id})).refreshToken;
+    return {accessToken: "", refreshToken};
+  }
+
   async refreshTokens(refreshToken: string): Promise<TokensDto> {
     const payload = this.jwtService.verify(refreshToken, {
       secret: process.env.JWT_REFRESH_SECRET,
@@ -40,14 +49,13 @@ export class AuthService {
     if (!payload.sub) {
       throw new UnauthorizedException('Invalid refresh token');
     }
-
+    
     //todo: compare with refresh token in database
     const user = await this.userRepository.findById(payload.sub);
 
     const tokens = await generateTokens(user);
 
     await this.userRepository.setRefreshToken(payload.sub, tokens.refreshToken);
-
     return tokens;
   }
 }

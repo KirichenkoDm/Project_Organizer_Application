@@ -40,9 +40,9 @@ export class TaskService {
       throw new BadRequestException("Task was not created");
     }
 
-    await this.reorderTaskById(task.id, task.order);
-
-    return task;
+    // await this.reorderTaskById(task.id, task.order);
+    
+    return this.taskCore.mapperEntityToGetDTO(task)
   }
 
   async updateTaskById(id: number, taskData: UpdateTaskDto): Promise<GetTaskDto> {

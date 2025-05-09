@@ -22,27 +22,29 @@ export class RoleRepository extends Repository<RoleEntity> {
         "roles.role AS role",
       ])
       .where("roles.project_id = :projectId", { projectId })
+      .andWhere("user.archived_at IS NULL")
       .getRawMany();
   }
 
   async findProjectsByUserId(userId: number): Promise<ProjectEntity[]> {
     return await this.createQueryBuilder("roles")
-      .leftJoin("roles.project", "project")
-      .select([
-        "project.id AS id",
-        "project.name AS name",
-        "project.theme AS theme",
-        "project.description AS description",
-      ])
-      .where("roles.user_Id = :userId", { userId })
-      .getRawMany();
+    .innerJoin(
+      "roles.project", 
+      "project", 
+      "project.archived_at IS NULL"
+    )
+    .select([
+      "project.id AS id",
+      "project.name AS name",
+      "project.theme AS theme",
+      "project.description AS description",
+    ])
+    .where("roles.user_Id = :userId", { userId })
+    .getRawMany();
   }
 
   async findRole(userId: number, projectId: number): Promise<RoleNamesEnum> {
     const role = await this.findOne({
-      select: {
-        role: true,
-      },
       where: {
         user: { id: userId },
         project: { id: projectId }

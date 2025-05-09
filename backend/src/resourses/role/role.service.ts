@@ -3,12 +3,23 @@ import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
 import { CreateRoleDto } from "./dto/create-role.dto";
 import { UpdateRoleDto } from "./dto/update-role.dto";
 import { RoleRepository } from "./role.repository";
+import { RoleNamesEnum } from "src/shared/role-names.enum";
 
 @Injectable()
 export class RoleService {
   constructor(
     private readonly roleRepository: RoleRepository,
   ){ }
+
+  async getRole(userId: number, projectId: number): Promise<RoleNamesEnum> {
+    const role = await this.roleRepository.findRole(userId, projectId);
+
+    if(!role) {
+      throw new NotFoundException("Role was not found");
+    }
+
+    return role
+  }
 
   async createRole(roleData: CreateRoleDto): Promise<BasicResponseDto> {
     const role = await this.roleRepository.save(roleData);

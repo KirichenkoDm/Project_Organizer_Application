@@ -6,6 +6,7 @@ import { SetRefreshTokenInterceptor } from "../../shared/refresh-token.intercept
 import { Request } from "express";
 import { Public } from "src/shared/public.decorator";
 import { SkipRoles } from "src/shared/roles.decorator";
+import { SetLogOutInterceptor } from "./logout.interceptor";
 
 @Controller('auth')
 @SkipRoles()
@@ -33,5 +34,11 @@ export class AuthController {
   ): Promise<TokensDto> {
     const refreshToken = req.cookies['refreshToken'];
     return this.authService.refreshTokens(refreshToken);
+  }
+
+  @Post("logout")
+  @UseInterceptors(SetLogOutInterceptor)
+  async logout (): Promise<TokensDto> {
+    return {accessToken: "", refreshToken: ""}
   }
 }

@@ -15,7 +15,8 @@ const ProjectInfo: FC = observer(() => {
   const router = useRouter();
   let content;
 
-  const project = projectStore.getProject();
+  const project = projectStore.getProject;
+  if(!project) return;
 
   const handleDelete = async () => {
     router.push("/home")

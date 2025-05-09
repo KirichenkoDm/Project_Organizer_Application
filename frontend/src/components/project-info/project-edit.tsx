@@ -25,7 +25,6 @@ const ProjectEdit: FC<ProjectEditProps> = ({
 
   const handleSubmit = async (values: typeof initialValues) => {
     const data = { ...values };
-    const projectStore = useProjectStore();
     await projectStore.editProject(data);
     setIsEditMode(false);
   }

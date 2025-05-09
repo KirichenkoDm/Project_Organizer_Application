@@ -133,7 +133,8 @@ describe("UserService", () => {
     it("should throw NotFoundException when user does not exist", async () => {
       jest.spyOn(userRepository, "findById").mockResolvedValue(null);
 
-      await expect(service.getUserById(999)).rejects.toThrow(NotFoundException);
+      await expect(service.getUserById(999)).rejects
+        .toThrow(new NotFoundException("User with this id not found"));
       expect(userRepository.findById).toHaveBeenCalledWith(999);
     });
   });
@@ -156,7 +157,8 @@ describe("UserService", () => {
     it("should throw NotFoundException when user does not exist", async () => {
       jest.spyOn(userRepository, "findByEmail").mockResolvedValue(null);
 
-      await expect(service.getUserByEmail("nonexistent@example.com")).rejects.toThrow(NotFoundException);
+      await expect(service.getUserByEmail("nonexistent@example.com"))
+        .rejects.toThrow(new NotFoundException("User with this email not found"));
       expect(userRepository.findByEmail).toHaveBeenCalledWith("nonexistent@example.com");
     });
   });
@@ -180,7 +182,8 @@ describe("UserService", () => {
     it("should throw NotFoundException when user does not exist", async () => {
       jest.spyOn(userRepository, "findByEmailWithPassword").mockResolvedValue(null);
 
-      await expect(service.getUserWithPasswordByEmail("nonexistent@example.com")).rejects.toThrow(NotFoundException);
+      await expect(service.getUserWithPasswordByEmail("nonexistent@example.com"))
+        .rejects.toThrow(new NotFoundException("User with this email not found"));
       expect(userRepository.findByEmailWithPassword).toHaveBeenCalledWith("nonexistent@example.com");
     });
   });
@@ -198,14 +201,16 @@ describe("UserService", () => {
     it("should throw NotFoundException when no users are found for project", async () => {
       jest.spyOn(roleRepository, "findUsersByProjectId").mockResolvedValue([]);
 
-      await expect(service.getUsersByProjectId(999)).rejects.toThrow(NotFoundException);
+      await expect(service.getUsersByProjectId(999)).rejects
+        .toThrow(new NotFoundException("Users related with this project not found"));
       expect(roleRepository.findUsersByProjectId).toHaveBeenCalledWith(999);
     });
 
     it("should throw NotFoundException when project not found", async () => {
       jest.spyOn(roleRepository, "findUsersByProjectId").mockResolvedValue(null);
 
-      await expect(service.getUsersByProjectId(999)).rejects.toThrow(NotFoundException);
+      await expect(service.getUsersByProjectId(999))
+        .rejects.toThrow(new NotFoundException("Users related with this project not found"));
       expect(roleRepository.findUsersByProjectId).toHaveBeenCalledWith(999);
     });
   });
@@ -245,7 +250,8 @@ describe("UserService", () => {
     it('should throw BadRequestException when user is not created', async () => {
       jest.spyOn(userRepository, "save").mockResolvedValue(null);
 
-      await expect(service.createUser({ ...mockCreateUserDto })).rejects.toThrow(BadRequestException);
+      await expect(service.createUser({ ...mockCreateUserDto })).rejects
+        .toThrow(new BadRequestException("User was not created"));
       expect(bcrypt.genSalt).toHaveBeenCalledWith(10);
       expect(bcrypt.hash).toHaveBeenCalledWith(mockCreateUserDto.password, "mockedSalt");
       expect(userRepository.save).toHaveBeenCalledWith({
@@ -315,7 +321,8 @@ describe("UserService", () => {
     it("should throw NotFoundException when user to update does not exist", async () => {
       jest.spyOn(userRepository, "findOneBy").mockResolvedValue(null);
 
-      await expect(service.updateUserById(999, mockUpdateUserDto)).rejects.toThrow(NotFoundException);
+      await expect(service.updateUserById(999, mockUpdateUserDto)).rejects
+        .toThrow(new NotFoundException("User with this id not found"));
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 999 });
       expect(userRepository.save).not.toHaveBeenCalled();
     });
@@ -340,7 +347,8 @@ describe("UserService", () => {
     it("should throw NotFoundException when user to delete does not exist", async () => {
       jest.spyOn(userRepository, "findOneBy").mockResolvedValue(null);
 
-      await expect(service.deleteUserById(999)).rejects.toThrow(NotFoundException);
+      await expect(service.deleteUserById(999)).rejects
+        .toThrow(new NotFoundException("User with this id not found"));
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 999 });
       expect(userRepository.softDelete).not.toHaveBeenCalled();
     });
@@ -349,7 +357,8 @@ describe("UserService", () => {
       jest.spyOn(userRepository, "findOneBy").mockResolvedValue(mockUser);
       jest.spyOn(userRepository, "softDelete").mockResolvedValue({ affected: 0, raw: [], generatedMaps: [] });
 
-      await expect(service.deleteUserById(1)).rejects.toThrow(BadRequestException);
+      await expect(service.deleteUserById(1)).rejects
+        .toThrow(new BadRequestException("User was not deleted"));
       expect(userRepository.findOneBy).toHaveBeenCalledWith({ id: 1 });
       expect(userRepository.softDelete).toHaveBeenCalledWith(1);
     });

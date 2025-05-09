@@ -5,6 +5,7 @@ import {
   Param,
   Delete,
   Put,
+  Get,
 } from "@nestjs/common";
 import { RoleService } from "./role.service";
 import { CreateRoleDto } from "./dto/create-role.dto";
@@ -17,6 +18,23 @@ import { ParseNumberPipe } from "src/shared/parse-number.pipe";
 @Controller("role")
 export class RoleController {
   constructor(private readonly roleService: RoleService) { }
+
+  /*
+    gets project and user IDs
+    returns role neme of the user inside project
+  */
+  @Get("/user/:userId/project/:projectId")
+  @Roles(
+    RoleNamesEnum.Member,
+    RoleNamesEnum.ProjectManager,
+    RoleNamesEnum.Owner,
+  )
+  async getRole (
+    @Param("userId", ParseNumberPipe) userId: number,
+    @Param("projectId", ParseNumberPipe) projectId: number,
+  ): Promise<RoleNamesEnum> {
+    return await this.roleService.getRole(userId, projectId);
+  }
 
   /*
      gets role data (project and user Ids plus role name) to create new relation

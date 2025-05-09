@@ -19,7 +19,7 @@ export const HomeProjectsStore = types
           undefined,
           true
         );
-        console.log(!!self.homeProjects);
+
         if (projects) {
           self.homeProjects
           ? self.homeProjects.replace(projects)

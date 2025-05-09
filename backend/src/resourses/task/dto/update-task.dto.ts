@@ -3,7 +3,7 @@ import { CreateTaskDto } from "./create-task.dto";
 import { IsInt, IsOptional, IsPositive } from "class-validator";
 
 export class UpdateTaskDto extends PartialType(
-  OmitType(CreateTaskDto, ["projectId", "order"]),
+  OmitType(CreateTaskDto, ["project", "order"]),
 ) {
 
   @IsOptional()

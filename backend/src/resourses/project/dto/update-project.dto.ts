@@ -5,6 +5,5 @@ import { IsObject } from "class-validator";
 export class UpdateProjectDto extends PartialType(
   OmitType(CreateProjectDto, ["creatorId"]),
 ) {
-  @IsObject()
   report?: object;
 }

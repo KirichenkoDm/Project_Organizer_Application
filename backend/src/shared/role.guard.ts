@@ -41,7 +41,7 @@ export class RoleGuard implements CanActivate {
       throw new UnauthorizedException("Access token missing");
     }
     
-    const payload = this.jwtService.verify(token);
+    const payload = this.jwtService.decode(token);
     const userId = payload.sub;
     const projectId = Number(request.query.currentProjectId);
 

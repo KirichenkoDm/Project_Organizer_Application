@@ -1,7 +1,6 @@
 .projectCardLink{
   width: calc(33.33% - 14px);
   height: 28vh;
-  margin: 15px 0px;
   display: flex;
   justify-content: center;
 }

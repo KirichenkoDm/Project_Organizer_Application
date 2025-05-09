@@ -7,6 +7,8 @@ import withGuard from "@/components/hoc/with-guard";
 import { useEffect } from "react";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
+import { Toast } from "radix-ui";
+import AppToast from "@/components/app-toast/app-toast";
 
 
 function RootLayout({
@@ -24,7 +26,10 @@ function RootLayout({
       <StoreProvider value={rootStore}>
         <body>
           <Theme accentColor="sky" radius="large">
-            <GuardedContent>{children}</GuardedContent>
+            <GuardedContent>
+                {children}
+              <AppToast />
+            </GuardedContent>
           </Theme>
         </body>
       </StoreProvider>

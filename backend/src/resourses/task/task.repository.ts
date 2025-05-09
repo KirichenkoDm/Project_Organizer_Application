@@ -17,6 +17,12 @@ export class TaskRepository extends Repository<TaskEntity> {
           id: projectId
         }
       },
+      relations: {
+        project: true,
+        user: true,
+        column: true,
+        task: true,
+      },
       order: { order: "ASC" },
     });
   }

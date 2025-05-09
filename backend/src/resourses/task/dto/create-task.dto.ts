@@ -1,4 +1,6 @@
-import { IsDateString, IsInt, IsNotEmpty, IsOptional, IsPositive, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsDateString, IsInt, IsNotEmpty, IsObject, IsOptional, IsPositive, IsString, ValidateNested } from "class-validator";
+import { ObjectWithId } from "src/shared/dto/object-with-id.dto";
 
 export class CreateTaskDto {
   @IsNotEmpty()
@@ -15,14 +17,16 @@ export class CreateTaskDto {
   order: number;
 
   @IsNotEmpty()
-  @IsInt()
-  @IsPositive()
-  projectId: number;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ObjectWithId)
+  project: { id: number };
 
   @IsNotEmpty()
-  @IsInt()
-  @IsPositive()
-  columnId: number;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ObjectWithId)
+  column: { id: number };
 
   @IsOptional()
   @IsDateString()

@@ -11,7 +11,13 @@ export const RootStore = types
     userStore: types.optional(UserStore, {}),
     projectStore: types.optional(ProjectStore, {}),
     homeProjectsStore: types.optional(HomeProjectsStore, {}),
+    error: types.maybeNull(types.string)
   })
+  .views(self => ({
+    get getError() {
+      return self.error;
+    },
+  }))
   .actions((self) => {
     const actions = {
       hydrate() {

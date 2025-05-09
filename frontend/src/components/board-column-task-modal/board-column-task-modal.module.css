@@ -1,0 +1,13 @@
+.taskModalContainer {
+  justify-content: space-between;
+}
+
+.taskInfoDetailed {
+  flex-direction: column;
+  gap: 15px;
+}
+
+.taskControls {
+  flex-direction: column;
+  gap: 5px;
+}

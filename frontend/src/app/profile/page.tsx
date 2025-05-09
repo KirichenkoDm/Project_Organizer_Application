@@ -7,8 +7,9 @@ import styles from "./profile.module.css"
 import AppHeader from "@/components/app-header/app-header";
 import { useUserStore } from "@/store/user-store";
 import AppLoadingPlaceholder from "@/components/app-loading-placeholder/app-loading-placeholder";
+import { observer } from "mobx-react-lite";
 
-const ProfilePage: FC = () => {
+const ProfilePage: FC = observer(() => {
   const isAuthenticated = useUserStore().isAuthenticated;
 
   if(!isAuthenticated) {
@@ -26,6 +27,6 @@ const ProfilePage: FC = () => {
       </Flex>
     </Box>
   );
-}
+})
 
 export default ProfilePage;

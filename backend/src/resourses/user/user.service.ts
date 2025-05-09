@@ -32,7 +32,7 @@ export class UserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundException('User with this email not found');
+      throw new NotFoundException("User with this email not found");
     }
 
     return this.userCore.mapperEntityToGetDto(user);
@@ -42,7 +42,7 @@ export class UserService {
     const user = await this.userRepository.findByEmailWithPassword(email);
 
     if (!user) {
-      throw new NotFoundException('User with this email not found');
+      throw new NotFoundException("User with this email not found");
     }
 
     return this.userCore.mapperEntityToGetWithPasswordDto(user);

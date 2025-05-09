@@ -3,7 +3,7 @@ import { TaskEntity } from "./tasks.entity";
 
 export class TaskCore {
   mapperEntityToGetDTO(task: TaskEntity): GetTaskDto {
-    return {
+    const data = {
       id: task.id,
       name: task.name,
       description: task.description,
@@ -15,5 +15,6 @@ export class TaskCore {
       start: task.start,
       end: task.end,
     }
+    return data;
   }
 }

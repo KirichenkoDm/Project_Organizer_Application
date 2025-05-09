@@ -1,4 +1,4 @@
-import { types, Instance } from "mobx-state-tree";
+import { types } from "mobx-state-tree";
 import { User } from "./models/user";
 import { UserStore } from "./user-store";
 import { ProjectStore } from "./project-store";

@@ -29,9 +29,9 @@ function withGuard<P extends object>(Component: React.ComponentType<P>) {
         
         if (!userStore.isAuthenticated && !isPublicRoute) {
           console.log("Authentication failed, redirecting to /auth");
-          router.replace("/auth")
+          router.push("/auth")
         } else if (userStore.isAuthenticated && pathname === "/auth") {
-          router.replace("/home");
+          router.push("/home");
         } else {
           setIsGuardPassed(true);
         }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Form, Formik } from "formik";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { authValidationSchema } from "./authentication-validation";
 import styles from "@/shared/styles/form.module.css";
 import InputGroup from "../input-group/input-group";
@@ -9,6 +9,7 @@ import { useUserStore } from "@/store/user-store";
 import { Box, Button, Heading, Text } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import AppButton from "../app-button/app-button";
+import { observer } from "mobx-react-lite";
 
 type AuthenticationFormProps = {
   setIsNewAccount: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,12 +17,12 @@ type AuthenticationFormProps = {
 
 const initialValues = { email: "", password: "" }
 
-const AuthenticationForm: FC<AuthenticationFormProps> = ({ setIsNewAccount }) => {
+const AuthenticationForm: FC<AuthenticationFormProps> = observer(({ setIsNewAccount }) => {
   const userStore = useUserStore()
-  const router = useRouter()
+  const errorMessage = userStore.errorMessage;
+
   const handleSubmit = async (values: typeof initialValues) => {
     await userStore.login(values);
-    router.replace("/home");
   }
 
   return (
@@ -34,44 +35,58 @@ const AuthenticationForm: FC<AuthenticationFormProps> = ({ setIsNewAccount }) =>
         validationSchema={authValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ touched, errors }) => (
-          <Form>
-            <InputGroup
-              id="email"
-              type="email"
-              touched={touched.email}
-              errors={errors.email}
-              label="Email"
-            />
+        {({ touched, errors, values }) => {
 
-            <InputGroup
-              id="password"
-              type="password"
-              touched={touched.password}
-              errors={errors.password}
-              label="Password"
-            />
+          useEffect(() => {
+            if (errorMessage && !errors.email && !errors.password) {
+              userStore.setError(undefined);
+            }
+          }, [values.email, values.password]);
 
-            <AppButton
-              type="submit"
-            >
-              Confirm
-            </AppButton>
+          return (
+            <Form>
+              <InputGroup
+                id="email"
+                type="email"
+                touched={touched.email}
+                errors={errors.email}
+                label="Email"
+              />
 
+              <InputGroup
+                id="password"
+                type="password"
+                touched={touched.password}
+                errors={errors.password}
+                label="Password"
+              />
+              {
+                errorMessage
+                  ? <Text className={`${styles.errorMessage} ${styles.errorMessageVisible}`}>{errorMessage}</Text>
+                  : null
+              }
 
-            <Box className={styles.switchLink}>
-              Don't have an account?{" "}
-              <Text
-                onClick={() => setIsNewAccount(true)}
+              <AppButton
+                type="submit"
               >
-                Sign up
-              </Text>
-            </Box>
-          </Form>
-        )}
+                Confirm
+              </AppButton>
+
+
+              <Box className={styles.switchLink}>
+                Don't have an account?{" "}
+                <Text
+                  onClick={() => setIsNewAccount(true)}
+                >
+                  Sign up
+                </Text>
+              </Box>
+            </Form>
+          )
+        }}
       </Formik>
     </Box>
   );
-};
+});
 
 export default AuthenticationForm;

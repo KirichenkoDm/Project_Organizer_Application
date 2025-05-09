@@ -8,6 +8,7 @@ import AppHeader from "@/components/app-header/app-header";
 import { useUserStore } from "@/store/user-store";
 import AppLoadingPlaceholder from "@/components/app-loading-placeholder/app-loading-placeholder";
 import { observer } from "mobx-react-lite";
+import Head from "next/head";
 
 const ProfilePage: FC = observer(() => {
   const isAuthenticated = useUserStore().isAuthenticated;
@@ -18,7 +19,10 @@ const ProfilePage: FC = observer(() => {
     />)
   }
 
-  return (
+  return (<>
+    <Head>
+      <title>My Profile</title>
+    </Head>
     <Box className={styles.profilePageContainer}>
       <AppHeader />
       <Flex direction="column" gap="5" className={styles.profileContainer}>
@@ -26,7 +30,7 @@ const ProfilePage: FC = observer(() => {
         <ProfileInfo />
       </Flex>
     </Box>
-  );
+  </>);
 })
 
 export default ProfilePage;

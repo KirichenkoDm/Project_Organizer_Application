@@ -30,6 +30,7 @@ export const HomeProjectsStore = types
       createProject: flow(function* (projectData: CreateProject) {
         const project = yield AxiosController.post<HomeProjectListItemInstance>(
           "/project",
+          undefined,
           projectData,
           true
         );

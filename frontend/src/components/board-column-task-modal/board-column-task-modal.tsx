@@ -6,7 +6,10 @@ import React, { FC, useEffect } from "react";
 import { useProjectStore } from "@/store/project-store";
 import { useUserStore } from "@/store/user-store";
 import { observer } from "mobx-react-lite";
+import TaskAssignContributor from "../task-assign-contributor/task-assign-contributor";
+import AppButton from "../app-button/app-button";
 interface BoardColumnTaskCardProps {
+  id: number;
   name: string;
   description: string;
   blockedBy?: number;
@@ -16,6 +19,7 @@ interface BoardColumnTaskCardProps {
 }
 
 const BoardColumnTaskModal: FC<BoardColumnTaskCardProps> = observer(({
+  id,
   name,
   description,
   blockedBy,
@@ -66,12 +70,13 @@ const BoardColumnTaskModal: FC<BoardColumnTaskCardProps> = observer(({
                 </Flex>
               </HoverCard.Content>
             </HoverCard.Root>
-            : null
+
+            : <TaskAssignContributor taskId={id}/>
         }
         {
           blockedBy
-            ? null
-            : <><Text>Change column:</Text>
+            ? <AppButton variant="surface" color="red">Remove block</AppButton> 
+            : <><Text>Change state:</Text>
               <Select.Root value={`${columnId}`} onValueChange={handleChangeColumn}>
                 <Select.Trigger />
                 <Select.Content>

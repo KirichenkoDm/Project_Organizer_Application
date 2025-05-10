@@ -9,7 +9,6 @@ import { CreateProject } from "@/shared/types/create-project";
 export const HomeProjectsStore = types
   .model("HomeProjectsStore", {
     homeProjects: types.maybe(types.array(HomeProjectListItem)),
-
   })
   .actions((self) => {
     const actions = {

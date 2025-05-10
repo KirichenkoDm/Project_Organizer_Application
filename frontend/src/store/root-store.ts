@@ -4,6 +4,7 @@ import { UserStore } from "./user-store";
 import { ProjectStore } from "./project-store";
 import { HomeProjectsStore } from "./home-projects-store";
 import { LOCAL_STORAGE_USER_KEY } from "@/shared/constants";
+import { ContributorsStore } from "./contributors-store";
 
 
 export const RootStore = types
@@ -11,6 +12,7 @@ export const RootStore = types
     userStore: types.optional(UserStore, {}),
     projectStore: types.optional(ProjectStore, {}),
     homeProjectsStore: types.optional(HomeProjectsStore, {}),
+    contributorsStore: types.optional(ContributorsStore, {isLoading: false}),
     error: types.maybeNull(types.string)
   })
   .views(self => ({

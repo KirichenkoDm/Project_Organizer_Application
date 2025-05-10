@@ -18,11 +18,11 @@
 .taskCard:hover {
   background-color: #fff;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
-  transform: translateY(-7px) scale(1.05, 1.05);
+  transform: translateY(-7px) scale(1.02, 1.02);
 }
 
 .taskCard h6 {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .taskCard span {

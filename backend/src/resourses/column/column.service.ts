@@ -5,6 +5,8 @@ import { GetColumnDto } from "./dto/get-column.dto";
 import { ColumnCore } from "./column.core";
 import { UpdateColumnDto } from "./dto/update-column.dto";
 import { BasicResponseDto } from "src/shared/dto/basic-response.dto";
+import { Reorder } from "src/shared/reorder";
+import { ColumnEntity } from "./columns.entity";
 
 const defaultColumnNames = [
   "To Do",
@@ -59,32 +61,28 @@ export class ColumnService {
     return this.columnCore.mapperEntityToGetDTO(column);
   }
 
-  async reorderColumnById(id: number, newOrder: number): Promise<GetColumnDto[]> {
-    const targetColumn = await this.columnRepository.findOneBy({ id });
-    if (!targetColumn) {
-      throw new NotFoundException("Column with this id not found");
-    }
-    if (!targetColumn.isCustom) {
-      throw new BadRequestException("Default columns cannot be moved");
-    }
-
-    const projectColumns = await this.getColumnsByProjectId(targetColumn.project.id);
-
-    const filtered = projectColumns.filter(col => col.id !== id);
-    filtered.splice(newOrder - 1, 0, targetColumn);
-
-    const reordered = await Promise.all(
-      filtered.map((col, index) => {
-        col.order = index + 1;
-        return this.columnRepository.save(col);
-      })
-    );
-
-    if (!reordered || reordered.some(col => !col)) {
-      throw new InternalServerErrorException("Some columns were not saved correctly");
-    }
-
-    return reordered.map(col => this.columnCore.mapperEntityToGetDTO(col))
+  async reorderColumnById(id: number, newOrder: number): Promise<GetColumnDto[]> { 
+      const targetColumn = await this.columnRepository.findOneWithRelations(id);
+      if (!targetColumn) {
+        throw new NotFoundException("Column with this id not found");
+      }
+      if (!targetColumn.isCustom) {
+        throw new BadRequestException("Default columns cannot be moved");
+      }
+      
+      
+      const projectColumns = await this.getColumnsByProjectId(targetColumn.project.id);
+      
+      
+      const reordered = Reorder<GetColumnDto>(projectColumns, targetColumn, newOrder);
+      
+      if (!reordered) {
+        throw new InternalServerErrorException("Columns were not reordered correctly");
+      }
+      
+      this.columnRepository.save(reordered);
+      
+      return reordered;
   }
 
   async deleteColumnById(id: number): Promise<BasicResponseDto> {

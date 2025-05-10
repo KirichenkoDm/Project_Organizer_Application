@@ -9,6 +9,17 @@ export class TaskRepository extends Repository<TaskEntity> {
     super(TaskEntity, dataSource.createEntityManager());
   }
 
+  async findOneWithRelations(id: number): Promise<TaskEntity> {
+    return this.findOne({
+      where: { id },
+      relations: {
+        project: true,
+        user: true,
+        column: true,
+        task: true,
+      }
+    });
+  }
 
   async findByProjectId(projectId: number): Promise<TaskEntity[]> {
     return this.find({
@@ -35,12 +46,18 @@ export class TaskRepository extends Repository<TaskEntity> {
       .getMany()
   }
 
-  async getTasksByColumnId(columnId: number): Promise<TaskEntity[]> {
+  async findTasksByColumnId(columnId: number): Promise<TaskEntity[]> {
     return this.find({
       where: {
         column: {
           id: columnId
         }
+      },
+      relations: {
+        project: true,
+        user: true,
+        column: true,
+        task: true,
       },
       order: { order: "ASC" },
     })

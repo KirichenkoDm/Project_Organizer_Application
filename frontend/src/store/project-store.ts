@@ -13,64 +13,108 @@ import { Director, ProjectBuilder } from "./project-builder";
 import { ProjectBuilderData } from "@/shared/types/project-builder-data";
 import { Variant } from "@/shared/types/variant";
 import { CreateTask } from "@/shared/types/create-task";
+import { ReorderAction } from "@/shared/types/reorder-action";
 
 export const ProjectStore = types
   .model("ProjectStore", {
     project: types.maybe(Project),
     error: types.maybe(types.string),
   })
-  .views((self) => ({
-    get getId () {
-      if (!self.project) return -1;
-      return self.project.id;
-    },
+  .views((self) => {
+    const views = {
+      get getId() {
+        if (!self.project) return -1;
+        return self.project.id;
+      },
 
-    get getProject() {
-      if (!self.project) return;
-      return {
-        name: self.project!.name,
-        description: self.project!.description,
-        theme: self.project!.theme,
+      get getProject() {
+        if (!self.project) return;
+        return {
+          name: self.project!.name,
+          description: self.project!.description,
+          theme: self.project!.theme,
+        }
+      },
+
+      get getColumns() {
+        if (!self.project) return [];
+        return self.project.columns
+          .slice()
+          .sort((a, b) => a.order - b.order);
+      },
+
+      get getFirstColumnId() {
+        if (!self.project) return -1;
+        const firstColumn = self.project.columns.reduce((minColumn, currentColumn) => {
+          return currentColumn.order < minColumn.order ? currentColumn : minColumn;
+        });
+
+        return firstColumn.id;
+      },
+
+      getColumn(columnId: number) {
+        return self.project?.columns.find(col => col.id === columnId);
+      },
+
+      getTask(taskId: number) {
+        return self.project?.tasks.find(tsk => tsk.id === taskId);
+      },
+
+      getTasksByColumnId(columnId: number) {
+        if (!self.project) return [];
+        return self.project.tasks
+          .filter((task) => task.columnId === columnId)
+          .slice()
+          .sort((a, b) => a.order - b.order);
+      },
+
+      getNextOrderInColumn(columnId: number) {
+        if (!self.project || !self.project.tasks.length) return 1;
+
+        const tasksInColumn = views.getTasksByColumnId(columnId);
+        if (!tasksInColumn.length) return 1;
+
+        return tasksInColumn[tasksInColumn.length - 1].order + 1;
+      },
+
+      isFirstColumn(columnId: number) {
+        const column = views.getColumn(columnId);
+        if (!column) return false;
+
+        const columns = views.getColumns;
+
+        return columns[0]?.id === columnId;
+      },
+
+      isLastColumn(columnId: number) {
+        const column = views.getColumn(columnId);
+        if (!column) return false;
+
+        const columns = views.getColumns;
+
+        return columns[columns.length - 1].id === columnId;
+      },
+
+      isFirstTask(taskId: number) {
+        const task = views.getTask(taskId);
+        if (!task) return false;
+
+        const tasksInColumn = views.getTasksByColumnId(task.columnId);
+
+        return tasksInColumn[0]?.id === taskId;
+      },
+
+      isLastTask(taskId: number) {
+        const task = views.getTask(taskId);
+        if (!task) return false;
+
+        const tasksInColumn = views.getTasksByColumnId(task.columnId);
+
+        return tasksInColumn[tasksInColumn.length - 1].id === taskId;
       }
-    },
-
-    get getColumns() {
-      if (!self.project) return [];
-      return self.project.columns
-        .slice()
-        .sort((a, b) => a.order - b.order);
-    },
-
-    get getFirstColumnId() {
-      if (!self.project) return -1;
-      const firstColumn = self.project.columns.reduce((minColumn, currentColumn) => {
-        return currentColumn.order < minColumn.order ? currentColumn : minColumn;
-      });
-
-      return firstColumn.id;
-    },
-
-    getNextOrderInColumn(columnId: number) {
-      if (!self.project || !self.project.tasks.length) return 1;
-
-      const tasksInColumn = self.project.tasks.filter(task => task.columnId === columnId);
-      if (!tasksInColumn.length) return 1;
-
-      const maxOrder = tasksInColumn.reduce((max, task) => {
-        return task.order > max ? task.order : max;
-      }, 0);
-
-      return maxOrder + 1;
-    },
-
-    getTasksByColumnId(columnId: number) {
-      if (!self.project) return [];
-      return self.project.tasks
-        .filter((task) => task.columnId === columnId)
-        .slice()
-        .sort((a, b) => a.order - b.order);
-    },
-  }))
+    }
+    return views
+  })
   .actions((self) => {
     const actions = {
       buildProject(director: Director, data: ProjectBuilderData) {
@@ -88,41 +132,44 @@ export const ProjectStore = types
         self.project = undefined;
       },
 
-      setColumns(columns: ColumnInstance[]) {
-        if (!self.project) return;
-        self.project.columns.replace(columns);
-      },
-
-      reorderColumns(columnId: number, newOrder: number) {
-        if (!self.project) return;
-
-        const columns = self.project.columns.slice().sort((a, b) => a.order - b.order);
-        const fromIndex = columns.findIndex(c => c.order === columnId);
-        if (fromIndex === -1) return;
-
-        const [movedColumn] = columns.splice(fromIndex, 1);
-        columns.splice(newOrder, 0, movedColumn);
-
-        columns.forEach((col, index) => {
-          col.order = index;
-        });
-        self.project.columns.replace(columns);
-        //call reorder api
-      },
-
       addColumn(column: ColumnInstance) {
         if (!self.project) return;
         self.project.columns.push(column);
       },
 
-      setTasks(tasks: TaskInstance[]) {
-        if (!self.project) return;
-        self.project.tasks.replace(tasks);
-      },
+      reorderColumn: flow(function* (columnId: number, reorderAction: ReorderAction) {
+        const column = self.project?.columns.find(col => col.id === columnId);
+        if (!column) {
+          self.error = "Column to reorder not found";
+          return;
+        }
+
+        let newOrder = column.order;
+        if (reorderAction === "increment") {
+          if (self.isLastColumn(columnId)) return;
+          newOrder++;
+        } else {
+          if (self.isFirstColumn(columnId)) return;
+          newOrder--;
+        }
+
+        const updatedColumn = yield AxiosController.put<GetColumn[]>(
+          `column/${columnId}/reorder/${newOrder}`,
+          { "currentProjectId": self.project!.id },
+          undefined,
+          true
+        )
+
+        updatedColumn.forEach((column: GetColumn) => {
+          const existingColumn = self.project?.columns.find(tsk => tsk.id === column.id);
+          if (existingColumn) {
+            existingColumn.order = column.order;
+          }
+        });
+      }),
 
       createTask: flow(function* (taskData: CreateTask) {
         if (!self.project) return;
-        console.log(self.project.id);
         const task = yield AxiosController.post<GetTask[]>(
           `/task`,
           { "currentProjectId": self.project.id },
@@ -131,10 +178,49 @@ export const ProjectStore = types
         );
 
         if (!self.project?.tasks || self.project.tasks.length === 0) {
-          self.project.tasks = cast([task]);
+          self.project.tasks = cast([Task.create({
+            ...task,
+            start: task.start ? new Date(task.start) : undefined,
+            end: task.end ? new Date(task.end) : undefined,
+          })]);
         } else {
-          self.project.tasks.push(task);
+          self.project.tasks.push(Task.create({
+            ...task,
+            start: task.start ? new Date(task.start) : undefined,
+            end: task.end ? new Date(task.end) : undefined,
+          }));
         }
+      }),
+
+      reorderTask: flow(function* (taskId: number, reorderAction: ReorderAction) {
+        const task = self.project?.tasks.find(tsk => tsk.id === taskId);
+        if (!task) {
+          self.error = "Task to reorder not found";
+          return;
+        }
+
+        let newOrder = task.order;
+        if (reorderAction === "increment") {
+          if (self.isLastTask(taskId)) return;
+          newOrder++;
+        } else {
+          if (self.isFirstTask(taskId)) return;
+          newOrder--;
+        }
+
+        const updatedTasks = yield AxiosController.put<GetTask[]>(
+          `task/${taskId}/reorder/${newOrder}`,
+          { "currentProjectId": self.project!.id },
+          undefined,
+          true,
+        )
+
+        updatedTasks.forEach((task: GetTask) => {
+          const existingTask = self.project?.tasks.find(tsk => tsk.id === task.id);
+          if (existingTask) {
+            existingTask.order = task.order;
+          }
+        });
       }),
 
       loadProject: flow(function* (projectId: Number) {

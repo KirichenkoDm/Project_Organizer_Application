@@ -3,13 +3,16 @@
 import { Flex, Heading, Text } from "@radix-ui/themes";
 import React, { FC, forwardRef } from "react";
 import styles from "./board-column-task-card.module.css"
+import TaskReorderControls from "../task-reorder-controls/task-reorder-controls";
 
 interface BoardColumnTaskCardProps {
+  id: number
   name: string;
   description: string;
 }
 
 const BoardColumnTaskCard: FC<BoardColumnTaskCardProps> = ({
+  id,
   name,
   description,
 }) => {
@@ -22,7 +25,7 @@ const BoardColumnTaskCard: FC<BoardColumnTaskCardProps> = ({
         <Heading as="h6">{name}</Heading>
         <Text>{description}</Text>
       </Flex>
-      <Heading as="h1">::</Heading>
+      <TaskReorderControls id={id}/>
     </Flex>
   );
 }

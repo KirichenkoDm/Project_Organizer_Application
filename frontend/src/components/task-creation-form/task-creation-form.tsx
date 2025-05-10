@@ -23,13 +23,13 @@ const TaskCreationForm: FC = () => {
   const handleSubmit = (values: typeof initialValues) => {
     const columnId = projectStore.getFirstColumnId;
     const nextOrder = projectStore.getNextOrderInColumn(columnId);
+    console.log(nextOrder);
     const projectData: CreateTask = {
       ...values,
       order: nextOrder,
-      project: {id: projectStore.getId},
-      column: {id: columnId},
+      project: { id: projectStore.getId },
+      column: { id: columnId },
     };
-
     projectStore.createTask(projectData)
   }
 

@@ -1,10 +1,8 @@
 "use client";
 
-import { Avatar, Box, Dialog, Flex, Heading, HoverCard, Link, Select, Separator, Text } from "@radix-ui/themes";
-import React, { FC, useEffect } from "react";
+import { Box, Dialog, Flex, Separator, Text } from "@radix-ui/themes";
+import React, { FC } from "react";
 import styles from "./board-column-task.module.css"
-import { useProjectStore } from "@/store/project-store";
-import { useUserStore } from "@/store/user-store";
 import { observer } from "mobx-react-lite";
 import dayjs from "dayjs"
 import BoardColumnTaskCard from "../board-column-task-card/board-column-task-card";
@@ -36,9 +34,9 @@ const BoardColumnTask: FC<BoardColumnTaskCardProps> = observer(({
   columnId,
 }) => {
   return (
-    <><Dialog.Root>
+    <Dialog.Root>
         <Dialog.Trigger><Box>
-          <BoardColumnTaskCard name={name} description={description}/>
+          <BoardColumnTaskCard id={id} name={name} description={description}/>
         </Box></Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Title as="h6">Detailed task info:</Dialog.Title>
@@ -57,7 +55,7 @@ const BoardColumnTask: FC<BoardColumnTaskCardProps> = observer(({
             : null
         }
       </Dialog.Content>
-    </Dialog.Root></>
+    </Dialog.Root>
   );
 });
 

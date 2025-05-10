@@ -9,6 +9,15 @@ export class ColumnRepository extends Repository<ColumnEntity> {
     super(ColumnEntity, dataSource.createEntityManager());
   }
 
+  async findOneWithRelations(id: number): Promise<ColumnEntity> {
+      return this.findOne({
+        where: { id },
+        relations: {
+          project: true,
+        }
+      });
+    }
+
   async findByProjectId(projectId: number): Promise<ColumnEntity[]> {
     return this.find({
       where: {

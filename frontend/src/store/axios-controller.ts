@@ -129,7 +129,6 @@ class AxiosController {
       undefined,
       false
     )
-    console.log(response);
     if (response) {
       return response.accessToken;
     }

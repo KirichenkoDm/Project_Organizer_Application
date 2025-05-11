@@ -50,7 +50,6 @@ export class AuthService {
       throw new UnauthorizedException('Invalid refresh token');
     }
     
-    //todo: compare with refresh token in database
     const user = await this.userRepository.findById(payload.sub);
 
     const tokens = await generateTokens(user);

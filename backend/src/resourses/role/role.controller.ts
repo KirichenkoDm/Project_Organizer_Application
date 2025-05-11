@@ -81,6 +81,4 @@ export class RoleController {
   ): Promise<BasicResponseDto> {
     return await this.roleService.deleteRoleById(id);
   }
-
-  //todo - delete own role with @SkipRoles()
 }

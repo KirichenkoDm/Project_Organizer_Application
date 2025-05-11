@@ -43,6 +43,7 @@ const InputGroup: React.FC<InputGroupProps> = ({
         name={id}
         as={as}
         rows={as === "textarea" ? rows : undefined}
+        autoComplete="off"
         className={touched && errors ? styles.inputError : ""}
       >
         {children}

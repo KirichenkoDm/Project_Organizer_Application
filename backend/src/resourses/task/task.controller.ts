@@ -109,6 +109,7 @@ export class TaskController {
   */
   @Delete(":id")
   @Roles(
+    RoleNamesEnum.Member,
     RoleNamesEnum.ProjectManager,
     RoleNamesEnum.Owner
   )

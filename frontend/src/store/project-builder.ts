@@ -52,29 +52,21 @@ export class ProjectBuilder implements Builder {
   };
 
   setColumns() {
-    try {
-      unprotect(this.project);
-      this.project.columns.replace(
-        this.data.columnData.map(col => Column.create(col))
-      );
-    } catch (e) {
-      console.log(e)
-    }
+    unprotect(this.project);
+    this.project.columns.replace(
+      this.data.columnData.map(col => Column.create(col))
+    );
   }
 
   setTasks() {
-    try {
-      unprotect(this.project);
-      this.project.tasks.replace(
-        this.data.taskData!.map((task) => Task.create({
-          ...task,
-          start: task.start ? new Date(task.start) : undefined,
-          end: task.end ? new Date(task.end) : undefined,
-        }))
-      );
-    } catch (e) {
-      console.log(e);
-    }
+    unprotect(this.project);
+    this.project.tasks.replace(
+      this.data.taskData!.map((task) => Task.create({
+        ...task,
+        start: task.start ? new Date(task.start) : undefined,
+        end: task.end ? new Date(task.end) : undefined,
+      }))
+    );
   };
 
   getResult() {

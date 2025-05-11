@@ -9,6 +9,7 @@ import AppButton from "../app-button/app-button";
 import ProjectCreateTask from "../project-create-task/project-create-task";
 import ProjectCreateColumn from "../project-create-column/project-create-column";
 import ProjectAddContributor from "../project-add-contributor/project-add-contributor";
+import { useUserStore } from "@/store/user-store";
 
 interface ProjectNav {
   projectId: number;
@@ -16,6 +17,7 @@ interface ProjectNav {
 }
 
 const ProjectNav: FC<ProjectNav> = ({ projectId, projectName }) => {
+  const rolePriority = useUserStore().getRolePriority
   const pathname = usePathname();
   const baseUrl = `/project/${projectId}`
 
@@ -36,8 +38,14 @@ const ProjectNav: FC<ProjectNav> = ({ projectId, projectName }) => {
           </TabNav.Link>
         </Flex>
         <Flex align="center" mr="28px" gap="10px">
-          <ProjectAddContributor />
-          <ProjectCreateColumn />
+          {
+            rolePriority >= 1
+              ? <>
+                <ProjectAddContributor />
+                <ProjectCreateColumn />
+              </>
+              : null
+          }
           <ProjectCreateTask />
         </Flex>
       </Flex>

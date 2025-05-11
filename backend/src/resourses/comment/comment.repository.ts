@@ -9,7 +9,6 @@ export class CommentRepository extends Repository<CommentEntity> {
     super(CommentEntity, dataSource.createEntityManager());
   }
 
-  // todo: pagination
   async findByTaskId(taskId: number, page: number): Promise<CommentEntity[]> {
     const limit = 15;
     const skip = (page - 1) * limit

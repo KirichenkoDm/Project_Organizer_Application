@@ -12,7 +12,7 @@ interface InputGroupProps {
   type: string;
   touched?: boolean;
   errors?: string;
-  label: string;
+  label?: string;
   as?: string;
   rows?: number;
   children?: React.ReactNode;
@@ -31,10 +31,14 @@ const InputGroup: React.FC<InputGroupProps> = ({
 }) => {
   return (
     <Box className={styles.inputGroup}>
-      <Label.Root htmlFor={id}>{label}:</Label.Root>
+      {
+        label
+          ? <Label.Root htmlFor={id}>{label}:</Label.Root>
+          : null
+      }
       <Field
         placeholder={placeholder}
-        type={as ? undefined : type} 
+        type={as ? undefined : type}
         id={id}
         name={id}
         as={as}

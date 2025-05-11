@@ -177,6 +177,44 @@ export const ProjectStore = types
         self.project.columns.push(Column.create(column));
       }),
 
+      editColumn: flow(function* (columnId: number, newColumnName: string) {
+        if (!self.project) return;
+        const column = yield AxiosController.put(
+          `/column/${columnId}`,
+          { currentProjectId: self.project.id },
+          {name: newColumnName},
+          true,
+        )
+
+        const existingColumnIndex = self.project.columns.findIndex(col => col.id === column.id);
+        if (
+          existingColumnIndex !== undefined &&
+          existingColumnIndex !== -1
+        ) {
+          const columnToUpdate = self.project.columns[existingColumnIndex];
+          applySnapshot(columnToUpdate, column);
+        }
+      }),
+
+      deleteColumn: flow(function* (columnId: number) {
+        if (!self.project) return;
+        const result = yield AxiosController.delete(
+          `/column/${columnId}`,
+          { currentProjectId: self.project.id },
+          true,
+        );
+
+        if (!result.isSuccess) {
+          self.error = "Column was not deleted.";
+          return
+        }
+
+        const columnIndex = self.project.columns.findIndex(col => col.id === columnId);;
+        if (columnIndex !== -1) {
+          self.project.columns.splice(columnIndex, 1);
+        }
+      }),
+
       reorderColumn: flow(function* (columnId: number, reorderAction: ReorderAction) {
         const column = self.project?.columns.find(col => col.id === columnId);
         if (!column) {
@@ -244,8 +282,7 @@ export const ProjectStore = types
         const existingTaskIndex = self.project?.tasks.findIndex(tsk => tsk.id === updatedTask.id);
         if (
           existingTaskIndex !== undefined &&
-          existingTaskIndex !== -1 &&
-          self.project
+          existingTaskIndex !== -1
         ) {
           const processedTask = {
             ...updatedTask,

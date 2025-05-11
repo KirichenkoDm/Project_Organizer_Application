@@ -96,6 +96,6 @@ export class ColumnController {
   async deleteColumnById(
     @Param("id", ParseNumberPipe) id: number,
   ): Promise<BasicResponseDto> {
-    return;
+    return await this.columnService.deleteColumnById(id);
   }
 }

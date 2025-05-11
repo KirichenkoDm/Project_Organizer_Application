@@ -35,15 +35,12 @@ const ProjectNav: FC<ProjectNav> = ({ projectId, projectName }) => {
             <Link href={`${baseUrl}/info`}>Info</Link>
           </TabNav.Link>
         </Flex>
-        <Flex align="center" mr="28px">
-          <ProjectCreateColumn />
         <Flex align="center" mr="28px" gap="10px">
           <ProjectAddContributor />
-          <AppButton>Add column</AppButton>
+          <ProjectCreateColumn />
           <ProjectCreateTask />
         </Flex>
       </Flex>
-
     </TabNav.Root>
   )
 }

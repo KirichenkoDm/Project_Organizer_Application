@@ -9,18 +9,20 @@ import React from "react";
 
 const BoardPage = observer(() => {
   const project = useProjectStore().getProject;
-  
-  if(!project) {
+  const title = `Board: ${project?.name}`;
+
+  if (!project) {
     return (<AppLoadingPlaceholder
       text="Project is loading. It will appear in a moment..."
     />)
   }
 
-  return (
+  return (<>
+    <title>{title}</title>
     <Flex height="80vh">
       <BoardMain />
     </Flex>
-  );
+  </>);
 })
 
 export default BoardPage;

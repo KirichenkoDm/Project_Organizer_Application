@@ -1,9 +1,6 @@
 import { RoleNamesEnum } from "../role-names.enum";
+import { GetUser } from "./get-user";
 
-export type GetContributor = {
-  id: number;
-  email: string;
-  firstName: string;
-  lastName: string;
+export type GetContributor = GetUser & {
   role: RoleNamesEnum;
 }

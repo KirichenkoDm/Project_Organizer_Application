@@ -6,6 +6,7 @@ import { Contributor } from "./models/contributor";
 import AxiosController from "./axios-controller";
 import { GetContributor } from "@/shared/types/get-contributor";
 import { ErrorMessage } from "formik";
+import { CreateRole } from "@/shared/types/create-role";
 
 export const ContributorsStore = types
   .model("ContributorsStore", {
@@ -15,7 +16,7 @@ export const ContributorsStore = types
   })
   .views((self) => {
     const views = {
-      get getContributors(){
+      get getContributors() {
         return self.contributors;
       },
     }
@@ -23,7 +24,7 @@ export const ContributorsStore = types
   })
   .actions((self) => {
     const actions = {
-      setContributors (contributors: GetContributor[]) {
+      setContributors(contributors: GetContributor[]) {
         self.contributors = cast(contributors);
       },
 
@@ -35,7 +36,7 @@ export const ContributorsStore = types
           true
         );
 
-        if(!contributors) {
+        if (!contributors) {
           self.errorMessage = "Can't load the contrubutors, try again later"
           return;
         };
@@ -44,6 +45,19 @@ export const ContributorsStore = types
         self.isLoading = false;
         actions.setContributors(contributors);
       }),
+
+      addContributor: flow(function* (contributorData: CreateRole, projectId: number) {
+        const responce = yield AxiosController.post(
+          "/role",
+          { currentProjectId: projectId },
+          contributorData,
+          true
+        );
+
+        if (!responce.isSuccess) {
+          self.errorMessage = "Contributor was not added, try again later";
+        }
+      })
     }
     return actions
   })

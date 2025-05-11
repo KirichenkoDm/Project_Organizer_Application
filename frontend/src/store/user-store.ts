@@ -1,4 +1,4 @@
-import { destroy, flow, types } from "mobx-state-tree";
+import { destroy, flow, getRoot, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
 import { Credentials } from "@/shared/types/credentials";
 import { CreateUser } from "@/shared/types/create-user";
@@ -10,6 +10,8 @@ import { destroyCookie } from "nookies";
 import { COOKIE_ACCESS_TOKEN_KEY, LOCAL_STORAGE_USER_KEY } from "@/shared/constants";
 import { AccessTokenBody } from "@/shared/types/access-token";
 import { RoleNamesEnum } from "@/shared/role-names.enum";
+import { GetUser } from "@/shared/types/get-user";
+import { RootStoreInstance } from "./root-instance";
 
 export const UserStore = types
   .model("UserStore", {
@@ -82,7 +84,7 @@ export const UserStore = types
           credentials,
           false
         );
-        
+
         if (!userData) {
           actions.setError("Invalid credentials");
           return;
@@ -118,10 +120,10 @@ export const UserStore = types
       fetchRole: flow(function* (projectId: number) {
         const role = yield AxiosController.get<RoleNamesEnum>(
           `/role/user/${self.user?.id}/project/${projectId}`,
-          {"currentProjectId": projectId},
+          { "currentProjectId": projectId },
           true,
         )
-        if(!role) return;
+        if (!role) return;
         actions.setRole(role)
       }),
 
@@ -132,7 +134,22 @@ export const UserStore = types
           true
         );
         actions.setAssigned(user);
-      })
+      }),
+
+      fetchUsersByEmail: flow(function* (emailQuery: string, projectId: number) {
+        const users = yield AxiosController.get<GetUser[]>(
+          `/user/search`,
+          {
+            email: emailQuery,
+            currentProjectId: projectId,
+          },
+          true,
+        );
+
+        if (!users) return []
+
+        return users;
+      }),
     }
     return actions;
   })

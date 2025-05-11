@@ -7,6 +7,7 @@ import {
   Put,
   Delete,
   UseInterceptors,
+  Query,
 } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -24,7 +25,19 @@ import { SetRefreshTokenInterceptor } from "src/shared/refresh-token.interceptor
 @SkipRoles()
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
+  
+  /*
+  gets email query of users to find
+  returns found array of user id, first and last name
+  */
+ @Get("/search")
+ async getUsersByEmail(
+   @Query("email") email: string,
+   @Query("currentProjectId") currentProjectId: number,
+  ): Promise<GetUserDto[]> {
+    return await this.userService.getUsersByEmail(email, currentProjectId);
+  }
+  
   /*
     gets id of user to find
     returns found user first and last name
@@ -34,17 +47,6 @@ export class UserController {
     @Param("id", ParseNumberPipe) id: number,
   ): Promise<GetUserDto> {
     return await this.userService.getUserById(id);
-  }
-
-  /*
-    gets email of user to find
-    returns found user id, first and last name
- */
-  @Get("/email/:email")
-  async getUserByEmail(
-    @Param("email") email: string,
-  ): Promise<GetUserDto> {
-    return await this.userService.getUserByEmail(email);
   }
 
   /*

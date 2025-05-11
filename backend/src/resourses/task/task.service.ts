@@ -51,8 +51,6 @@ export class TaskService {
       throw new NotFoundException("Task with this id not found");
     }
 
-    console.log(taskData);
-
     const task = await this.taskRepository.save({
       ...taskToUpdate,
       ...taskData,

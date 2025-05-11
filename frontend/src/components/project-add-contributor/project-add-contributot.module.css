@@ -1,0 +1,11 @@
+.queryImport {
+  padding: 8px;
+  height: 30px;
+  border-radius: 8px;
+  border: 2px solid skyblue;
+  font-size: 16px;
+} 
+
+.queryImport:focus {
+  outline: none;
+}

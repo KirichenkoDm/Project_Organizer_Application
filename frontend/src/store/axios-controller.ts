@@ -84,23 +84,41 @@ class AxiosController {
       headers,
     }
 
-    const responce = await axiosInstance.request<T>(config);
-    return responce.data;
+    const response = await axiosInstance.request<T>(config);
+    return response.data;
   }
 
-  static async get<T>(url: string, query?: Record<string, any>, withAuth = true): Promise<T> {
+  static async get<T>(
+    url: string, 
+    query: Record<string, any> = {}, 
+    withAuth = true
+  ): Promise<T> {
     return await this.request<T>({ method: 'get', url, query, withAuth });
   }
 
-  static async post<T>(url: string, query?: Record<string, any>, data?: any, withAuth = true): Promise<T> {
+  static async post<T>(
+    url: string, 
+    query: Record<string, any> = {}, 
+    data: any = undefined, 
+    withAuth = true
+  ): Promise<T> {
     return await this.request<T>({ method: 'post', url, query, data, withAuth });
   }
 
-  static async put<T>(url: string, query?: Record<string, any>, data?: any, withAuth = true): Promise<T> {
+  static async put<T>(
+    url: string, 
+    query: Record<string, any> = {}, 
+    data: any = undefined, 
+    withAuth = true
+  ): Promise<T> {
     return await this.request<T>({ method: 'put', url, query, data, withAuth });
   }
 
-  static async delete<T>(url: string, query?: Record<string, any>, withAuth = true): Promise<T> {
+  static async delete<T>(
+    url: string, 
+    query: Record<string, any> = {}, 
+    withAuth = true
+  ): Promise<T> {
     return await this.request<T>({ method: 'delete', url, query, withAuth });
   }
 

@@ -8,15 +8,17 @@ import { useProjectStore } from "@/store/project-store";
 import { useRouter } from "next/navigation";
 import ProjectView from "./project-view";
 import ProjectEdit from "./project-edit";
+import { useUserStore } from "@/store/user-store";
 
 const ProjectInfo: FC = observer(() => {
   const [isEditMode, setIsEditMode] = useState(false);
   const projectStore = useProjectStore();
   const router = useRouter();
+  const rolePriority = useUserStore().getRolePriority;
   let content;
 
   const project = projectStore.getProject;
-  if(!project) return;
+  if (!project) return;
 
   const handleDelete = async () => {
     router.push("/home")
@@ -29,11 +31,16 @@ const ProjectInfo: FC = observer(() => {
     content =
       <Flex direction="column" gap="3">
         <ProjectView project={project} />
-        <InfoControls
-          setIsEditMode={setIsEditMode}
-          deleteAction={handleDelete}
-          deleteTarget="Project"
-        />
+        {
+          rolePriority >= 2
+            ?
+            <InfoControls
+              setIsEditMode={setIsEditMode}
+              deleteAction={handleDelete}
+              deleteTarget="Project"
+            />
+            : null
+        }
       </Flex>
   }
 

@@ -5,10 +5,12 @@ import styles from "./app-user-badge.module.css"
 import { useUserStore } from '@/store/user-store';
 import { Avatar, DropdownMenu, Flex, Separator, Text } from '@radix-ui/themes';
 import { useRouter } from 'next/navigation';
+import { useHomeProjectsStore } from "@/store/home-projects-store";
 
 const AppUserBadge: FC = () => {
   const router = useRouter()
   const userStore = useUserStore();
+  const homeProjectsStore = useHomeProjectsStore()
   const user = userStore.user;
 
   if(!user) {
@@ -23,6 +25,7 @@ const AppUserBadge: FC = () => {
   }
 
   const handleLogOut = () => {
+    homeProjectsStore.clearProjects();
     userStore.logout();
   }
 

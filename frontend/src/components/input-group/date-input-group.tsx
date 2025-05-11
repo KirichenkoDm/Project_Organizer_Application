@@ -24,6 +24,7 @@ const DateInputGroup: React.FC<DateInputGroupProps> = ({ id, label }) => {
         selected={field.value ?? null}
         onChange={(val: Date | null) => setFieldValue(id, val)}
         dateFormat="yyyy-MM-dd"
+        autoComplete="off"
         className={meta.touched && meta.error ? styles.inputError : ""}
         placeholderText="Leave empty for none"
       />

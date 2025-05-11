@@ -11,7 +11,6 @@ import ProfileEdit from "./profile-edit";
 const ProfileInfo: FC = observer(() => {
   const [isEditMode, setIsEditMode] = useState(false);
   const userStore = useUserStore();
-  const rolePriority = userStore.getRolePriority;
 
   let content
 
@@ -27,16 +26,11 @@ const ProfileInfo: FC = observer(() => {
     content =
       <Flex direction="column" gap="3">
         <ProfileView user={user} />
-        {
-          rolePriority >= 2
-            ?
-            <InfoControls
-              setIsEditMode={setIsEditMode}
-              deleteAction={handleDelete}
-              deleteTarget="User"
-            />
-            : null
-        }
+        <InfoControls
+          setIsEditMode={setIsEditMode}
+          deleteAction={handleDelete}
+          deleteTarget="User"
+        />
       </Flex>
   }
 

@@ -1,4 +1,4 @@
-import { cast, flow, getRoot, types } from "mobx-state-tree";
+import { cast, destroy, flow, getRoot, types } from "mobx-state-tree";
 import axios from "axios";
 import { useStore } from "./root-provider";
 import { HomeProjectListItem, HomeProjectListItemInstance } from "./models/home-project-list-item";
@@ -12,6 +12,10 @@ export const HomeProjectsStore = types
   })
   .actions((self) => {
     const actions = {
+      clearProjects () {
+        destroy(self.homeProjects);
+      },
+
       fetchHomeProjects: flow(function* (userId: number) {
         const projects = yield AxiosController.get<HomeProjectListItemInstance[]>(
           `/project/user/${userId}`,

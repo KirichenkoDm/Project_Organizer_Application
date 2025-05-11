@@ -43,7 +43,7 @@ const BoardColumnTask: FC<BoardColumnTaskCardProps> = observer(({
         <Dialog.Description />
         <Separator my="3" size="4" />
         <BoardColumnTaskModal 
-          {...{name, description, blockedBy, blockedByName, assignedId, columnId}}
+          {...{id, name, description, blockedBy, blockedByName, assignedId, columnId}}
         />
         {
           start && end

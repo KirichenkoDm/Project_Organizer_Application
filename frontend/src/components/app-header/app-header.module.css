@@ -3,6 +3,7 @@
   height: 7vh;
 }
 
+
 .appHeader {
   display: flex;
   justify-content: space-between;
@@ -11,4 +12,16 @@
   background-color: #eee;
   border-bottom: 1px solid #eaeaea;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1020) {
+  .appHeader {
+    padding: 6px 14px;
+  }
+}
+
+@media (max-width: 750px) {
+  .appHeader {
+    padding: 6px 10px;
+  }
 }

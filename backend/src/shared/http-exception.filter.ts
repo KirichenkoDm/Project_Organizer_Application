@@ -2,11 +2,6 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from
 import { BasicResponseDto } from "./dto/basic-response.dto";
 import { Response } from 'express';
 
-// interface Response {
-//   status(code: number): Response;
-//   json(body: BasicResponceDto): void;
-// }
-
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {

@@ -1,4 +1,4 @@
-import { applySnapshot, cast, flow, getSnapshot, types } from "mobx-state-tree";
+import { applySnapshot, cast, flow, getRoot, getSnapshot, types } from "mobx-state-tree";
 import { Project, ProjectInstance } from "./models/project";
 import axios from "axios";
 import { useStore } from "./root-provider";
@@ -14,6 +14,7 @@ import { ProjectBuilderData } from "@/shared/types/project-builder-data";
 import { Variant } from "@/shared/types/variant";
 import { CreateTask } from "@/shared/types/create-task";
 import { ReorderAction } from "@/shared/types/reorder-action";
+import { RootStoreInstance } from "./root-instance";
 
 export const ProjectStore = types
   .model("ProjectStore", {
@@ -221,6 +222,23 @@ export const ProjectStore = types
             existingTask.order = task.order;
           }
         });
+      }),
+
+      assingContributor: flow(function* (taskId: number, assignedId: number) {
+        const updatedTask = yield AxiosController.put<GetTask>(
+          `/task/${taskId}`,
+          { "currentProjectId": self.project!.id },
+          { user: { id: assignedId } },
+          true,
+        );
+
+        const existingTask = self.project?.tasks.find(tsk => tsk.id === updatedTask.id);
+        if (existingTask) {
+          existingTask.assignedId = updatedTask.assignedId;
+        }
+        
+        const rootStore = getRoot<RootStoreInstance>(self);
+        rootStore.userStore.fetchAssigned(updatedTask.assignedId);
       }),
 
       loadProject: flow(function* (projectId: Number) {

@@ -14,7 +14,7 @@
 }
 
 .userName {
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -27,4 +27,30 @@
   align-items: center;
   justify-content: center;
   font-weight: 500;
+}
+
+@media (max-width: 1020px) {
+  .userName {
+    font-size: 16px;
+  }
+  .avatar {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (max-width: 750px) {
+  .userBadge { 
+    gap: 3px;
+  }
+  .userName {
+    font-size: 12px;
+  }
+  .avatar {
+    width: 24px;
+    height: 24px;
+  } 
+  .avatar span {
+    font-size: 14px;
+  }
 }

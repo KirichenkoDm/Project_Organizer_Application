@@ -46,7 +46,7 @@ export class TaskService {
   }
 
   async updateTaskById(id: number, taskData: UpdateTaskDto): Promise<GetTaskDto> {
-    const taskToUpdate = await this.taskRepository.findOneBy({ id });
+    const taskToUpdate = await this.taskRepository.findOneWithRelations( id );
     if (!taskToUpdate) {
       throw new NotFoundException("Task with this id not found");
     }

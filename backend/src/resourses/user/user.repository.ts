@@ -22,17 +22,22 @@ export class UserRepository extends Repository<UserEntity> {
     });
   }
 
-  async findByEmail(email: string): Promise<UserEntity> {
-    return await this.findOne({
-      where: { email },
-      select: {
-        id: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-      }
-    });
+  async findByEmailNotInProject(email: string, currentProjectId: number): Promise<UserEntity[]> {
+    const emailquery = `%${email}%`
     
+    const query = this.createQueryBuilder("user")
+      .select([
+        "user.id AS id",
+        "user.email AS email",
+        "user.first_name AS \"firstName\"",
+        "user.last_name AS \"lastName\"",
+      ])
+      .where("user.email ILIKE :emailquery", { emailquery })
+      .andWhere("user.archived_at IS NULL")
+      .andWhere("NOT EXISTS (SELECT 1 FROM roles role WHERE role.user_id = user.id AND role.project_id = :projectId AND role.archived_at IS NULL)", 
+      { projectId: currentProjectId })
+      .limit(10);
+    return await query.getRawMany();
   }
 
   async findByEmailWithPassword(email: string): Promise<UserEntity> {

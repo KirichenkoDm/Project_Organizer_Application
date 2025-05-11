@@ -28,14 +28,14 @@ export class UserService {
     return this.userCore.mapperEntityToGetDto(user);
   }
 
-  async getUserByEmail(email: string): Promise<GetUserDto> {
-    const user = await this.userRepository.findByEmail(email);
+  async getUsersByEmail(email: string, currentProjectId: number): Promise<GetUserDto[]> {
+    const users = await this.userRepository.findByEmailNotInProject(email, currentProjectId);
 
-    if (!user) {
-      throw new NotFoundException("User with this email not found");
+    if (!users || users.length === 0) {
+      throw new NotFoundException("Users with similar email not found");
     }
 
-    return this.userCore.mapperEntityToGetDto(user);
+    return users.map(user => this.userCore.mapperEntityToGetDto(user));
   }
 
   async getUserWithPasswordByEmail(email: string): Promise<GetUserWithPasswordDto> {

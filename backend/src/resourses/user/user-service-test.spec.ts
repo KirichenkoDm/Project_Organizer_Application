@@ -81,7 +81,7 @@ describe("UserService", () => {
           provide: UserRepository,
           useValue: {
             findById: jest.fn(),
-            findByEmail: jest.fn(),
+            findByEmailNotInProject: jest.fn(),
             findByEmailWithPassword: jest.fn(),
             findOneBy: jest.fn(),
             save: jest.fn(),
@@ -139,27 +139,27 @@ describe("UserService", () => {
     });
   });
 
-  describe("getUserByEmail", () => {
-    it("should return a user when user exists", async () => {
-      jest.spyOn(userRepository, "findByEmail").mockResolvedValue(mockUser);
+  describe("getUsersByEmail", () => {
+    it("should return a users when exist and don't have role in project", async () => {
+      jest.spyOn(userRepository, "findByEmailNotInProject").mockResolvedValue([mockUser]);
 
-      const result = await service.getUserByEmail("test@example.com");
+      const result = await service.getUsersByEmail("test@example.com", -1);
 
-      expect(userRepository.findByEmail).toHaveBeenCalledWith("test@example.com");
-      expect(result).toEqual(expect.objectContaining({
+      expect(userRepository.findByEmailNotInProject).toHaveBeenCalledWith("test@example.com", -1);
+      expect(result).toEqual([expect.objectContaining({
         id: mockUser.id,
         email: mockUser.email,
         firstName: mockUser.firstName,
         lastName: mockUser.lastName,
-      }));
+      })]);
     });
 
-    it("should throw NotFoundException when user does not exist", async () => {
-      jest.spyOn(userRepository, "findByEmail").mockResolvedValue(null);
+    it("should throw NotFoundException when users not found", async () => {
+      jest.spyOn(userRepository, "findByEmailNotInProject").mockResolvedValue(null);
 
-      await expect(service.getUserByEmail("nonexistent@example.com"))
-        .rejects.toThrow(new NotFoundException("User with this email not found"));
-      expect(userRepository.findByEmail).toHaveBeenCalledWith("nonexistent@example.com");
+      await expect(service.getUsersByEmail("nonexistent@example.com", -999))
+        .rejects.toThrow(new NotFoundException("Users with similar email not found"));
+      expect(userRepository.findByEmailNotInProject).toHaveBeenCalledWith("nonexistent@example.com", -999);
     });
   });
 

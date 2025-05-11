@@ -11,6 +11,12 @@ import { COOKIE_ACCESS_TOKEN_KEY, LOCAL_STORAGE_USER_KEY } from "@/shared/consta
 import { AccessTokenBody } from "@/shared/types/access-token";
 import { RoleNamesEnum } from "@/shared/role-names.enum";
 
+const rolePriorityMap = {
+  [RoleNamesEnum.Member]: 0,
+  [RoleNamesEnum.ProjectManager]: 1,
+  [RoleNamesEnum.Owner]: 2,
+};
+
 export const UserStore = types
   .model("UserStore", {
     user: types.maybe(User),
@@ -27,6 +33,13 @@ export const UserStore = types
       if (self.user) {
         return self.user;
       }
+    },
+
+    get getRolePriority() {
+      if(self.role && rolePriorityMap[self.role] !== undefined) {
+        return rolePriorityMap[self.role];
+      }
+      return -1;
     },
 
     get getAssigned() {

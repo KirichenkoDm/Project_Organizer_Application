@@ -1,9 +1,13 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString } from "class-validator";
+import { Type } from "class-transformer";
+import { IsBoolean, IsInt, IsNotEmpty, IsObject, IsString, ValidateNested } from "class-validator";
+import { ObjectWithId } from "src/shared/dto/object-with-id.dto";
 
 export class CreateColumnDto {
   @IsNotEmpty()
-  @IsInt()
-  projectId: number;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ObjectWithId)
+  project: { id: number };
 
   @IsNotEmpty()
   @IsString()

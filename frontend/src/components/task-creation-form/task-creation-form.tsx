@@ -22,7 +22,7 @@ const TaskCreationForm: FC = () => {
 
   const handleSubmit = (values: typeof initialValues) => {
     const columnId = projectStore.getFirstColumnId;
-    const nextOrder = projectStore.getNextOrderInColumn(columnId);
+    const nextOrder = projectStore.getNextOrderForTask(columnId);
     console.log(nextOrder);
     const projectData: CreateTask = {
       ...values,
@@ -76,7 +76,7 @@ const TaskCreationForm: FC = () => {
                 </AppButton>
               </Dialog.Close>
               <Dialog.Close>
-                <AppButton type="submit">Create Project</AppButton>
+                <AppButton type="submit">Create Task</AppButton>
               </Dialog.Close>
             </Flex>
           </Form>

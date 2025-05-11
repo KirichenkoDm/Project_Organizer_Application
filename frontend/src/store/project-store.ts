@@ -14,6 +14,7 @@ import { ProjectBuilderData } from "@/shared/types/project-builder-data";
 import { Variant } from "@/shared/types/variant";
 import { CreateTask } from "@/shared/types/create-task";
 import { ReorderAction } from "@/shared/types/reorder-action";
+import { CreateColumn } from "@/shared/types/create-column";
 
 export const ProjectStore = types
   .model("ProjectStore", {
@@ -52,9 +53,21 @@ export const ProjectStore = types
         return firstColumn.id;
       },
 
+      get getNextOrderForColumn() {
+        if (!self.project || !self.project.columns.length) return 1;
+
+        const columnsInProject = views.getColumns;
+        if (!columnsInProject.length) {
+          self.error = "Error hapened during getting columns."
+        };
+
+        return columnsInProject[columnsInProject.length - 1].order + 1;
+      },
+
       getColumn(columnId: number) {
         return self.project?.columns.find(col => col.id === columnId);
       },
+
 
       getTask(taskId: number) {
         return self.project?.tasks.find(tsk => tsk.id === taskId);
@@ -68,7 +81,7 @@ export const ProjectStore = types
           .sort((a, b) => a.order - b.order);
       },
 
-      getNextOrderInColumn(columnId: number) {
+      getNextOrderForTask(columnId: number) {
         if (!self.project || !self.project.tasks.length) return 1;
 
         const tasksInColumn = views.getTasksByColumnId(columnId);
@@ -132,10 +145,25 @@ export const ProjectStore = types
         self.project = undefined;
       },
 
-      addColumn(column: ColumnInstance) {
+      createColumn: flow(function* (columnName: string) {
         if (!self.project) return;
-        self.project.columns.push(column);
-      },
+
+        const columnData: CreateColumn = {
+          project: { id: self.project.id },
+          name: columnName,
+          order: self.getNextOrderForColumn,
+          isCustom: true
+        }
+
+        const column = yield AxiosController.post<GetTask[]>(
+          "/column",
+          { "currentProjectId": self.project.id },
+          columnData,
+          true
+        );
+
+        self.project.columns.push(Column.create(column));
+      }),
 
       reorderColumn: flow(function* (columnId: number, reorderAction: ReorderAction) {
         const column = self.project?.columns.find(col => col.id === columnId);

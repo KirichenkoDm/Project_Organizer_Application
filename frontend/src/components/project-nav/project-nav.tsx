@@ -7,6 +7,7 @@ import React, { FC } from "react"
 import styles from "./project-nav.module.css"
 import AppButton from "../app-button/app-button";
 import ProjectCreateTask from "../project-create-task/project-create-task";
+import ProjectCreateColumn from "../project-create-column/project-create-column";
 
 interface ProjectNav {
   projectId: number;
@@ -34,6 +35,7 @@ const ProjectNav: FC<ProjectNav> = ({ projectId, projectName }) => {
           </TabNav.Link>
         </Flex>
         <Flex align="center" mr="28px">
+          <ProjectCreateColumn />
           <ProjectCreateTask />
         </Flex>
       </Flex>

@@ -48,6 +48,7 @@ const BoardColumnTask: FC<BoardColumnTaskCardProps> = observer(({
         {
           start && end
             ? <Flex direction="column" mt="2">
+              <Separator size="4" mb="6px"/>
               <Text>Time constraints of the task:</Text>
               <Text>{`Start: ${dayjs(start).format("YYYY-MM-DD")}`}</Text>
               <Text>{`End: ${dayjs(end).format("YYYY-MM-DD")}`}</Text>

@@ -16,6 +16,7 @@ import { CreateTask } from "@/shared/types/create-task";
 import { ReorderAction } from "@/shared/types/reorder-action";
 import { CreateColumn } from "@/shared/types/create-column";
 import { RootStoreInstance } from "./root-instance";
+import { EditTask } from "@/shared/types/edit-task";
 
 export const ProjectStore = types
   .model("ProjectStore", {
@@ -43,6 +44,16 @@ export const ProjectStore = types
         return self.project.columns
           .slice()
           .sort((a, b) => a.order - b.order);
+      },
+
+      get getTasks() {
+        if (
+          !self.project ||
+          !self.project.tasks ||
+          self.project.tasks.length === 0
+        ) return [];
+
+        return self.project.tasks;
       },
 
       get getFirstColumnId() {
@@ -221,6 +232,70 @@ export const ProjectStore = types
         }
       }),
 
+      editTask: flow(function* (taskId: number, taskData: EditTask) {
+        if (!self.project) return null;
+        const updatedTask = yield AxiosController.put<GetTask>(
+          `/task/${taskId}`,
+          { "currentProjectId": self.project.id },
+          taskData,
+          true,
+        );
+
+        const existingTaskIndex = self.project?.tasks.findIndex(tsk => tsk.id === updatedTask.id);
+        if (
+          existingTaskIndex !== undefined &&
+          existingTaskIndex !== -1 &&
+          self.project
+        ) {
+          const processedTask = {
+            ...updatedTask,
+            start: updatedTask.start ? new Date(updatedTask.start) : undefined,
+            end: updatedTask.end ? new Date(updatedTask.end) : undefined,
+          };
+
+
+          const taskToUpdate = self.project.tasks[existingTaskIndex];
+          applySnapshot(taskToUpdate, processedTask);
+        }
+      }),
+
+      unblockTask: flow(function* (taskId) {
+        if (!self.project) return null;
+        const result = yield AxiosController.put<GetTask>(
+          `/task/${taskId}`,
+          { "currentProjectId": self.project.id },
+          { task: null },
+          true,
+        );
+
+        if (!result) {
+          self.error = "Task wasn't unblocked";
+          return;
+        }
+
+        const taskIndex = self.project?.tasks.findIndex(tsk => tsk.id === taskId);
+        self.project.tasks[taskIndex].blockedBy = undefined;
+        self.project.tasks[taskIndex].blockedByName = undefined;
+      }),
+
+      changeTaskState: flow(function* (taskId, targetColumnId) {
+        if (!self.project) return null;
+        const result = yield AxiosController.put<GetTask>(
+          `/task/${taskId}`,
+          { "currentProjectId": self.project.id },
+          { column: { id: targetColumnId } },
+          true,
+        );
+
+        if (!result) {
+          self.error = "Task's state wasn't updated";
+          return;
+        }
+
+        const taskIndex = self.project?.tasks.findIndex(tsk => tsk.id === taskId);
+        self.project.tasks[taskIndex].columnId = targetColumnId;
+      }),
+
       reorderTask: flow(function* (taskId: number, reorderAction: ReorderAction) {
         const task = self.project?.tasks.find(tsk => tsk.id === taskId);
         if (!task) {
@@ -252,7 +327,8 @@ export const ProjectStore = types
         });
       }),
 
-      assingContributor: flow(function* (taskId: number, assignedId: number) {
+      assignContributor: flow(function* (taskId: number, assignedId: number) {
+        if (!self.project) return;
         const updatedTask = yield AxiosController.put<GetTask>(
           `/task/${taskId}`,
           { "currentProjectId": self.project!.id },
@@ -264,9 +340,36 @@ export const ProjectStore = types
         if (existingTask) {
           existingTask.assignedId = updatedTask.assignedId;
         }
-        
+
         const rootStore = getRoot<RootStoreInstance>(self);
         rootStore.userStore.fetchAssigned(updatedTask.assignedId);
+      }),
+
+      deleteTask: flow(function* (taskId: number) {
+        if (!self.project) return;
+        const result = yield AxiosController.delete(
+          `/task/${taskId}`,
+          { "currentProjectId": self.project.id },
+          true,
+        );
+
+        if (!result.isSuccess) {
+          self.error = "Task was not deleted.";
+          return
+        }
+
+        const taskIndex = self.project.tasks.findIndex(task => task.id === taskId);
+
+        if (taskIndex !== -1) {
+          self.project.tasks.splice(taskIndex, 1);
+
+          self.project.tasks.forEach(task => {
+            if (task.blockedBy === taskId) {
+              task.blockedBy = undefined;
+              task.blockedByName = undefined;
+            }
+          });
+        }
       }),
 
       loadProject: flow(function* (projectId: Number) {

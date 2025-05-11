@@ -92,6 +92,7 @@ export class TaskController {
   */
   @Put(":id/reorder/:neworder")
   @Roles(
+    RoleNamesEnum.Member,
     RoleNamesEnum.ProjectManager,
     RoleNamesEnum.Owner
   )

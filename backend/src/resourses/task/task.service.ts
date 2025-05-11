@@ -51,16 +51,18 @@ export class TaskService {
       throw new NotFoundException("Task with this id not found");
     }
 
-    const task = await this.taskRepository.save({
+    await this.taskRepository.save({
       ...taskToUpdate,
       ...taskData,
     });
 
-    if (!task) {
+    const updatedTask = await this.taskRepository.findOneWithRelations( id );
+
+    if (!updatedTask) {
       throw new BadRequestException("Task was not updated");
     }
 
-    return this.taskCore.mapperEntityToGetDTO(task);
+    return this.taskCore.mapperEntityToGetDTO(updatedTask);
   }
 
   async reorderTaskById(id: number, newOrder: number): Promise<GetTaskDto[]> {

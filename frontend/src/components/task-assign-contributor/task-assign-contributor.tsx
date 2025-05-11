@@ -30,7 +30,7 @@ const TaskAssignContributor: FC<TaskAssignContributorProps> = observer(({
 
   const handleAssignContributor = (contributorId: string) => {
     setSelectedContributor(Number(contributorId))
-    projectStore.assingContributor(taskId, Number(contributorId))
+    projectStore.assignContributor(taskId, Number(contributorId))
   }
 
   const selectedContributorLabel = () => {

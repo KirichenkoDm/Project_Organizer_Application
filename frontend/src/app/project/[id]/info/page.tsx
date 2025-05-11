@@ -8,17 +8,19 @@ import React from "react";
 
 const ProjectInfoPage = observer(() => {
   const project = useProjectStore().getProject;
-  
-  if(!project) {
+  const title = `Info: ${project?.name}`;
+
+  if (!project) {
     return (<AppLoadingPlaceholder
       text="Project is loading. It will appear in a moment..."
     />)
   }
 
-  return (
+  return (<>
+    <title>{title}</title>
     <Flex height="80vh" justify="center" align="center">
       <ProjectInfo />
     </Flex>
-  );
+  </>);
 })
 export default ProjectInfoPage;

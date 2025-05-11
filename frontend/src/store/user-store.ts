@@ -13,6 +13,12 @@ import { RoleNamesEnum } from "@/shared/role-names.enum";
 import { GetUser } from "@/shared/types/get-user";
 import { RootStoreInstance } from "./root-instance";
 
+const rolePriorityMap = {
+  [RoleNamesEnum.Member]: 0,
+  [RoleNamesEnum.ProjectManager]: 1,
+  [RoleNamesEnum.Owner]: 2,
+};
+
 export const UserStore = types
   .model("UserStore", {
     user: types.maybe(User),
@@ -29,6 +35,13 @@ export const UserStore = types
       if (self.user) {
         return self.user;
       }
+    },
+
+    get getRolePriority() {
+      if(self.role && rolePriorityMap[self.role] !== undefined) {
+        return rolePriorityMap[self.role];
+      }
+      return -1;
     },
 
     get getAssigned() {

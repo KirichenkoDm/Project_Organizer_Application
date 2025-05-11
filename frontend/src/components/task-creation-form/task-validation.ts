@@ -1,4 +1,3 @@
-import { ProjectThemeEnum } from "@/shared/project-theme.enum";
 import * as Yup from "yup";
 
 export const TaskValidationSchema = Yup.object().shape({

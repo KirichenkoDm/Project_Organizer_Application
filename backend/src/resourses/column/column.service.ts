@@ -38,8 +38,6 @@ export class ColumnService {
       throw new BadRequestException("Column was not created");
     }
 
-    await this.reorderColumnById(column.id, column.order);
-
     return this.columnCore.mapperEntityToGetDTO(column);
   }
 

@@ -21,10 +21,7 @@ const ProjectLayout = observer(({ children }: { children: React.ReactNode }) => 
   }, [])
 
 
-  return (<>
-    <Head>
-      <title>{projectName}</title>
-    </Head>
+  return (
     <Box>
       <AppHeader />
       <ProjectNav projectId={projectId} projectName={projectName ?? "loading"}/>
@@ -32,7 +29,7 @@ const ProjectLayout = observer(({ children }: { children: React.ReactNode }) => 
         <main>{children}</main>
       </div>
     </Box>
-  </>);
+  );
 });
 
 export default ProjectLayout;

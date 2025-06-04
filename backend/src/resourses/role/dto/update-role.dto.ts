@@ -1,7 +1,9 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateRoleDto } from "./create-role.dto";
-import { RoleNamesEnum } from "../role-names.enum";
+import { RoleNamesEnum } from "../../../shared/role-names.enum";
+import { IsEnum, IsNotEmpty } from "class-validator";
 
 export class UpdateRoleDto {
+  
+  @IsNotEmpty()
+  @IsEnum(RoleNamesEnum)
   role: RoleNamesEnum;
 }

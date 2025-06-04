@@ -1,0 +1,23 @@
+.taskModalInfo {
+  width: 65%;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.infoName {
+  height: 7vh;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.infoDescription {
+  height: 13vh;
+}
+
+.blockedText {
+  color: #fc7608
+}
+
+.notBlockedText {
+  color: #666;
+}

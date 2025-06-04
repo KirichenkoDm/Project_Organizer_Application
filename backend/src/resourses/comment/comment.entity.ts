@@ -1,12 +1,15 @@
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
-import { UserEntity } from "../user";
-import { TaskEntity } from "../task";
+import { UserEntity } from "../user/user.entity";
+import { TaskEntity } from "../task/tasks.entity";
 
 @Entity("comments")
 export class CommentEntity {
@@ -15,27 +18,23 @@ export class CommentEntity {
 
   @Column("int")
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: "user_id" })
   user: UserEntity;
 
   @Column("int")
   @ManyToOne(() => TaskEntity)
-  @JoinColumn({ name: "taskId" })
+  @JoinColumn({ name: "task_id" })
   task: TaskEntity;
 
   @Column({ type: "jsonb", default: () => "'{}'::jsonb" })
   text: object;
 
-  @Column("timestamptz")
+  @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
-  @Column("timestamptz")
+  @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @Column({
-    type: "timestamptz",
-    nullable: true,
-    default: null,
-  })
+  @DeleteDateColumn({ name: "archived_at" })
   archivedAt: Date;
 }

@@ -1,0 +1,121 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 350px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formWrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  gap: 8px;
+}
+
+.inputGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.inputGroup input {
+  padding: 8px;
+  height: 30px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.5s;
+}
+
+.inputGroup input.inputError {
+  border-color: #e53935;
+}
+
+.inputGroup textarea {
+  padding: 8px;
+  min-height: 80px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.5s;
+  resize: none;
+  font-family: inherit;
+}
+
+/* Стили для select/dropdown */
+.inputGroup select {
+  padding: 8px;
+  height: 46px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.5s;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  padding-right: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.errorMessage {
+  height: 0;
+  opacity: 0;
+  margin: 0 0;
+  color: #e53935;
+  font-size: 14px;
+  overflow: hidden;
+  transition: 
+    height 0.3s ease-in-out, 
+    opacity 0.3s ease-in-out, 
+    margin 0.3s ease-in-out;
+}
+
+.errorMessageVisible {
+  height: auto;
+  opacity: 1;
+  margin: 4px 0px;
+}
+
+.submitButton {
+  padding: 12px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  width: 125px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background-color: #1565c0;
+}
+
+.switchLink {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.switchLink span {
+  color: #1976d2;
+  cursor: pointer;
+  text-decoration: underline;
+}

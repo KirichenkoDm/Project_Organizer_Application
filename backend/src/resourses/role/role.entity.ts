@@ -1,27 +1,28 @@
 import {
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   Unique,
+  UpdateDateColumn,
 } from "typeorm";
-import { RoleNamesEnum } from "./role-names.enum";
-import { ProjectEntity } from "../project";
-import { UserEntity } from "../user";
+import { RoleNamesEnum } from "../../shared/role-names.enum";
+import { ProjectEntity } from "../project/projects.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Entity("roles")
 @Unique(["project", "user"])
 export class RoleEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
-  @Column("int")
   @ManyToOne(() => ProjectEntity)
   @JoinColumn({ name: "project_id" })
   project: ProjectEntity;
 
-  @Column("int")
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: "user_id" })
   user: UserEntity;
@@ -33,16 +34,12 @@ export class RoleEntity {
   })
   role: RoleNamesEnum;
 
-  @Column("timestamptz")
+  @CreateDateColumn({ name: "created_at"})
   createdAt: Date;
 
-  @Column("timestamptz")
+  @UpdateDateColumn({ name: "updated_at"})
   updatedAt: Date;
 
-  @Column({
-    type: "timestamptz",
-    nullable: true,
-    default: null,
-  })
+  @DeleteDateColumn({name: "archived_at"})
   archivedAt: Date;
 }

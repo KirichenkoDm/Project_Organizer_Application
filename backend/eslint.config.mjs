@@ -41,7 +41,7 @@ export default [
       "eqeqeq": ["error", "always"],
       "curly": "error",
       "eol-last": "error",
-      'semi': 'error',
+      "semi": "error",
     }
   }
 ];

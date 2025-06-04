@@ -1,0 +1,9 @@
+.profileViewContainer { 
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  width: 450px;
+}
+
+.profileEditContainer {
+  width: 450px;
+}

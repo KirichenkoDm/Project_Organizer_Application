@@ -1,0 +1,41 @@
+.taskCard {
+  justify-content: space-between;
+  height: 18vh;
+  border-radius: 15px;
+  
+  padding: 15px;
+  border: 1px solid #eaeaea;
+  background-color: #f1f1f1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 
+    box-shadow 0.2s, 
+    transform 0.2s,
+    background-color 0.2s
+  ;
+}
+
+.taskCard:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-7px) scale(1.02, 1.02);
+}
+
+.taskCard h6 {
+  height: 45%;
+  font-size: 16px;
+  line-height: normal;
+}
+
+.taskCard span {
+  font-size: 15px;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.taskText {
+  gap: 3px;
+  height: 100%;
+  flex-direction: column;
+}

@@ -1,0 +1,31 @@
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+}
+
+.homeIcon {
+  width: 28px;
+  height: 28px;
+}
+
+@media (max-width: 1020px) {
+  .logo {
+    font-size: 19px;
+  }
+  .homeIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 750px) {
+  .logo {
+    font-size: 15px;
+  }
+  .homeIcon {
+    width: 22px;
+    height: 22px;
+  }
+}

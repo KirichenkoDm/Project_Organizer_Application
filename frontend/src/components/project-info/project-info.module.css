@@ -1,0 +1,9 @@
+.projectViewContainer { 
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  width: 450px;
+}
+
+.projectEditContainer {
+  width: 450px;
+}

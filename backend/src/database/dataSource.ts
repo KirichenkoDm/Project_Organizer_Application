@@ -1,13 +1,20 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-import { ProjectEntity } from "src/resourses/project/projects.entity";
-import { UserEntity } from "src/resourses/user/user.entity";
-import { RoleEntity } from "src/resourses/role/role.entity";
-import { ColumnEntity } from "src/resourses/column/columns.entity";
-import { CommentEntity } from "src/resourses/comment/comment.entity";
-import { ColumnNameRenaming1744646418265 } from "./migrations/1744646418265-ColumnNameRenaming";
-import { TaskEntity } from "src/resourses/task/tasks.entity";
+import { InitialCreation1742833962934 } from "./migrations/1-InitialCreation";
+import { UniqueConstraints1743002916366 } from "./migrations/2-UniqueConstraints";
+import { UsersInsert1742896192584 } from "./migrations/3-UsersInsert";
+import { ProjectInsert1742910651015 } from "./migrations/4-ProjectInsert";
+import { RoleInsert1742923160383 } from "./migrations/5-RoleInsert";
+import { ColumnInsert1742924639407 } from "./migrations/6-ColumnInsert";
+import { TaskInsert1742926783780 } from "./migrations/7-TaskInsert";
+import { CommentInsert1742928923624 } from "./migrations/8-CommentInsert";
+import { UserEntity } from "../resourses/user/user.entity";
+import { ProjectEntity } from "../resourses/project/projects.entity";
+import { RoleEntity } from "../resourses/role/role.entity";
+import { ColumnEntity } from "../resourses/column/columns.entity";
+import { TaskEntity } from "../resourses/task/tasks.entity";
+import { CommentEntity } from "../resourses/comment/comment.entity";
 
 dotenv.config();
 
@@ -28,6 +35,15 @@ export const AppDataSource = new DataSource({
     TaskEntity,
     CommentEntity,
   ],
-  migrations: [ColumnNameRenaming1744646418265],
+  migrations: [
+    InitialCreation1742833962934,
+    UniqueConstraints1743002916366,
+    UsersInsert1742896192584,
+    ProjectInsert1742910651015,
+    RoleInsert1742923160383,
+    ColumnInsert1742924639407,
+    TaskInsert1742926783780,
+    CommentInsert1742928923624
+  ],
   subscribers: [],
 });

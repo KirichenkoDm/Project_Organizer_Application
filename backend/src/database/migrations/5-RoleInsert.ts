@@ -10,8 +10,8 @@ export class RoleInsert1742923160383 implements MigrationInterface {
         ('1', '3', 'Project manager'::roles_enum),
         ('1', '4', 'Member'::roles_enum),
         ('1', '5', 'Member'::roles_enum),
-        ('2', '2', 'Owner'::roles_enum);
-        ('2', '1', 'Member'::roles_enum),
+        ('2', '2', 'Owner'::roles_enum),
+        ('2', '1', 'Member'::roles_enum);
       `);
   }
 

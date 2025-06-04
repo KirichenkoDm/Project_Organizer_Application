@@ -6,52 +6,47 @@ export class TaskInsert1742926783780 implements MigrationInterface {
         INSERT INTO public.tasks (
           "name", 
           "description", 
-          "start", 
-          "end", 
+          "order",
           "project_id", 
-          "column_id", 
-          "assigned_id", 
-          "blocked_by"
+          "column_id",
+          "start", 
+          "end"
         )
         VALUES
         (
           'Test task 1', 
           'Test description 1', 
+          '1',
+          '1',
+          '1',
           NOW(), 
-          NOW() + INTERVAL '5 days', 
-          '1', 
-          '1', 
-          '2', 
-          NULL
+          NOW() + INTERVAL '5 days'
         ),
         (
           'Test task 2', 
           'Test description 2', 
-          NULL, 
-          NULL, 
-          '1', 
-          '1', 
-          '1', 
-          NULL
+          '2',
+          '1',
+          '1',
+          NOW(), 
+          NOW() + INTERVAL '5 days'
         ),
         (
           'Test task 3', 
           'Test description 3', 
-          NOW()+ INTERVAL '1 days', 
-          NOW() + INTERVAL '7 days', 
-          '1', 
-          '2', 
+          '1',
+          '1',
+          '2',
           NULL, 
           NULL
         ),
         (
           'Test task 4', 
           'Test description 4', 
+          '1',
+          '1',
+          '3',
           NULL, 
-          NULL, 
-          '1', 
-          '3', 
-          '1', 
           NULL
         );
       `);

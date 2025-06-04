@@ -8,10 +8,10 @@ export class ColumnInsert1742924639407 implements MigrationInterface {
         -- ('1', 'Not started', '1', 'false'),
         -- ('1', 'In progress', '2', 'false'),
         -- ('1', 'Finished', '4', 'false'),
-        ('1', 'In review', '4', 'true')
         -- ('2', 'Not started', '1', 'false'),
         -- ('2', 'In progress', '2', 'false'),
-        -- ('2', 'Finished', '3', 'false');
+        -- ('2', 'Finished', '3', 'false'),
+        ('1', 'In review', '4', 'true');
       `);
   }
 

@@ -15,6 +15,7 @@ import { RoleEntity } from "../resourses/role/role.entity";
 import { ColumnEntity } from "../resourses/column/columns.entity";
 import { TaskEntity } from "../resourses/task/tasks.entity";
 import { CommentEntity } from "../resourses/comment/comment.entity";
+import { AdminRole1752498382339 } from "./migrations/1752498382339-AdminRole";
 
 dotenv.config();
 
@@ -43,7 +44,8 @@ export const AppDataSource = new DataSource({
     RoleInsert1742923160383,
     ColumnInsert1742924639407,
     TaskInsert1742926783780,
-    CommentInsert1742928923624
+    CommentInsert1742928923624,
+    AdminRole1752498382339,
   ],
   subscribers: [],
 });

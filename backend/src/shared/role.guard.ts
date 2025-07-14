@@ -55,6 +55,10 @@ export class RoleGuard implements CanActivate {
       throw new ForbiddenException("User has no role in this project");
     }
 
+    if (userRole === 'admin') {
+      return true;
+    }
+
     const userRolePriority = rolePriority[userRole];
 
     const isAccessed = allowedRoles.some(allowed => {

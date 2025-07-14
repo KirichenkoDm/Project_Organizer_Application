@@ -9,7 +9,9 @@ export class ValidationPipe implements PipeTransform<unknown> {
       return value;
     }
 
-    const object = plainToInstance(metatype, value);
+    const object = plainToInstance(metatype, value, {
+      excludeExtraneousValues: true,
+    });
     const errors = await validate(object);
 
     if (errors.length > 0) {
@@ -20,6 +22,6 @@ export class ValidationPipe implements PipeTransform<unknown> {
       throw new BadRequestException(messages);
     }
 
-    return value;
+    return object;
   }
 }

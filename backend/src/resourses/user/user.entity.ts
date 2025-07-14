@@ -29,6 +29,9 @@ export class UserEntity {
   })
   refreshToken: string;
 
+  @Column({ type: "boolean", name: "is_admin" })
+  isCustom: boolean;
+
   @CreateDateColumn({ name: "created_at"})
   createdAt: Date;
 

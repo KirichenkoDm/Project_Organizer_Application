@@ -32,6 +32,7 @@ describe("UserService", () => {
     password: "hashedPassword123",
     firstName: "Test",
     lastName: "User",
+    isAdmin: false,
     refreshToken: "refreshToken123",
     createdAt: new Date(),
     updatedAt: new Date(),

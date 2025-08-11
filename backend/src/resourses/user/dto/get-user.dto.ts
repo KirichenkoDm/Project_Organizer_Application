@@ -5,6 +5,7 @@ export class GetUserDto {
   email: string;
   firstName: string;
   lastName: string;
+  isAdmin: boolean;
 }
 
 export class GetUserWithPasswordDto extends GetUserDto {

@@ -9,6 +9,7 @@ import { RoleService } from "../role/role.service";
 import { RoleNamesEnum } from "src/shared/role-names.enum";
 import { ProjectCore } from "./project.core";
 import { CreateRoleDto } from "../role/dto/create-role.dto";
+import { ProjectGateway } from "./project-notification.gateway";
 
 @Injectable()
 export class ProjectService {
@@ -17,12 +18,13 @@ export class ProjectService {
     private readonly roleRepository: RoleRepository,
     private readonly roleService: RoleService,
     private readonly projectCole: ProjectCore,
+    private readonly projectGateway: ProjectGateway,
   ) { }
 
   async getProjectById(id: number): Promise<GetProjectDto> {
     const project = await this.projectRepository.findOneBy({ id });
 
-    if(!project) {
+    if (!project) {
       throw new NotFoundException("Project with this id not found");
     }
 
@@ -32,7 +34,7 @@ export class ProjectService {
   async getProjectsByUserId(userId: number): Promise<GetProjectDto[]> {
     const projects = await this.roleRepository.findProjectsByUserId(userId);
 
-    if(!projects || projects.length === 0) {
+    if (!projects || projects.length === 0) {
       throw new NotFoundException("No projects found for this user");
     }
 
@@ -42,7 +44,7 @@ export class ProjectService {
   async getProjectReportById(id: number): Promise<object> {
     const report = this.projectRepository.findReportById(id);
 
-    if(!report) {
+    if (!report) {
       throw new NotFoundException("Project report with this id not found");
     }
 
@@ -57,11 +59,15 @@ export class ProjectService {
     }
 
     const roleData = {
-      user: {id: projectData.creatorId},
-      project: {id: project.id},
+      user: { id: projectData.creatorId },
+      project: { id: project.id },
       role: RoleNamesEnum.Owner
     } as CreateRoleDto;
     await this.roleService.createRole(roleData);
+
+    this.projectGateway.notifyAdmins(
+      `New project created: ${project.name}`
+    );
 
     return this.projectCole.mapperEntityToGetDTO(project);
   }
@@ -77,7 +83,7 @@ export class ProjectService {
       ...projectData,
     });
 
-    if(!project) {
+    if (!project) {
       throw new BadRequestException("Project was not updated");
     }
 
@@ -90,7 +96,7 @@ export class ProjectService {
     if (!projectToDelete) {
       throw new NotFoundException("Project with this id not found");
     }
-    
+
     const result = await this.projectRepository.softDelete(id);
 
     if (result.affected === 0) {

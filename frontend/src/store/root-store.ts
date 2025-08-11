@@ -34,7 +34,11 @@ export const RootStore = types
             self.userStore.logout();
           }
         } else {
-          self.userStore.refresh()
+          try {
+            self.userStore.refresh()
+          } catch {
+            console.log("Failed to find user in browser storage");
+          }
         }
       },
     };

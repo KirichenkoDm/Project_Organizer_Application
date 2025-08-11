@@ -5,7 +5,8 @@ import { AccessTokenBody } from "@/shared/types/access-token";
 
 const ONE_HOUR = 60 * 60;
 
-let wasRetry: boolean = false;
+// let wasRetry: boolean = false;
+const retryTracker = new Map<string, boolean>();
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -17,37 +18,55 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   async (response: AxiosResponse) => {
+    if (response.config.url) {
+      retryTracker.delete(response.config.url);
+    }
     return response;
   },
   async (error: AxiosError) => {
     if (error.response?.status === 400) {
-      error.response.data;
+      return Promise.reject(error);
     }
     if (error.response?.status === 401) {
-      if (wasRetry) {
-        console.log("Retry does not help.");
-        wasRetry = false;
-        return error.response.data
+      const requestKey = error.config?.url || 'unknown';
+      if (retryTracker.get(requestKey)) {
+        console.log("Retry does not help for:", requestKey);
+        retryTracker.delete(requestKey);
+        return Promise.reject(error);
       }
 
-      wasRetry = true;
-      console.log("refreshing");
-      const accessToken = await AxiosController.sendRefresh();
+      retryTracker.set(requestKey, true);
+      try {
+        console.log("Refreshing token for:", requestKey);
+        const accessToken = await AxiosController.sendRefresh();
 
-      setCookie(
-        null,
-        COOKIE_ACCESS_TOKEN_KEY,
-        accessToken,
-        {
-          maxAge: ONE_HOUR,
-          path: "/",
+        if (!accessToken) {
+          console.log("Failed to refresh token");
+          retryTracker.delete(requestKey);
+          return Promise.reject(error);
         }
-      );
 
-      const originalRequest = error.config!;
-      originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+        setCookie(
+          null,
+          COOKIE_ACCESS_TOKEN_KEY,
+          accessToken,
+          {
+            maxAge: ONE_HOUR,
+            path: "/",
+          }
+        );
 
-      return axiosInstance(originalRequest);
+        const originalRequest = error.config!;
+        originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+
+        retryTracker.delete(requestKey);
+
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("Error during token refresh");
+        retryTracker.delete(requestKey);
+        return Promise.reject(error);
+      }
     }
     return error.response?.data;
   }
@@ -89,34 +108,34 @@ class AxiosController {
   }
 
   static async get<T>(
-    url: string, 
-    query: Record<string, any> = {}, 
+    url: string,
+    query: Record<string, any> = {},
     withAuth = true
   ): Promise<T> {
     return await this.request<T>({ method: 'get', url, query, withAuth });
   }
 
   static async post<T>(
-    url: string, 
-    query: Record<string, any> = {}, 
-    data: any = undefined, 
+    url: string,
+    query: Record<string, any> = {},
+    data: any = undefined,
     withAuth = true
   ): Promise<T> {
     return await this.request<T>({ method: 'post', url, query, data, withAuth });
   }
 
   static async put<T>(
-    url: string, 
-    query: Record<string, any> = {}, 
-    data: any = undefined, 
+    url: string,
+    query: Record<string, any> = {},
+    data: any = undefined,
     withAuth = true
   ): Promise<T> {
     return await this.request<T>({ method: 'put', url, query, data, withAuth });
   }
 
   static async delete<T>(
-    url: string, 
-    query: Record<string, any> = {}, 
+    url: string,
+    query: Record<string, any> = {},
     withAuth = true
   ): Promise<T> {
     return await this.request<T>({ method: 'delete', url, query, withAuth });

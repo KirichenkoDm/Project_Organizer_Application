@@ -18,8 +18,17 @@ function RootLayout({
 }>) {
 
   useEffect(() => {
-    rootStore.hydrate();
-  })
+    const hydrateStore = async () => {
+      try {
+        await rootStore.hydrate();
+        // console.log("Store hydrated successfully");
+      } catch (error) {
+        // console.error("Store hydration failed:", error);
+      }
+    };
+
+    hydrateStore();
+  });
 
   return (
     <html lang="en">

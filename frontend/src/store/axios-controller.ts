@@ -104,7 +104,7 @@ class AxiosController {
     }
 
     const response = await axiosInstance.request<T>(config);
-    return response.data;
+    return response ? response.data : {} as T;
   }
 
   static async get<T>(

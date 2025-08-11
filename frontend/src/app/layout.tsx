@@ -10,12 +10,15 @@ import { Theme } from "@radix-ui/themes";
 import AppToast from "@/components/app-toast/app-toast";
 import Head from "next/head";
 import "react-datepicker/dist/react-datepicker.css";
+import useNotifications from "@/shared/hooks/useNotifications";
 
 function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  useNotifications();
 
   useEffect(() => {
     const hydrateStore = async () => {

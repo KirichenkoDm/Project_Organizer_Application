@@ -22,5 +22,6 @@ export const initialiseUser = (responseData: AccessTokenBody): UserInstance => {
     email: payload.email,
     firstName: payload.firstName,
     lastName: payload.lastName,
+    isAdmin: payload.isAdmin,
   });
 };

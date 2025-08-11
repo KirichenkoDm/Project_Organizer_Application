@@ -4,7 +4,8 @@ export const User = types.model("User", {
   id: types.identifierNumber,
   email: types.string,
   firstName: types.string,
-  lastName: types.string
+  lastName: types.string,
+  isAdmin: types.boolean,
 });
 
 export type UserInstance = Instance<typeof User>;

@@ -37,5 +37,5 @@ export const NotificationsStore = types
   }));
 
   export const useNotificationsStore = () => {
-    // return useStore().notificationsStore;
+    return useStore().notificationsStore;
   }

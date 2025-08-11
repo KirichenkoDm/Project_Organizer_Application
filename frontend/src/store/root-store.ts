@@ -5,6 +5,7 @@ import { ProjectStore } from "./project-store";
 import { HomeProjectsStore } from "./home-projects-store";
 import { LOCAL_STORAGE_USER_KEY } from "@/shared/constants";
 import { ContributorsStore } from "./contributors-store";
+import { NotificationsStore } from "./notifications-store";
 
 
 export const RootStore = types
@@ -13,6 +14,7 @@ export const RootStore = types
     projectStore: types.optional(ProjectStore, {}),
     homeProjectsStore: types.optional(HomeProjectsStore, {}),
     contributorsStore: types.optional(ContributorsStore, {isLoading: false}),
+    notificationsStore: types.optional(NotificationsStore, { notifications: [] }),
     error: types.maybeNull(types.string)
   })
   .views(self => ({

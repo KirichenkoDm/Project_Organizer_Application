@@ -21,6 +21,8 @@ export default () => {
   const isUserAdmin = userStore.isAdmin;
   const isAuthenticated = userStore.isAuthenticated;
 
+  const isConnectingRef = useRef<boolean>(false);
+
   const disconnect = useCallback(() => {
     if (socketRef.current) {
       console.log('Disconnecting WebSocket...');
@@ -35,11 +37,16 @@ export default () => {
       return;
     };
 
+    if (isConnectingRef.current || socketRef.current?.connected) {
+      console.log('Connection already in progress or established');
+      return;
+    }
+
     try {
       setStatus('connecting');
       setError(null);
 
-      await userStore.refresh();
+      // await userStore.refresh();
 
       const accessToken = parseCookies()[COOKIE_ACCESS_TOKEN_KEY];
       if (!accessToken) {
@@ -58,6 +65,7 @@ export default () => {
       });
 
       socketRef.current.on('connect', () => {
+        console.log('connected');
         setStatus('connected');
         setError(null);
       });
@@ -72,6 +80,8 @@ export default () => {
       });
 
       socketRef.current.on('notification', (data: NotificationPayload) => {
+        console.log("got notification:");
+        console.log(data);
         notificationsStore.addNotification({
           id: Date.now(),
           message: data.message,
@@ -97,11 +107,17 @@ export default () => {
   }, [isAuthenticated, isUserAdmin, userStore, notificationsStore, disconnect]);
 
   useEffect(() => {
-    if (isAuthenticated && isUserAdmin) {
+    if (isAuthenticated && isUserAdmin && !socketRef.current?.connected && !isConnectingRef.current) {
       connect();
     } else {
       disconnect();
     }
-    return disconnect;
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+        isConnectingRef.current = false;
+      }
+    };
   }, [isAuthenticated, isUserAdmin, connect, disconnect]);
 }

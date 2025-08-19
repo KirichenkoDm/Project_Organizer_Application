@@ -16,6 +16,7 @@ const rolePriorityMap = {
   [RoleNamesEnum.Member]: 0,
   [RoleNamesEnum.ProjectManager]: 1,
   [RoleNamesEnum.Owner]: 2,
+  [RoleNamesEnum.admin]: 100,
 };
 
 export const UserStore = types

@@ -4,7 +4,7 @@ import "./globals.css";
 import { StoreProvider } from "@/store/root-provider";
 import { rootStore } from "@/store/root-store";
 import withGuard from "@/components/hoc/with-guard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import AppToast from "@/components/app-toast/app-toast";
@@ -17,13 +17,12 @@ function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  useNotifications();
-
+  const [isStoreReady, setIsStoreReady] = useState(false);
   useEffect(() => {
     const hydrateStore = async () => {
       try {
         await rootStore.hydrate();
+        setIsStoreReady(true);
         // console.log("Store hydrated successfully");
       } catch (error) {
         // console.error("Store hydration failed:", error);
@@ -41,10 +40,18 @@ function RootLayout({
       <StoreProvider value={rootStore}>
         <body>
           <Theme accentColor="sky" radius="large">
-            <GuardedContent>
+            {isStoreReady
+              ? <WebSocketInitializer>
+                <GuardedContent>
+                  {children}
+                  <AppToast />
+                </GuardedContent>
+              </WebSocketInitializer>
+              : <GuardedContent>
                 {children}
-              <AppToast />
-            </GuardedContent>
+                <AppToast />
+              </GuardedContent>
+            }
           </Theme>
         </body>
       </StoreProvider>
@@ -55,6 +62,15 @@ function RootLayout({
 type ChildrenProps = {
   children: React.ReactNode;
 };
+
+function WebSocketInitializer({ children }: ChildrenProps) {
+  useNotifications();
+  return (
+    <>
+      {children}
+    </>
+  );
+}
 
 const ChildrenComponent = ({ children }: ChildrenProps) => <>{children}</>;
 

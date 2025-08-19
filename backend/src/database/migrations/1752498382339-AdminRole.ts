@@ -32,7 +32,7 @@ export class AdminRole1752498382339 implements MigrationInterface {
         admin_user RECORD;
       BEGIN
         FOR admin_user IN
-          SELECT id FROM public."user" WHERE "is_admin" = true
+          SELECT id FROM public."users" WHERE "is_admin" = true
         LOOP
           INSERT INTO public.roles ("role", "project_id", "user_id")
           VALUES ('admin'::roles_enum, NEW.id, admin_user.id);

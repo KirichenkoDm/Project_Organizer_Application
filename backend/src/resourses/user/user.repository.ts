@@ -50,6 +50,7 @@ export class UserRepository extends Repository<UserEntity> {
         firstName: true,
         lastName: true,
         password: true,
+        isAdmin: true,
       }
     });
   }

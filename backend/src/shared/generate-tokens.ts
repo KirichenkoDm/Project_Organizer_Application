@@ -10,7 +10,7 @@ export async function generateTokens(user: GetUserDto): Promise<TokensDto> {
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
-    isAdmin: user.isAdmin
+    isAdmin: user.isAdmin || false
   };
 
   const accessToken = jwtService.sign(payload, {

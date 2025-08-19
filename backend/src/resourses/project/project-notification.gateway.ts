@@ -25,7 +25,9 @@ export class ProjectGateway implements OnGatewayConnection, OnGatewayDisconnect 
 
   async handleConnection(socket: Socket) {
     try {
-      const token = socket.handshake.auth.token || socket.handshake.headers?.authorization?.split(' ')[1];
+      const token = socket.handshake.auth.accessToken || socket.handshake.auth.token || socket.handshake.headers?.authorization?.split(' ')[1];
+
+      console.log(`Ask for connection by: ${token}`);
 
       if (!token) {
         throw new UnauthorizedException('Access token missing');
@@ -49,6 +51,8 @@ export class ProjectGateway implements OnGatewayConnection, OnGatewayDisconnect 
       if (!user.isAdmin) {
         throw new ForbiddenException('User is not an admin');
       }
+
+      console.log(`Connecting ${user.email}`);
 
       socket.join('admins');
       console.log(`Admin connected: ${user.email}`);

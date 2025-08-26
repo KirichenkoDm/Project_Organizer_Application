@@ -12,8 +12,9 @@ export const HomeProjectsStore = types
   })
   .actions((self) => {
     const actions = {
-      clearProjects () {
-        destroy(self.homeProjects);
+      clearProjects() {
+        if (self.homeProjects)
+          destroy(self.homeProjects);
       },
 
       fetchHomeProjects: flow(function* (userId: number) {
@@ -25,8 +26,8 @@ export const HomeProjectsStore = types
 
         if (projects) {
           self.homeProjects
-          ? self.homeProjects.replace(projects)
-          : self.homeProjects = cast(projects);
+            ? self.homeProjects.replace(projects)
+            : self.homeProjects = cast(projects);
         }
       }),
 

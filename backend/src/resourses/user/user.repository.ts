@@ -18,6 +18,7 @@ export class UserRepository extends Repository<UserEntity> {
         email: true,
         firstName: true,
         lastName: true,
+        isAdmin: true,
       }
     });
   }
@@ -49,6 +50,7 @@ export class UserRepository extends Repository<UserEntity> {
         firstName: true,
         lastName: true,
         password: true,
+        isAdmin: true,
       }
     });
   }
@@ -63,5 +65,15 @@ export class UserRepository extends Repository<UserEntity> {
       status: 200,
       isSuccess: true,
     };
+  }
+
+  async checkAdmin(id: number) {
+    return await this.findOne({
+      where: { id },
+      select: {
+        email: true,
+        isAdmin: true,
+      }
+    });
   }
 }

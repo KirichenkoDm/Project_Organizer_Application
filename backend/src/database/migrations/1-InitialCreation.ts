@@ -7,7 +7,7 @@ export class InitialCreation1742833962934 implements MigrationInterface {
         "id" SERIAL NOT NULL PRIMARY KEY, 
         "email" varchar(255) NOT NULL,
         "password" varchar(255) NOT NULL, 
-        "refresh_token" varchar(255) DEFAULT NULL, 
+        "refresh_token" varchar(512) DEFAULT NULL, 
         "first_name" varchar(255) NOT NULL, 
         "last_name" varchar(255) NOT NULL, 
         "created_at" TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL, 

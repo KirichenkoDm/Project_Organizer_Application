@@ -1,4 +1,4 @@
-import { destroy, flow, getRoot, types } from "mobx-state-tree";
+import { destroy, flow, types } from "mobx-state-tree";
 import { User, UserInstance } from "./models/user";
 import { Credentials } from "@/shared/types/credentials";
 import { CreateUser } from "@/shared/types/create-user";
@@ -11,12 +11,12 @@ import { COOKIE_ACCESS_TOKEN_KEY, LOCAL_STORAGE_USER_KEY } from "@/shared/consta
 import { AccessTokenBody } from "@/shared/types/access-token";
 import { RoleNamesEnum } from "@/shared/role-names.enum";
 import { GetUser } from "@/shared/types/get-user";
-import { RootStoreInstance } from "./root-instance";
 
 const rolePriorityMap = {
   [RoleNamesEnum.Member]: 0,
   [RoleNamesEnum.ProjectManager]: 1,
   [RoleNamesEnum.Owner]: 2,
+  [RoleNamesEnum.admin]: 100,
 };
 
 export const UserStore = types
@@ -29,6 +29,10 @@ export const UserStore = types
   .views(self => ({
     get isAuthenticated() {
       return self.user !== undefined;
+    },
+
+    get isAdmin() {
+      return self.user?.isAdmin === true;
     },
 
     get getUserData() {

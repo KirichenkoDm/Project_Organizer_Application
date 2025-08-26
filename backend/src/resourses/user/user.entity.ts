@@ -24,7 +24,7 @@ export class UserEntity {
   @Column({
     name: "refresh_token", 
     type: "varchar", 
-    length: 225, 
+    length: 512, 
     nullable: true
   })
   refreshToken: string;

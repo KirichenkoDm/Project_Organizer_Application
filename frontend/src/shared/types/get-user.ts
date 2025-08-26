@@ -3,4 +3,5 @@ export type GetUser = {
   email: string;
   firstName: string;
   lastName: string;
+  isAdmin: boolean;
 }

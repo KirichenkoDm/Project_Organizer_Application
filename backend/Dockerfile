@@ -15,4 +15,4 @@ RUN npm run build
 COPY wait-for-db.sh /wait-for-db.sh
 RUN chmod +x /wait-for-db.sh
 
-CMD ["/wait-for-db.sh", "sh", "-c", "npm run migration:up && npm run start"]
+CMD ["/wait-for-db.sh", "sh", "-c", "npm run migration:up:prod && npm run start"]

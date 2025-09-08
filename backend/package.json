@@ -20,10 +20,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "npm run typeorm migration:create",
-    "migration:up": "npm run typeorm migration:run -- -d src/Database/dataSource.ts",
-    "migration:down": "npm run typeorm migration:revert -- -d src/Database/dataSource.ts",
-    "migration:up:prod": "typeorm migration:run -d dist/Database/dataSource.js",
-    "migration:down:prod": "typeorm migration:revert -d dist/Database/dataSource.js"
+    "migration:up": "npm run typeorm migration:run -- -d src/database/dataSource.ts",
+    "migration:down": "npm run typeorm migration:revert -- -d src/database/dataSource.ts",
+    "migration:up:prod": "typeorm migration:run -d dist/database/dataSource.js",
+    "migration:down:prod": "typeorm migration:revert -d dist/database/dataSource.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
